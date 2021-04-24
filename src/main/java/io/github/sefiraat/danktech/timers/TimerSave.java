@@ -10,7 +10,7 @@ public class TimerSave extends TimerTask {
     public DankTech Parent;
 
     public TimerSave(DankTech Parent) {
-        Parent = Parent;
+        this.Parent = Parent;
     }
 
     public void run() {

@@ -1,6 +1,7 @@
 package io.github.sefiraat.danktech;
 
 import co.aikar.commands.PaperCommandManager;
+import io.github.sefiraat.danktech.commands.Commands;
 import io.github.sefiraat.danktech.listeners.ItemPickupListener;
 import io.github.sefiraat.danktech.timers.TimerSave;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -28,6 +29,10 @@ public class DankTech extends JavaPlugin {
         return DankStorageConfig;
     }
 
+    public PaperCommandManager getCommandManager() {
+        return CommandManager;
+    }
+
     public JavaPlugin getInstance() {
         return instance;
     }
@@ -48,6 +53,7 @@ public class DankTech extends JavaPlugin {
 
         saveDefaultConfig();
         createDankStorageConfig();
+        registerCommands();
 
         new ItemPickupListener(this);
 
@@ -60,6 +66,10 @@ public class DankTech extends JavaPlugin {
 
     }
 
+    private void registerCommands() {
+        CommandManager = new PaperCommandManager(this);
+        CommandManager.registerCommand(new Commands(this));
+    }
 
     private void createDankStorageConfig() {
         DankStorageConfigFile = new File(getDataFolder(), "DankStorages.yml");
