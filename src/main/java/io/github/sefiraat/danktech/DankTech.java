@@ -1,5 +1,7 @@
 package io.github.sefiraat.danktech;
 
+import io.github.sefiraat.danktech.implimentation.items.ItemDank;
+import io.github.sefiraat.danktech.listeners.ItemPickupListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DankTech extends JavaPlugin {
@@ -15,6 +17,11 @@ public class DankTech extends JavaPlugin {
         getLogger().info("          Created by Sefiraat           ");
         getLogger().info("");
         getLogger().info("########################################");
+
+
+
+        new ItemPickupListener(this);
+
     }
 
     @Override
