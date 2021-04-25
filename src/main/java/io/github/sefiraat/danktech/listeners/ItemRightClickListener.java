@@ -36,7 +36,7 @@ public class ItemRightClickListener implements Listener {
                 long dankId = getDankId(i, Parent.getInstance());
                 ConfigurationSection dankConfig = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankId);
                 p.sendMessage(Messages.MessageEventOpenPack(dankId));
-                Gui g = getDankGUI(dankId, dankLevel);
+                Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
                 g.open(p);
             }
         }

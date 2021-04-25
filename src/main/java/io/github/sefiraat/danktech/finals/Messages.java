@@ -26,4 +26,7 @@ public final class Messages {
     public static final String MessageEventOpenPack(long packID) {
         return (Prefix + Passive + "Opening Dank Pack. ID: " + packID);
     }
+    public static final String MessageEventInputExisting() {
+        return (Prefix + Warning + "Slot is already assigned. Empty slot to replace.");
+    }
 }

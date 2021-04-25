@@ -130,5 +130,12 @@ public final class ItemDetails {
         l.add("" + ChatColor.GOLD + ChatColor.BOLD + "Dank Tier: " + ChatColor.WHITE + DankLevel);
         return l;
     }
+    public static final String GUIDisplayNameUnassigned = "" + ChatColor.GRAY + "Unassigned Slot";
+    public static List<String> GUIDisplayLoreUnassigned() {
+        List<String> l = new ArrayList<>();
+        l.add("" + ChatColor.WHITE + "Slot unassigned, place an item below");
+        l.add("" + ChatColor.WHITE + "to assign that type to this slot.");
+        return l;
+    }
 
 }
