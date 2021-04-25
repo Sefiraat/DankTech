@@ -3,6 +3,7 @@ package io.github.sefiraat.danktech;
 import co.aikar.commands.PaperCommandManager;
 import io.github.sefiraat.danktech.commands.Commands;
 import io.github.sefiraat.danktech.listeners.ItemPickupListener;
+import io.github.sefiraat.danktech.listeners.ItemRightClickListener;
 import io.github.sefiraat.danktech.timers.TimerSave;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,7 +16,7 @@ import java.util.Timer;
 
 public class DankTech extends JavaPlugin {
 
-    private JavaPlugin instance;
+    private DankTech instance;
     private File DankStorageConfigFile;
     private FileConfiguration DankStorageConfig;
     private PaperCommandManager CommandManager;
@@ -33,7 +34,7 @@ public class DankTech extends JavaPlugin {
         return CommandManager;
     }
 
-    public JavaPlugin getInstance() {
+    public DankTech getInstance() {
         return instance;
     }
 
@@ -55,20 +56,21 @@ public class DankTech extends JavaPlugin {
         createDankStorageConfig();
         registerCommands();
 
-        new ItemPickupListener(this);
+        new ItemPickupListener(this.getInstance());
+        new ItemRightClickListener(this.getInstance());
 
-        Repeater.schedule(new TimerSave(this),0, 30000);
+        Repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
 
     }
 
     @Override
     public void onDisable() {
-
+        saveDankStorageConfig();
     }
 
     private void registerCommands() {
-        CommandManager = new PaperCommandManager(this);
-        CommandManager.registerCommand(new Commands(this));
+        CommandManager = new PaperCommandManager(this.getInstance());
+        CommandManager.registerCommand(new Commands(this.getInstance()));
     }
 
     private void createDankStorageConfig() {

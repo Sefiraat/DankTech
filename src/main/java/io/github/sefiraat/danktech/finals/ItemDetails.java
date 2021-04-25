@@ -5,16 +5,21 @@ import net.md_5.bungee.api.ChatColor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.github.sefiraat.danktech.finals.Debug.bugsWarnUsers;
+
 public final class ItemDetails {
-    public static final String NameDank1 = "" + ChatColor.GRAY + ChatColor.BOLD + "Dank Storage Pack [T1]";
-    public static final String NameDank2 = "" + ChatColor.DARK_GRAY + ChatColor.BOLD + "Dank Storage Pack [T2]";
-    public static final String NameDank3 = "" + ChatColor.GREEN + ChatColor.BOLD + "Dank Storage Pack [T3]";
-    public static final String NameDank4 = "" + ChatColor.DARK_GREEN + ChatColor.BOLD + "Dank Storage Pack [T4]";
-    public static final String NameDank5 = "" + ChatColor.BLUE + ChatColor.BOLD + "Dank Storage Pack [T5]";
-    public static final String NameDank6 = "" + ChatColor.DARK_BLUE + ChatColor.BOLD + "Dank Storage Pack [T6]";
-    public static final String NameDank7 = "" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "Dank Storage Pack [T7]";
-    public static final String NameDank8 = "" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "Dank Storage Pack [T8]";
-    public static final String NameDank9 = "" + ChatColor.RED + ChatColor.BOLD + "Dank Storage Pack [Master]";
+
+    // Dank Stuff
+
+    public static final String NameDank1 = "" + ChatColor.GRAY + "Dank Storage Pack [T1]";
+    public static final String NameDank2 = "" + ChatColor.DARK_GRAY + "Dank Storage Pack [T2]";
+    public static final String NameDank3 = "" + ChatColor.GREEN + "Dank Storage Pack [T3]";
+    public static final String NameDank4 = "" + ChatColor.DARK_GREEN + "Dank Storage Pack [T4]";
+    public static final String NameDank5 = "" + ChatColor.BLUE + "Dank Storage Pack [T5]";
+    public static final String NameDank6 = "" + ChatColor.DARK_BLUE + "Dank Storage Pack [T6]";
+    public static final String NameDank7 = "" + ChatColor.LIGHT_PURPLE + "Dank Storage Pack [T7]";
+    public static final String NameDank8 = "" + ChatColor.DARK_PURPLE + "Dank Storage Pack [T8]";
+    public static final String NameDank9 = "" + ChatColor.RED + "Dank Storage Pack [Master]";
 
     public static final String DankInfo1 = ChatColor.GRAY + "A dimension folded into a single point of";
     public static final String DankInfo2 = ChatColor.GRAY + "space and time. All this just to hold";
@@ -42,6 +47,12 @@ public final class ItemDetails {
 
     public static final String DankLoreRightClick = "" + ChatColor.GOLD + "Right click to open pack";
 
+    public static  final String DankBuggyWarnUsers1 = "" + ChatColor.RED + ChatColor.BOLD + "Warning! While every care has been made";
+    public static  final String DankBuggyWarnUsers2 = "" + ChatColor.RED + ChatColor.BOLD + "to make this release stable, it may well";
+    public static  final String DankBuggyWarnUsers3 = "" + ChatColor.RED + ChatColor.BOLD + "still have bugs. Please ensure you only";
+    public static  final String DankBuggyWarnUsers4 = "" + ChatColor.RED + ChatColor.BOLD + "use this for items you wouldn't cry over";
+    public static  final String DankBuggyWarnUsers5 = "" + ChatColor.RED + ChatColor.BOLD + "if lost!";
+
     public static List<String> DankLoreBuilder(String slots, String volume) {
         List<String> l = new ArrayList<>();
         l.add(DankInfo1);
@@ -52,6 +63,14 @@ public final class ItemDetails {
         l.add(volume);
         l.add("");
         l.add(DankLoreRightClick);
+        if (bugsWarnUsers) {
+            l.add("");
+            l.add(DankBuggyWarnUsers1);
+            l.add(DankBuggyWarnUsers2);
+            l.add(DankBuggyWarnUsers3);
+            l.add(DankBuggyWarnUsers4);
+            l.add(DankBuggyWarnUsers5);
+        }
         return l;
     }
 
@@ -84,4 +103,32 @@ public final class ItemDetails {
             default: return "Error";
         }
     }
+
+    public static final String getDankNameBold(int DankLevel) {
+        switch (DankLevel) {
+            case 1: return ChatColor.BOLD + NameDank1;
+            case 2: return ChatColor.BOLD + NameDank2;
+            case 3: return ChatColor.BOLD + NameDank3;
+            case 4: return ChatColor.BOLD + NameDank4;
+            case 5: return ChatColor.BOLD + NameDank5;
+            case 6: return ChatColor.BOLD + NameDank6;
+            case 7: return ChatColor.BOLD + NameDank7;
+            case 8: return ChatColor.BOLD + NameDank8;
+            case 9: return ChatColor.BOLD + NameDank9;
+            default: return "Error";
+        }
+    }
+
+    // GUI Stuff
+
+    public static final String GUIDisplayNameFiller = "" + ChatColor.GRAY + "Get Dank";
+    public static final String GUIDisplayNameInfo = "" + ChatColor.RED + "Pack Info";
+    public static final String GUIDisplayNameLocked = "" + ChatColor.RED + "Locked Slot";
+    public static List<String> GUIDisplayLoreInfo(long DankID, int DankLevel) {
+        List<String> l = new ArrayList<>();
+        l.add("" + ChatColor.GOLD + ChatColor.BOLD + "Dank ID: " + ChatColor.WHITE + DankID);
+        l.add("" + ChatColor.GOLD + ChatColor.BOLD + "Dank Tier: " + ChatColor.WHITE + DankLevel);
+        return l;
+    }
+
 }

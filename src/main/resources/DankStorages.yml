@@ -1,30 +1,31 @@
 PACKS:
   PACKS_BY_ID:
-    EXAMPLE_ID:
+    # Pack 1 is an example pack only. Do not use and/or edit
+    "1":
       SLOT1:
-        STACK:
-        VOLUME:
+        STACK: null
+        VOLUME: 0
       SLOT2:
-        STACK:
-        VOLUME:
+        STACK: null
+        VOLUME: 0
       SLOT3:
-        STACK:
-        VOLUME:
+        STACK: null
+        VOLUME: 0
       SLOT4:
-        STACK:
-        VOLUME:
+        STACK: null
+        VOLUME: 0
       SLOT5:
-        STACK:
-        VOLUME:
+        STACK: null
+        VOLUME: 0
       SLOT6:
-        STACK:
-        VOLUME:
+        STACK: null
+        VOLUME: 0
       SLOT7:
-        STACK:
-        VOLUME:
+        STACK: null
+        VOLUME: 0
       SLOT8:
-        STACK:
-        VOLUME:
+        STACK: null
+        VOLUME: 0
       SLOT9:
-        STACK:
-        VOLUME:
+        STACK: null
+        VOLUME: 0

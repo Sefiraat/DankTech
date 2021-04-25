@@ -15,9 +15,9 @@ public class TimerSave extends TimerTask {
 
     public void run() {
         try {
-            Parent.getDankStorageConfig().save(Parent.getDankStorageConfigFile());
+            Parent.getInstance().getDankStorageConfig().save(Parent.getDankStorageConfigFile());
         } catch (IOException e) {
-            Parent.getLogger().warning("Unable to save " + Parent.getDankStorageConfig().getName());
+            Parent.getLogger().warning("Unable to save " + Parent.getInstance().getDankStorageConfig().getName());
         }
         // Parent.getLogger().info("Void Stores Saving Data");
     }

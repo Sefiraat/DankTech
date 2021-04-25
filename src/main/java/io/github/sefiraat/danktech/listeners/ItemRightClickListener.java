@@ -1,8 +1,10 @@
 package io.github.sefiraat.danktech.listeners;
 
 import io.github.sefiraat.danktech.DankTech;
-import io.github.sefiraat.danktech.implementation.abstracts.DankPack;
+import io.github.sefiraat.danktech.finals.Messages;
+import me.mattstudios.mfgui.gui.guis.Gui;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -11,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+import static io.github.sefiraat.danktech.lib.misc.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemRightClickListener implements Listener {
@@ -24,13 +27,18 @@ public class ItemRightClickListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onRightClick(PlayerInteractEvent e) {
-        ItemStack i = e.getItem();
-        if (isDank(i, Parent)) {
-            e.setCancelled(true);
-            int dankLevel = getDankLevel(i,Parent);
-            long dankId = getDankId(i, Parent);
-            ConfigurationSection dankConfig = Parent.getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankId);
-            DankPack d = new DankPack(dankLevel, dankConfig);
+        if (e.getItem() != null) {
+            ItemStack i = e.getItem();
+            if (isDank(i, Parent.getInstance())) {
+                Player p = e.getPlayer();
+                e.setCancelled(true);
+                int dankLevel = getDankLevel(i,Parent.getInstance());
+                long dankId = getDankId(i, Parent.getInstance());
+                ConfigurationSection dankConfig = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankId);
+                p.sendMessage(Messages.MessageEventOpenPack(dankId));
+                Gui g = getDankGUI(dankId, dankLevel);
+                g.open(p);
+            }
         }
     }
 
