@@ -53,7 +53,7 @@ public final class ItemDetails {
     public static  final String DankBuggyWarnUsers4 = "" + ChatColor.RED + ChatColor.BOLD + "use this for items you wouldn't cry over";
     public static  final String DankBuggyWarnUsers5 = "" + ChatColor.RED + ChatColor.BOLD + "if lost!";
 
-    public static List<String> DankLoreBuilder(String slots, String volume) {
+    public static List<String> DankLoreBuilder(String slots, String volume, long dankID) {
         List<String> l = new ArrayList<>();
         l.add(DankInfo1);
         l.add(DankInfo2);
@@ -63,6 +63,8 @@ public final class ItemDetails {
         l.add(volume);
         l.add("");
         l.add(DankLoreRightClick);
+        l.add("");
+        l.add(ChatColor.GRAY + "Pack ID: " + dankID);
         if (bugsWarnUsers) {
             l.add("");
             l.add(DankBuggyWarnUsers1);
@@ -74,18 +76,18 @@ public final class ItemDetails {
         return l;
     }
 
-    public static final List<String> getDankLore(int DankLevel) {
+    public static final List<String> getDankLore(int DankLevel, long dankID) {
         switch (DankLevel) {
-            case 1: return DankLoreBuilder(Dank1_Slots, Dank1_Volume);
-            case 2: return DankLoreBuilder(Dank2_Slots, Dank2_Volume);
-            case 3: return DankLoreBuilder(Dank3_Slots, Dank3_Volume);
-            case 4: return DankLoreBuilder(Dank4_Slots, Dank4_Volume);
-            case 5: return DankLoreBuilder(Dank5_Slots, Dank5_Volume);
-            case 6: return DankLoreBuilder(Dank6_Slots, Dank6_Volume);
-            case 7: return DankLoreBuilder(Dank7_Slots, Dank7_Volume);
-            case 8: return DankLoreBuilder(Dank8_Slots, Dank8_Volume);
-            case 9: return DankLoreBuilder(Dank9_Slots, Dank9_Volume);
-            default: return DankLoreBuilder("ERROR", "ERROR");
+            case 1: return DankLoreBuilder(Dank1_Slots, Dank1_Volume, dankID);
+            case 2: return DankLoreBuilder(Dank2_Slots, Dank2_Volume, dankID);
+            case 3: return DankLoreBuilder(Dank3_Slots, Dank3_Volume, dankID);
+            case 4: return DankLoreBuilder(Dank4_Slots, Dank4_Volume, dankID);
+            case 5: return DankLoreBuilder(Dank5_Slots, Dank5_Volume, dankID);
+            case 6: return DankLoreBuilder(Dank6_Slots, Dank6_Volume, dankID);
+            case 7: return DankLoreBuilder(Dank7_Slots, Dank7_Volume, dankID);
+            case 8: return DankLoreBuilder(Dank8_Slots, Dank8_Volume, dankID);
+            case 9: return DankLoreBuilder(Dank9_Slots, Dank9_Volume, dankID);
+            default: return DankLoreBuilder("ERROR", "ERROR", -1);
         }
     }
 

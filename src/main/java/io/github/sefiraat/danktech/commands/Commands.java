@@ -49,7 +49,7 @@ public class Commands extends BaseCommand {
                     DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
                     ItemMeta m = Dank.getItemMeta();
                     m.setDisplayName(getDankNameBold(level));
-                    m.setLore(ItemDetails.getDankLore(level));
+                    m.setLore(ItemDetails.getDankLore(level, packID));
                     Dank.setItemMeta(m);
                     player.getInventory().addItem(Dank);
                     player.sendMessage(Messages.MessageCommandPackGiven(packID));
@@ -82,7 +82,7 @@ public class Commands extends BaseCommand {
                 DankPack Dank = new DankPack(getDankMaterial(level), level, ID, Parent);
                 ItemMeta m = Dank.getItemMeta();
                 m.setDisplayName(getDankNameBold(level));
-                m.setLore(ItemDetails.getDankLore(level));
+                m.setLore(ItemDetails.getDankLore(level, ID));
                 Dank.setItemMeta(m);
                 player.getInventory().addItem(Dank);
                 player.sendMessage(Messages.MessageCommandPackGiven(ID));
