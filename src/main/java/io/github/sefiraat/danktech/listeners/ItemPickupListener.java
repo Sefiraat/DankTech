@@ -44,6 +44,7 @@ public class ItemPickupListener implements Listener {
                                 e.getItem().remove();
                                 int CurrentVolume = slotSection.getInt("VOLUME");
                                 slotSection.set("VOLUME", CurrentVolume + PickedStack.getAmount());
+                                return;
                             }
                         }
                     }

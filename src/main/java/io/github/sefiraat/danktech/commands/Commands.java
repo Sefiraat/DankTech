@@ -46,7 +46,6 @@ public class Commands extends BaseCommand {
                 Player player = (Player) sender;
                 if (level <= 9) {
                     long packID = getNextPackID(Parent);
-
                     DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
                     ItemMeta m = Dank.getItemMeta();
                     m.setDisplayName(getDankNameBold(level));
