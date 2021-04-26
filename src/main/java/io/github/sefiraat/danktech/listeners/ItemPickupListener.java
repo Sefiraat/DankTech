@@ -1,6 +1,10 @@
 package io.github.sefiraat.danktech.listeners;
 
 import io.github.sefiraat.danktech.DankTech;
+import io.github.sefiraat.danktech.finals.GUIItems;
+import io.github.sefiraat.danktech.finals.Messages;
+import me.mattstudios.mfgui.gui.guis.GuiItem;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,7 +15,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.github.sefiraat.danktech.lib.misc.Utils.isDank;
+import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemPickupListener implements Listener {
 
@@ -24,7 +28,6 @@ public class ItemPickupListener implements Listener {
 
     @EventHandler
     public void onItemPickup(EntityPickupItemEvent e) {
-        ItemStack PickedStack = e.getItem().getItemStack();
         if(e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
             if(hasDank(p)) {
