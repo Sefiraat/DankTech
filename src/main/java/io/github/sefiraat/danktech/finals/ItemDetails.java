@@ -143,7 +143,8 @@ public final class ItemDetails {
     public static List<String> GUIDisplayLoreWithdraw(int amount) {
         List<String> l = new ArrayList<>();
         l.add("" + ChatColor.WHITE + "");
-        l.add("" + ChatColor.WHITE + "Click to withdraw 1 stack");
+        l.add("" + ChatColor.WHITE + "Left click to withdraw 1");
+        l.add("" + ChatColor.WHITE + "Right click to withdraw stack");
         l.add("" + ChatColor.WHITE + "");
         if (amount > 0) {
             l.add("" + ChatColor.GOLD + "Amount: " + ChatColor.WHITE + amount);

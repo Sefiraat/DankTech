@@ -35,6 +35,12 @@ public class DankGUI {
         setInputRow(g, dankLevel, DankID, parent);
         setItemWithdraw(g, dankLevel, DankID, parent);
 
+        g.setDefaultClickAction(event -> {
+            if (event.isShiftClick()) {
+                event.setCancelled(true);
+            }
+        });
+
         g.setDragAction(event -> {event.setCancelled(true);});
 
         return g;
@@ -66,7 +72,7 @@ public class DankGUI {
             GuiItem g = GUIItems.GUIPackWithdrawItem(Amount);
             int finalI = i;
             g.setAction(event -> {
-                withdrawStack(gui, dankID, plugin, finalI, event);
+                withdrawItems(gui, dankID, plugin, finalI, event);
                 event.setCancelled(true);
             });
             gui.setItem(4, i, g);
@@ -105,35 +111,61 @@ public class DankGUI {
         }
     }
 
-    public static void withdrawStack(Gui gui, long dankID, DankTech plugin, int slot, InventoryClickEvent e) {
+    public static void withdrawItems(Gui gui, long dankID, DankTech plugin, int slot, InventoryClickEvent e) {
         ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
         ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + slot);
         if (slotSection.get("STACK") != null) {
             if(e.getWhoClicked().getInventory().firstEmpty() != -1) {
                 int Amount = slotSection.getInt("VOLUME");
                 ItemStack i = slotSection.getItemStack("STACK");
-                if (Amount <= i.getMaxStackSize()) {
-                    i.setAmount(Amount);
-                    slotSection.set("VOLUME", 0);
-                    slotSection.set("STACK", null);
-                    gui.updateItem(2, slot, GUIItems.GUIPackUnassignedSlot());
-                    GuiItem g = GUIItems.GUIPackWithdrawItem(0);
-                    g.setAction(event -> {
-                        withdrawStack(gui, dankID, plugin, slot, event);
-                        event.setCancelled(true);
-                    });
-                    gui.updateItem(4, slot, g);
-                } else {
-                    i.setAmount(i.getMaxStackSize());
-                    Amount = (Amount - i.getMaxStackSize());
-                    slotSection.set("VOLUME", Amount);
-                    gui.updateItem(2, slot, GUIItems.GUIPackAssignedSlot(dankID, slot, plugin));
-                    GuiItem g = GUIItems.GUIPackWithdrawItem(Amount);
-                    g.setAction(event -> {
-                        withdrawStack(gui, dankID, plugin, slot, event);
-                        event.setCancelled(true);
-                    });
-                    gui.updateItem(4, slot, g);
+                if (e.isRightClick()) {
+                    if (Amount <= i.getMaxStackSize()) {
+                        i.setAmount(Amount);
+                        slotSection.set("VOLUME", 0);
+                        slotSection.set("STACK", null);
+                        gui.updateItem(2, slot, GUIItems.GUIPackUnassignedSlot());
+                        GuiItem g = GUIItems.GUIPackWithdrawItem(0);
+                        g.setAction(event -> {
+                            withdrawItems(gui, dankID, plugin, slot, event);
+                            event.setCancelled(true);
+                        });
+                        gui.updateItem(4, slot, g);
+                    } else {
+                        i.setAmount(i.getMaxStackSize());
+                        Amount = (Amount - i.getMaxStackSize());
+                        slotSection.set("VOLUME", Amount);
+                        gui.updateItem(2, slot, GUIItems.GUIPackAssignedSlot(dankID, slot, plugin));
+                        GuiItem g = GUIItems.GUIPackWithdrawItem(Amount);
+                        g.setAction(event -> {
+                            withdrawItems(gui, dankID, plugin, slot, event);
+                            event.setCancelled(true);
+                        });
+                        gui.updateItem(4, slot, g);
+                    }
+                } else if (e.isLeftClick()) {
+                    if (Amount == 1) {
+                        i.setAmount(Amount);
+                        slotSection.set("VOLUME", 0);
+                        slotSection.set("STACK", null);
+                        gui.updateItem(2, slot, GUIItems.GUIPackUnassignedSlot());
+                        GuiItem g = GUIItems.GUIPackWithdrawItem(0);
+                        g.setAction(event -> {
+                            withdrawItems(gui, dankID, plugin, slot, event);
+                            event.setCancelled(true);
+                        });
+                        gui.updateItem(4, slot, g);
+                    } else {
+                        i.setAmount(1);
+                        Amount = (Amount - 1);
+                        slotSection.set("VOLUME", Amount);
+                        gui.updateItem(2, slot, GUIItems.GUIPackAssignedSlot(dankID, slot, plugin));
+                        GuiItem g = GUIItems.GUIPackWithdrawItem(Amount);
+                        g.setAction(event -> {
+                            withdrawItems(gui, dankID, plugin, slot, event);
+                            event.setCancelled(true);
+                        });
+                        gui.updateItem(4, slot, g);
+                    }
                 }
                 e.getWhoClicked().getInventory().addItem(i);
             } else {
