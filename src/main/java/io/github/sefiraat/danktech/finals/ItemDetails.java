@@ -137,5 +137,17 @@ public final class ItemDetails {
         l.add("" + ChatColor.WHITE + "to assign that type to this slot.");
         return l;
     }
-
+    public static final String GUIDisplayNameWithdraw = "" + ChatColor.GOLD + "Withdraw Stack";
+    public static List<String> GUIDisplayLoreWithdraw(int amount) {
+        List<String> l = new ArrayList<>();
+        l.add("" + ChatColor.WHITE + "");
+        l.add("" + ChatColor.WHITE + "Click to withdraw 1 stack");
+        l.add("" + ChatColor.WHITE + "");
+        if (amount > 0) {
+            l.add("" + ChatColor.GOLD + "Amount: " + ChatColor.WHITE + amount);
+        } else {
+            l.add("" + ChatColor.GOLD + "Amount: " + ChatColor.WHITE + "Empty");
+        }
+        return l;
+    }
 }

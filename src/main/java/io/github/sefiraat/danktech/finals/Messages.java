@@ -18,6 +18,7 @@ public final class Messages {
     // Commands
     public static final String MessageCommandSubcommand = Prefix + Notice + "Please select a valid sub command";
     public static final String MessageCommandSelectItem = Prefix + Notice + "Please select a valid sub command";
+
     public static final String MessageCommandPackGiven(long packID) {
         return (Prefix + Success + "Pack created. ID: " + packID);
     }
@@ -26,7 +27,7 @@ public final class Messages {
     public static final String MessageEventOpenPack(long packID) {
         return (Prefix + Passive + "Opening Dank Pack. ID: " + packID);
     }
-    public static final String MessageEventInputExisting() {
-        return (Prefix + Warning + "Slot is already assigned. Empty slot to replace.");
-    }
+    public static final String MessageEventInputExisting = Prefix + Warning + "Slot is already assigned. Empty slot to replace.";
+    public static final String MessageEventWithdrawNoSpace = Prefix + Warning + "You need an empty inventory slot!";
+    public static final String MessageEventWithdrawNoVolume = Prefix + Warning + "Nothing to withdraw";
 }

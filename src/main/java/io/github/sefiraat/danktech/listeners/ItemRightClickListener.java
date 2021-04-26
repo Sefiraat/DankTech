@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,14 +31,16 @@ public class ItemRightClickListener implements Listener {
         if (e.getItem() != null) {
             ItemStack i = e.getItem();
             if (isDank(i, Parent.getInstance())) {
-                Player p = e.getPlayer();
-                e.setCancelled(true);
-                int dankLevel = getDankLevel(i,Parent.getInstance());
-                long dankId = getDankId(i, Parent.getInstance());
-                ConfigurationSection dankConfig = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankId);
-                p.sendMessage(Messages.MessageEventOpenPack(dankId));
-                Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
-                g.open(p);
+                if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+                    Player p = e.getPlayer();
+                    e.setCancelled(true);
+                    int dankLevel = getDankLevel(i,Parent.getInstance());
+                    long dankId = getDankId(i, Parent.getInstance());
+                    ConfigurationSection dankConfig = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankId);
+                    p.sendMessage(Messages.MessageEventOpenPack(dankId));
+                    Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
+                    g.open(p);
+                }
             }
         }
     }

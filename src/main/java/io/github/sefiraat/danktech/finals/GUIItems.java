@@ -3,6 +3,7 @@ package io.github.sefiraat.danktech.finals;
 import io.github.sefiraat.danktech.DankTech;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -60,8 +61,13 @@ public class GUIItems {
         g.setAction(event -> {event.setCancelled(true);});
         return g;
     }
-    public static GuiItem GUIPackWithdrawItem() {
+
+    public static GuiItem GUIPackWithdrawItem(int amount) {
         ItemStack i = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        ItemMeta im = i.getItemMeta();
+        im.setDisplayName(ItemDetails.GUIDisplayNameWithdraw);
+        im.setLore(ItemDetails.GUIDisplayLoreWithdraw(amount));
+        i.setItemMeta(im);
         GuiItem g = new GuiItem(i);
         return g;
     }
