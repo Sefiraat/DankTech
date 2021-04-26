@@ -18,6 +18,7 @@ public final class Messages {
     // Commands
     public static final String MessageCommandSubcommand = Prefix + Notice + "Please select a valid sub command";
     public static final String MessageCommandSelectItem = Prefix + Notice + "Please select a valid sub command";
+    public static final String MessageCommandPackNoExist = Prefix + Error + "Yeah, bags only go from 1 to 9 dummy :)";
 
     public static final String MessageCommandPackGiven(long packID) {
         return (Prefix + Success + "Pack created. ID: " + packID);

@@ -39,20 +39,54 @@ public class Commands extends BaseCommand {
             }
         }
 
-        @Subcommand("Dank_Pack_1")
+        @Subcommand("DankPack")
         @CommandPermission("DankTech.Admin")
-        public void onGiveItemDank1(CommandSender sender, int level) {
+        public void onGiveItemDank(CommandSender sender, int level) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                long packID = getNextPackID(Parent);
+                if (level <= 9) {
+                    long packID = getNextPackID(Parent);
 
-                DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
+                    DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
+                    ItemMeta m = Dank.getItemMeta();
+                    m.setDisplayName(getDankNameBold(level));
+                    m.setLore(ItemDetails.getDankLore(level));
+                    Dank.setItemMeta(m);
+                    player.getInventory().addItem(Dank);
+                    player.sendMessage(Messages.MessageCommandPackGiven(packID));
+                } else {
+                    player.sendMessage(Messages.MessageCommandPackNoExist);
+                }
+            }
+        }
+    }
+
+    @Subcommand("RecoverPack")
+    @Description("Recovers a pre-existing pack")
+    public class RecoverPack extends BaseCommand {
+
+        @Default
+        public void onDefault(CommandSender sender) {
+            if (sender instanceof Player) {
+                sender.sendMessage(Messages.MessageCommandSelectItem);
+            }
+        }
+
+        @Subcommand("PackByID")
+        @CommandPermission("DankTech.Admin")
+        public void onRecoverItemDank(CommandSender sender, long ID) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+
+                int level = Parent.getInstance().getDankStorageConfig().getInt("PACKS.PACKS_BY_ID." + ID + ".LEVEL");
+
+                DankPack Dank = new DankPack(getDankMaterial(level), level, ID, Parent);
                 ItemMeta m = Dank.getItemMeta();
                 m.setDisplayName(getDankNameBold(level));
                 m.setLore(ItemDetails.getDankLore(level));
                 Dank.setItemMeta(m);
                 player.getInventory().addItem(Dank);
-                player.sendMessage(Messages.MessageCommandPackGiven(packID));
+                player.sendMessage(Messages.MessageCommandPackGiven(ID));
             }
         }
     }

@@ -84,6 +84,7 @@ public class DankPack extends ItemStack {
 
     private void setupSection(Configuration config, long packID) {
         config.createSection("PACKS.PACKS_BY_ID." + packID);
+        config.createSection("PACKS.PACKS_BY_ID." + packID + ".LEVEL" + level);
         if (level >= 1) {
             ConfigurationSection c = config.createSection("PACKS.PACKS_BY_ID." + packID + ".SLOT1");
             c.set("STACK", null);
