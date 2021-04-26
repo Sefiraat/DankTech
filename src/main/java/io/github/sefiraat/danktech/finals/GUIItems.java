@@ -3,7 +3,6 @@ package io.github.sefiraat.danktech.finals;
 import io.github.sefiraat.danktech.DankTech;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

@@ -1,9 +1,6 @@
 package io.github.sefiraat.danktech.listeners;
 
 import io.github.sefiraat.danktech.DankTech;
-import io.github.sefiraat.danktech.finals.GUIItems;
-import io.github.sefiraat.danktech.finals.Messages;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
