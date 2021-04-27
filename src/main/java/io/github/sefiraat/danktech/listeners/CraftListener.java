@@ -55,9 +55,7 @@ public class CraftListener implements Listener {
                     for (int i : slots) {
                         NamespacedKey key = new NamespacedKey(Parent, "dank");
                         if (Contents[i].getItemMeta().getPersistentDataContainer().has(key, PersistentDataType.INTEGER)) {
-                            p.sendMessage("Slot " + i + " has meta");
                         } else {
-                            p.sendMessage("Slot " + i + " no meta");
                             itemsCorrect = false;
                         }
                     }
@@ -68,9 +66,7 @@ public class CraftListener implements Listener {
                         if (Contents[4].getItemMeta().getPersistentDataContainer().has(levelKey, PersistentDataType.INTEGER)) {
                             dankLevel = Contents[4].getItemMeta().getPersistentDataContainer().get(levelKey, PersistentDataType.INTEGER) + 1;
                             dankID = Contents[4].getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
-                            p.sendMessage("Slot 4 is a correct dank - dankLevel is :" + dankLevel);
                         } else {
-                            p.sendMessage("Slot 4 is not a correct dank");
                             itemsCorrect = false;
                         }
                     }
@@ -102,10 +98,8 @@ public class CraftListener implements Listener {
                 ItemStack res = e.getCurrentItem();
                 boolean isDank = isResultDank(res.getType());
                 boolean hasKey = res.getItemMeta().getPersistentDataContainer().has(key, PersistentDataType.INTEGER);
-                p.sendMessage(res.getItemMeta().getDisplayName() + " // isDank : " + isDank + " || hasKey " + hasKey);
                 if (isDank && hasKey) {
                     int level = res.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.INTEGER);
-                    p.sendMessage("THIS SHOULD BECOME DANK AT LEVEL " + level);
                     if (level == 1) {
                         long packID = getNextPackID(Parent);
                         DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
