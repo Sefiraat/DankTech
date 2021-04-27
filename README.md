@@ -1,6 +1,6 @@
 # DankTech
 
-DankTech is an attept to recreate the [Dank Storage](https://www.curseforge.com/minecraft/mc-mods/dank-storage) mod (and \dank\null\ etc.) from a plugin.
+DankTech is an attempt to recreate the [Dank Storage](https://www.curseforge.com/minecraft/mc-mods/dank-storage) mod (and \dank\null\ etc.) from a plugin.
 
 ## Features
 The plugin currently features:
