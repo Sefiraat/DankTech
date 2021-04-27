@@ -6,8 +6,8 @@ public final class Materials {
 
     public static final Material Error = Material.BARRIER;
 
-    public static final Material Dank1 = Material.LIGHT_GRAY_STAINED_GLASS;
-    public static final Material Dank2 = Material.GRAY_STAINED_GLASS;
+    public static final Material Dank1 = Material.GRAY_STAINED_GLASS;
+    public static final Material Dank2 = Material.BLACK_STAINED_GLASS;
     public static final Material Dank3 = Material.LIME_STAINED_GLASS;
     public static final Material Dank4 = Material.GREEN_STAINED_GLASS;
     public static final Material Dank5 = Material.LIGHT_BLUE_STAINED_GLASS;
@@ -31,8 +31,8 @@ public final class Materials {
         }
     }
 
-    public static final Material DankCell1 = Material.LIGHT_GRAY_STAINED_GLASS_PANE;
-    public static final Material DankCell2 = Material.GRAY_STAINED_GLASS_PANE;
+    public static final Material DankCell1 = Material.GRAY_STAINED_GLASS_PANE;
+    public static final Material DankCell2 = Material.BLACK_STAINED_GLASS_PANE;
     public static final Material DankCell3 = Material.LIME_STAINED_GLASS_PANE;
     public static final Material DankCell4 = Material.GREEN_STAINED_GLASS_PANE;
     public static final Material DankCell5 = Material.LIGHT_BLUE_STAINED_GLASS_PANE;

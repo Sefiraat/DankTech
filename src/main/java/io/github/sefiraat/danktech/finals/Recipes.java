@@ -58,7 +58,7 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_6");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.DIAMOND_BLOCK);
+        r.setIngredient('N', Material.EMERALD);
         r.setIngredient('E', Material.GLASS_PANE);
         return r;
     }
@@ -67,7 +67,7 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_7");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.EMERALD);
+        r.setIngredient('N', Material.DIAMOND_BLOCK);
         r.setIngredient('E', Material.GLASS_PANE);
         return r;
     }
