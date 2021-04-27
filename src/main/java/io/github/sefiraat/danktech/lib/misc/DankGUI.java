@@ -21,7 +21,7 @@ public class DankGUI {
     public static Gui getDankGUI(long DankID, int dankLevel, DankTech parent) {
 
         Integer[] arrayFillerSlots = new Integer[]{0, 1, 2, 3, 5, 6, 7, 8, 36, 37, 38, 39, 40, 41, 42, 43, 44};
-        List<Integer> listFillerSlots = (List<Integer>) Arrays.asList(arrayFillerSlots);
+        List<Integer> listFillerSlots = Arrays.asList(arrayFillerSlots);
 
         Gui g = new Gui(5, getDankName(dankLevel));
 
@@ -85,7 +85,6 @@ public class DankGUI {
         for (int i = 1; i <= dankLevel; i++) {
             ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + i);
             if (slotSection.get("STACK") != null) {
-                ItemStack stack = slotSection.getItemStack("STACK");
                 gui.setItem(2, i, GUIItems.GUIPackAssignedSlot(dankID, i, plugin));
             } else {
                 gui.setItem(2, i, GUIItems.GUIPackUnassignedSlot());

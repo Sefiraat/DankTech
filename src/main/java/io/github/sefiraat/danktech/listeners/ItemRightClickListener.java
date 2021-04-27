@@ -19,7 +19,7 @@ import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemRightClickListener implements Listener {
 
-    DankTech Parent;
+    final DankTech Parent;
 
     public ItemRightClickListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -36,7 +36,6 @@ public class ItemRightClickListener implements Listener {
                     e.setCancelled(true);
                     int dankLevel = getDankLevel(i,Parent.getInstance());
                     long dankId = getDankId(i, Parent.getInstance());
-                    ConfigurationSection dankConfig = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankId);
                     p.sendMessage(Messages.MessageEventOpenPack(dankId));
                     Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
                     g.open(p);

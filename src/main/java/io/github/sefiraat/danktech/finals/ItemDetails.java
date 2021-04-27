@@ -113,7 +113,7 @@ public final class ItemDetails {
         return l;
     }
 
-    public static final List<String> getDankLore(int DankLevel, long dankID) {
+    public static List<String> getDankLore(int DankLevel, long dankID) {
         switch (DankLevel) {
             case 1: return DankLoreBuilder(Dank1_Slots, Dank1_Volume, dankID);
             case 2: return DankLoreBuilder(Dank2_Slots, Dank2_Volume, dankID);
@@ -128,7 +128,7 @@ public final class ItemDetails {
         }
     }
 
-    public static final String getDankName(int DankLevel) {
+    public static String getDankName(int DankLevel) {
         switch (DankLevel) {
             case 1: return NameDank1;
             case 2: return NameDank2;
@@ -143,7 +143,7 @@ public final class ItemDetails {
         }
     }
 
-    public static final String getDankNameBold(int DankLevel) {
+    public static String getDankNameBold(int DankLevel) {
         switch (DankLevel) {
             case 1: return ChatColor.BOLD + NameDank1;
             case 2: return ChatColor.BOLD + NameDank2;
@@ -158,7 +158,7 @@ public final class ItemDetails {
         }
     }
 
-    public static final String getDankCellName(int DankLevel) {
+    public static String getDankCellName(int DankLevel) {
         switch (DankLevel) {
             case 1: return NameDankCell1;
             case 2: return NameDankCell2;

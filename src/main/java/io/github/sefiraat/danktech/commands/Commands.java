@@ -22,10 +22,17 @@ import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;
 @Description("DankTech Main")
 public class Commands extends BaseCommand {
 
-    public DankTech Parent;
+    public final DankTech Parent;
 
     public Commands(DankTech Parent) {
         this.Parent = Parent;
+    }
+
+    @Default
+    public void onDefault(CommandSender sender) {
+        if (sender instanceof Player) {
+            sender.sendMessage(Messages.MessageCommandSubcommand);
+        }
     }
 
     @Subcommand("GiveItem")

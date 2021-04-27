@@ -7,7 +7,7 @@ import java.util.TimerTask;
 
 public class TimerSave extends TimerTask {
 
-    public DankTech Parent;
+    public final DankTech Parent;
 
     public TimerSave(DankTech Parent) {
         this.Parent = Parent;
@@ -19,6 +19,5 @@ public class TimerSave extends TimerTask {
         } catch (IOException e) {
             Parent.getLogger().warning("Unable to save " + Parent.getInstance().getDankStorageConfig().getName());
         }
-        // Parent.getLogger().info("Void Stores Saving Data");
     }
 }

@@ -26,7 +26,7 @@ import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;
 
 public class CraftListener implements Listener {
 
-    DankTech Parent;
+    final DankTech Parent;
 
     public CraftListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -36,7 +36,6 @@ public class CraftListener implements Listener {
     @EventHandler
     public void onPreCraft(PrepareItemCraftEvent e) {
         if (e.getView().getPlayer() instanceof Player) {
-            Player p = (Player) e.getView().getPlayer();
             if (e.getRecipe() != null && e.getRecipe().getResult() != null) {
                 ItemStack res = e.getRecipe().getResult();
                 if (isResultDank(res.getType())) {
@@ -130,8 +129,7 @@ public class CraftListener implements Listener {
     }
 
     public boolean isResultDank(Material m) {
-        if (
-                m == Materials.Dank1 ||
+        return m == Materials.Dank1 ||
                 m == Materials.Dank2 ||
                 m == Materials.Dank3 ||
                 m == Materials.Dank4 ||
@@ -139,12 +137,7 @@ public class CraftListener implements Listener {
                 m == Materials.Dank6 ||
                 m == Materials.Dank7 ||
                 m == Materials.Dank8 ||
-                m == Materials.Dank9
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+                m == Materials.Dank9;
     }
 
 }

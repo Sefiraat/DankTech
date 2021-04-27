@@ -22,7 +22,7 @@ public class DankTech extends JavaPlugin {
     private File DankStorageConfigFile;
     private FileConfiguration DankStorageConfig;
     private PaperCommandManager CommandManager;
-    private Timer Repeater = new Timer();
+    private final Timer Repeater = new Timer();
 
     public File getDankStorageConfigFile() {
         return DankStorageConfigFile;

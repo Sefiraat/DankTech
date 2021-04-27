@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
+
 public class GUIItems {
     public static GuiItem GUIPackFiller() {
         GuiItem g = new GuiItem(Material.GRAY_STAINED_GLASS_PANE);
@@ -54,7 +56,7 @@ public class GUIItems {
         g.setAction(event -> {event.setCancelled(true);});
         return g;
     }
-    public static GuiItem GUIPackAssignedSlot(long dankID, int slot, DankTech plugin) {
+    public static GuiItem GUIPackAssignedSlot(@Nonnull Long dankID, @Nonnull Integer slot, @Nonnull DankTech plugin) {
         ItemStack i = plugin.getDankStorageConfig().getItemStack("PACKS.PACKS_BY_ID." + dankID + ".SLOT" + slot + ".STACK");
         GuiItem g = new GuiItem(i);
         g.setAction(event -> {event.setCancelled(true);});
@@ -67,7 +69,6 @@ public class GUIItems {
         im.setDisplayName(ItemDetails.GUIDisplayNameWithdraw);
         im.setLore(ItemDetails.GUIDisplayLoreWithdraw(amount));
         i.setItemMeta(im);
-        GuiItem g = new GuiItem(i);
-        return g;
+        return new GuiItem(i);
     }
 }

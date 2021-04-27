@@ -20,12 +20,12 @@ public final class Messages {
     public static final String MessageCommandSelectItem = Prefix + Notice + "Please select a valid sub command";
     public static final String MessageCommandPackNoExist = Prefix + Error + "Yeah, bags only go from 1 to 9 dummy :)";
 
-    public static final String MessageCommandPackGiven(long packID) {
+    public static String MessageCommandPackGiven(long packID) {
         return (Prefix + Success + "Pack created. ID: " + packID);
     }
 
     // Events
-    public static final String MessageEventOpenPack(long packID) {
+    public static String MessageEventOpenPack(long packID) {
         return (Prefix + Passive + "Opening Dank Pack. ID: " + packID);
     }
     public static final String MessageEventInputExisting = Prefix + Warning + "Slot is already assigned. Empty slot to replace.";

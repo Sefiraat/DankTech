@@ -17,7 +17,7 @@ import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemPickupListener implements Listener {
 
-    DankTech Parent;
+    final DankTech Parent;
 
     public ItemPickupListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -44,7 +44,6 @@ public class ItemPickupListener implements Listener {
                                 e.setCancelled(true);
                                 int CurrentVolume = slotSection.getInt("VOLUME");
                                 if ((CurrentVolume + PickedStack.getAmount()) >= getLimit(dankLevel)) {
-                                    int Difference = getLimit(dankLevel) - CurrentVolume;
                                     slotSection.set("VOLUME", getLimit(dankLevel));
                                 } else {
                                     slotSection.set("VOLUME", CurrentVolume + PickedStack.getAmount());

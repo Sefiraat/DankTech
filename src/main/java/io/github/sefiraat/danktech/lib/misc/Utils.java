@@ -11,11 +11,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class Utils {
 
     public static boolean containerHasData(ItemStack i, NamespacedKey key, PersistentDataType type) {
-        if(i.getItemMeta().getPersistentDataContainer().has(key , type)) {
-            return true;
-        } else {
-            return false;
-        }
+        return i.getItemMeta().getPersistentDataContainer().has(key, type);
     }
 
     public static Object getData(ItemStack i, NamespacedKey key, PersistentDataType type) {
@@ -49,20 +45,12 @@ public class Utils {
 
     public static boolean isDank(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-dank");
-        if (containerHasData(i, key, PersistentDataType.INTEGER)) {
-            return true;
-        }
-        return false;
+        return containerHasData(i, key, PersistentDataType.INTEGER);
     }
 
     public static void makeDank(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-dank");
         setData(i, key, 1);
-    }
-
-    public static void makeNotDank(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-dank");
-        removeData(i, key);
     }
 
     public static int getDankLevel(ItemStack i, DankTech plugin) {
