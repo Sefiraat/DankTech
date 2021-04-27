@@ -29,6 +29,11 @@ public final class Messages {
         return (Prefix + Passive + "Opening Dank Pack. ID: " + packID);
     }
     public static final String MessageEventInputExisting = Prefix + Warning + "Slot is already assigned. Empty slot to replace.";
+    public static final String MessageEventInputThisDank = Prefix + Warning + "You cannot put a Dank inside itself silly!";
     public static final String MessageEventWithdrawNoSpace = Prefix + Warning + "You need an empty inventory slot!";
     public static final String MessageEventWithdrawNoVolume = Prefix + Warning + "Nothing to withdraw";
+
+    // Crafting
+    public static final String MessageCraftNewPack = Prefix + Success + "You have crafted a new Dank Pack!";
+    public static final String MessageCraftUpgradePack = Prefix + Success + "You have upgraded a Dank Pack!";
 }

@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankName;
+import static io.github.sefiraat.danktech.lib.misc.Utils.getDankId;
 
 public class DankGUI {
 
@@ -98,13 +99,18 @@ public class DankGUI {
         if (e.getWhoClicked().getItemOnCursor().getType() != Material.AIR) {
             if (slotSection.get("STACK") == null) {
                 ItemStack i = e.getWhoClicked().getItemOnCursor();
-                ItemStack i2 = i.clone();
-                i.setAmount(i.getAmount() - 1);
-                e.getWhoClicked().setItemOnCursor(i);
-                i2.setAmount(1);
-                slotSection.set("STACK", i2);
-                slotSection.set("VOLUME", 1);
-                gui.updateItem(2, slot, GUIItems.GUIPackAssignedSlot(dankID, slot, plugin));
+
+                if (getDankId(i, plugin) != dankID) {
+                    ItemStack i2 = i.clone();
+                    i.setAmount(i.getAmount() - 1);
+                    e.getWhoClicked().setItemOnCursor(i);
+                    i2.setAmount(1);
+                    slotSection.set("STACK", i2);
+                    slotSection.set("VOLUME", 1);
+                    gui.updateItem(2, slot, GUIItems.GUIPackAssignedSlot(dankID, slot, plugin));
+                } else {
+                    e.getWhoClicked().sendMessage(Messages.MessageEventInputThisDank);
+                }
             } else {
                 e.getWhoClicked().sendMessage(Messages.MessageEventInputExisting);
             }

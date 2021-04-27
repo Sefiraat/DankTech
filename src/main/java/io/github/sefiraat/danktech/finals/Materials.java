@@ -30,4 +30,30 @@ public final class Materials {
             default: return Error;
         }
     }
+
+    public static final Material DankCell1 = Material.LIGHT_GRAY_STAINED_GLASS_PANE;
+    public static final Material DankCell2 = Material.GRAY_STAINED_GLASS_PANE;
+    public static final Material DankCell3 = Material.LIME_STAINED_GLASS_PANE;
+    public static final Material DankCell4 = Material.GREEN_STAINED_GLASS_PANE;
+    public static final Material DankCell5 = Material.LIGHT_BLUE_STAINED_GLASS_PANE;
+    public static final Material DankCell6 = Material.BLUE_STAINED_GLASS_PANE;
+    public static final Material DankCell7 = Material.PINK_STAINED_GLASS_PANE;
+    public static final Material DankCell8 = Material.PURPLE_STAINED_GLASS_PANE;
+    public static final Material DankCell9 = Material.RED_STAINED_GLASS_PANE;
+
+    public static Material getDankCellMaterial(int DankLevel) {
+        switch (DankLevel) {
+            case 1: return DankCell1;
+            case 2: return DankCell2;
+            case 3: return DankCell3;
+            case 4: return DankCell4;
+            case 5: return DankCell5;
+            case 6: return DankCell6;
+            case 7: return DankCell7;
+            case 8: return DankCell8;
+            case 9: return DankCell9;
+            default: return Error;
+        }
+    }
+
 }

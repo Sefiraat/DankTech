@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.github.sefiraat.danktech.finals.ItemDetails.getLimit;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemPickupListener implements Listener {
@@ -31,7 +32,7 @@ public class ItemPickupListener implements Listener {
                 List<ItemStack> Danks = getDanks(p);
                 for (ItemStack iStack : Danks) {
                     long dankID = getDankId(iStack, Parent);
-                    long dankLevel = getDankLevel(iStack, Parent);
+                    int dankLevel = getDankLevel(iStack, Parent);
                     ConfigurationSection section = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
 
                     for (int i = 1; i <= dankLevel; i++) {
@@ -41,9 +42,14 @@ public class ItemPickupListener implements Listener {
                             ItemStack ExpectantStack = slotSection.getItemStack("STACK");
                             if (ExpectantStack.isSimilar(e.getItem().getItemStack())) {
                                 e.setCancelled(true);
-                                e.getItem().remove();
                                 int CurrentVolume = slotSection.getInt("VOLUME");
-                                slotSection.set("VOLUME", CurrentVolume + PickedStack.getAmount());
+                                if ((CurrentVolume + PickedStack.getAmount()) >= getLimit(dankLevel)) {
+                                    int Difference = getLimit(dankLevel) - CurrentVolume;
+                                    slotSection.set("VOLUME", getLimit(dankLevel));
+                                } else {
+                                    slotSection.set("VOLUME", CurrentVolume + PickedStack.getAmount());
+                                }
+                                e.getItem().remove();
                                 return;
                             }
                         }

@@ -2,6 +2,8 @@ package io.github.sefiraat.danktech;
 
 import co.aikar.commands.PaperCommandManager;
 import io.github.sefiraat.danktech.commands.Commands;
+import io.github.sefiraat.danktech.finals.Recipes;
+import io.github.sefiraat.danktech.listeners.CraftListener;
 import io.github.sefiraat.danktech.listeners.ItemPickupListener;
 import io.github.sefiraat.danktech.listeners.ItemRightClickListener;
 import io.github.sefiraat.danktech.timers.TimerSave;
@@ -58,6 +60,9 @@ public class DankTech extends JavaPlugin {
 
         new ItemPickupListener(this.getInstance());
         new ItemRightClickListener(this.getInstance());
+        new CraftListener(this.getInstance());
+
+        addRecipes();
 
         Repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
 
@@ -79,7 +84,6 @@ public class DankTech extends JavaPlugin {
             DankStorageConfigFile.getParentFile().mkdirs();
             saveResource("DankStorages.yml", false);
         }
-
         DankStorageConfig = new YamlConfiguration();
         try {
             DankStorageConfig.load(DankStorageConfigFile);
@@ -94,6 +98,27 @@ public class DankTech extends JavaPlugin {
         } catch (IOException e) {
             this.getLogger().warning("Unable to save " + DankStorageConfigFile.getName());
         }
+    }
+
+    public void addRecipes() {
+        this.getServer().addRecipe(Recipes.recipeCell1(this));
+        this.getServer().addRecipe(Recipes.recipeCell2(this));
+        this.getServer().addRecipe(Recipes.recipeCell3(this));
+        this.getServer().addRecipe(Recipes.recipeCell4(this));
+        this.getServer().addRecipe(Recipes.recipeCell5(this));
+        this.getServer().addRecipe(Recipes.recipeCell6(this));
+        this.getServer().addRecipe(Recipes.recipeCell7(this));
+        this.getServer().addRecipe(Recipes.recipeCell8(this));
+        this.getServer().addRecipe(Recipes.recipeCell9(this));
+        this.getServer().addRecipe(Recipes.recipeDank1(this));
+        this.getServer().addRecipe(Recipes.recipeDank2(this));
+        this.getServer().addRecipe(Recipes.recipeDank3(this));
+        this.getServer().addRecipe(Recipes.recipeDank4(this));
+        this.getServer().addRecipe(Recipes.recipeDank5(this));
+        this.getServer().addRecipe(Recipes.recipeDank6(this));
+        this.getServer().addRecipe(Recipes.recipeDank7(this));
+        this.getServer().addRecipe(Recipes.recipeDank8(this));
+        this.getServer().addRecipe(Recipes.recipeDank9(this));
     }
 
 }

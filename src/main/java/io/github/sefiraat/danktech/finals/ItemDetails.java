@@ -21,6 +21,16 @@ public final class ItemDetails {
     public static final String NameDank8 = "" + ChatColor.DARK_PURPLE + "Dank Storage Pack [T8]";
     public static final String NameDank9 = "" + ChatColor.RED + "Dank Storage Pack [Master]";
 
+    public static final String NameDankCell1 = "" + ChatColor.GRAY + "Storage Cell [T1]";
+    public static final String NameDankCell2 = "" + ChatColor.DARK_GRAY + "Storage Cell [T2]";
+    public static final String NameDankCell3 = "" + ChatColor.GREEN + "Storage Cell [T3]";
+    public static final String NameDankCell4 = "" + ChatColor.DARK_GREEN + "Storage Cell [T4]";
+    public static final String NameDankCell5 = "" + ChatColor.BLUE + "Storage Cell [T5]";
+    public static final String NameDankCell6 = "" + ChatColor.DARK_BLUE + "Storage Cell [T6]";
+    public static final String NameDankCell7 = "" + ChatColor.LIGHT_PURPLE + "Storage Cell [T7]";
+    public static final String NameDankCell8 = "" + ChatColor.DARK_PURPLE + "Storage Cell [T8]";
+    public static final String NameDankCell9 = "" + ChatColor.RED + "Storage Cell [Master]";
+
     public static final String DankInfo1 = ChatColor.GRAY + "A dimension folded into a single point of";
     public static final String DankInfo2 = ChatColor.GRAY + "space and time. All this just to hold";
     public static final String DankInfo3 = ChatColor.GRAY + "your trash!";
@@ -35,16 +45,41 @@ public final class ItemDetails {
     public static final String Dank8_Slots = "" + ChatColor.WHITE + "Slots: 8";
     public static final String Dank9_Slots = "" + ChatColor.WHITE + "Slots: 9";
 
-    public static final String Dank1_Volume = "" + ChatColor.WHITE + "Volume per slot: 256";
-    public static final String Dank2_Volume = "" + ChatColor.WHITE + "Volume per slot: 1,024";
-    public static final String Dank3_Volume = "" + ChatColor.WHITE + "Volume per slot: 2,048";
-    public static final String Dank4_Volume = "" + ChatColor.WHITE + "Volume per slot: 4,096";
-    public static final String Dank5_Volume = "" + ChatColor.WHITE + "Volume per slot: 8,192";
-    public static final String Dank6_Volume = "" + ChatColor.WHITE + "Volume per slot: 16,384";
-    public static final String Dank7_Volume = "" + ChatColor.WHITE + "Volume per slot: 65,536";
-    public static final String Dank8_Volume = "" + ChatColor.WHITE + "Volume per slot: 524,288";
-    public static final String Dank9_Volume = "" + ChatColor.WHITE + "Volume per slot: 2,147,483,647";
+    public static final Integer Limit1 = 256;
+    public static final Integer Limit2 = 1024;
+    public static final Integer Limit3 = 2048;
+    public static final Integer Limit4 = 4096;
+    public static final Integer Limit5 = 8192;
+    public static final Integer Limit6 = 16384;
+    public static final Integer Limit7 = 65536;
+    public static final Integer Limit8 = 524288;
+    public static final Integer Limit9 = 2147483547;
 
+    public static Integer getLimit(int level) {
+        switch(level) {
+            case 1: return Limit1;
+            case 2: return Limit2;
+            case 3: return Limit3;
+            case 4: return Limit4;
+            case 5: return Limit5;
+            case 6: return Limit6;
+            case 7: return Limit7;
+            case 8: return Limit8;
+            default: return Limit9;
+        }
+    }
+
+    public static final String Dank1_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit1;
+    public static final String Dank2_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit2;
+    public static final String Dank3_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit3;
+    public static final String Dank4_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit4;
+    public static final String Dank5_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit5;
+    public static final String Dank6_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit6;
+    public static final String Dank7_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit7;
+    public static final String Dank8_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit8;
+    public static final String Dank9_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit9;
+
+    public static final String DankLoreVoid = "" + ChatColor.RED + "Items over limit are voided";
     public static final String DankLoreRightClick = "" + ChatColor.GOLD + "Right click to open pack";
 
     public static  final String DankBuggyWarnUsers1 = "" + ChatColor.RED + ChatColor.BOLD + "Warning! While every care has been made";
@@ -61,6 +96,8 @@ public final class ItemDetails {
         l.add("");
         l.add(slots);
         l.add(volume);
+        l.add("");
+        l.add(DankLoreVoid);
         l.add("");
         l.add(DankLoreRightClick);
         l.add("");
@@ -120,6 +157,22 @@ public final class ItemDetails {
             default: return "Error";
         }
     }
+
+    public static final String getDankCellName(int DankLevel) {
+        switch (DankLevel) {
+            case 1: return NameDankCell1;
+            case 2: return NameDankCell2;
+            case 3: return NameDankCell3;
+            case 4: return NameDankCell4;
+            case 5: return NameDankCell5;
+            case 6: return NameDankCell6;
+            case 7: return NameDankCell7;
+            case 8: return NameDankCell8;
+            case 9: return NameDankCell9;
+            default: return "Error";
+        }
+    }
+
 
     // GUI Stuff
 
