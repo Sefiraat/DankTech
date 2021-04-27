@@ -147,6 +147,7 @@ public class DankGUI {
                         });
                         gui.updateItem(4, slot, g);
                     }
+                    e.getWhoClicked().getInventory().addItem(i);
                 } else if (e.isLeftClick()) {
                     if (Amount == 1) {
                         i.setAmount(Amount);
@@ -171,8 +172,8 @@ public class DankGUI {
                         });
                         gui.updateItem(4, slot, g);
                     }
+                    e.getWhoClicked().getInventory().addItem(i);
                 }
-                e.getWhoClicked().getInventory().addItem(i);
             } else {
                 e.getWhoClicked().sendMessage(Messages.MessageEventWithdrawNoSpace);
             }
