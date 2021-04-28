@@ -197,7 +197,9 @@ public final class ItemDetails {
         List<String> l = new ArrayList<>();
         l.add("" + ChatColor.WHITE + "");
         l.add("" + ChatColor.WHITE + "Left click to withdraw 1");
-        l.add("" + ChatColor.WHITE + "Right click to withdraw stack");
+        l.add("" + ChatColor.WHITE + "Right click to withdraw a stack");
+        l.add("" + ChatColor.WHITE + "Shift Left click to input full inventory");
+        l.add("" + ChatColor.WHITE + "Shift Right click to withdraw max");
         l.add("" + ChatColor.WHITE + "");
         if (amount > 0) {
             l.add("" + ChatColor.GOLD + "Amount: " + ChatColor.WHITE + amount);

@@ -7,6 +7,7 @@ import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -124,7 +125,32 @@ public class DankGUI {
                 int Amount = slotSection.getInt("VOLUME");
                 ItemStack i = slotSection.getItemStack("STACK");
                 if (e.isRightClick()) {
-                    if (Amount <= i.getMaxStackSize()) {
+                    if(e.isShiftClick()) {
+                        Integer MaxWithdrawl = (i.getMaxStackSize() * Utils.getEmptySlots((Player) e.getWhoClicked()));
+                        if (Amount <= MaxWithdrawl) {
+                            i.setAmount(Amount);
+                            slotSection.set("VOLUME", 0);
+                            slotSection.set("STACK", null);
+                            gui.updateItem(2, slot, GUIItems.GUIPackUnassignedSlot());
+                            GuiItem g = GUIItems.GUIPackWithdrawItem(0);
+                            g.setAction(event -> {
+                                withdrawItems(gui, dankID, plugin, slot, event);
+                                event.setCancelled(true);
+                            });
+                            gui.updateItem(4, slot, g);
+                        } else {
+                            i.setAmount(i.getMaxStackSize() * Utils.getEmptySlots((Player) e.getWhoClicked()));
+                            Amount = (Amount - i.getAmount());
+                            slotSection.set("VOLUME", Amount);
+                            GuiItem g = GUIItems.GUIPackWithdrawItem(Amount);
+                            g.setAction(event -> {
+                                withdrawItems(gui, dankID, plugin, slot, event);
+                                event.setCancelled(true);
+                            });
+                            gui.updateItem(4, slot, g);
+                        }
+                        e.getWhoClicked().getInventory().addItem(i);
+                    } else if (Amount <= i.getMaxStackSize()) {
                         i.setAmount(Amount);
                         slotSection.set("VOLUME", 0);
                         slotSection.set("STACK", null);
@@ -139,7 +165,6 @@ public class DankGUI {
                         i.setAmount(i.getMaxStackSize());
                         Amount = (Amount - i.getMaxStackSize());
                         slotSection.set("VOLUME", Amount);
-                        gui.updateItem(2, slot, GUIItems.GUIPackAssignedSlot(dankID, slot, plugin));
                         GuiItem g = GUIItems.GUIPackWithdrawItem(Amount);
                         g.setAction(event -> {
                             withdrawItems(gui, dankID, plugin, slot, event);
@@ -164,7 +189,6 @@ public class DankGUI {
                         i.setAmount(1);
                         Amount = (Amount - 1);
                         slotSection.set("VOLUME", Amount);
-                        gui.updateItem(2, slot, GUIItems.GUIPackAssignedSlot(dankID, slot, plugin));
                         GuiItem g = GUIItems.GUIPackWithdrawItem(Amount);
                         g.setAction(event -> {
                             withdrawItems(gui, dankID, plugin, slot, event);

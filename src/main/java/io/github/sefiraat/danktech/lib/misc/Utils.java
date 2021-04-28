@@ -1,9 +1,13 @@
 package io.github.sefiraat.danktech.lib.misc;
 
 import io.github.sefiraat.danktech.DankTech;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -93,6 +97,17 @@ public class Utils {
 
     public static ConfigurationSection getDankSection(DankTech plugin, long DankID) {
         return plugin.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACK_BY_ID." + DankID);
+    }
+
+    public static int getEmptySlots(Player p) {
+        PlayerInventory inventory = p.getInventory();
+        ItemStack[] cont = inventory.getContents();
+        int i = 0;
+        for (ItemStack item : cont)
+            if (item != null && item.getType() != Material.AIR) {
+                i++;
+            }
+        return 36 - i;
     }
 
 }

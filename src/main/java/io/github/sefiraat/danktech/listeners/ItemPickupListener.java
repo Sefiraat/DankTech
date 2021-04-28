@@ -30,13 +30,12 @@ public class ItemPickupListener implements Listener {
             Player p = (Player) e.getEntity();
             if(hasDank(p)) {
                 List<ItemStack> Danks = getDanks(p);
-                for (ItemStack iStack : Danks) {
-                    long dankID = getDankId(iStack, Parent);
-                    int dankLevel = getDankLevel(iStack, Parent);
+                for (ItemStack Dank : Danks) {
+                    long dankID = getDankId(Dank, Parent);
+                    int dankLevel = getDankLevel(Dank, Parent);
                     ConfigurationSection section = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
-
+                    ItemStack PickedStack = e.getItem().getItemStack();
                     for (int i = 1; i <= dankLevel; i++) {
-                        ItemStack PickedStack = e.getItem().getItemStack();
                         ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + i);
                         if (slotSection.get("STACK") != null) {
                             ItemStack ExpectantStack = slotSection.getItemStack("STACK");
