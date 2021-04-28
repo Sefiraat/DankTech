@@ -3,7 +3,6 @@ package io.github.sefiraat.danktech.listeners;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.Messages;
 import me.mattstudios.mfgui.gui.guis.Gui;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

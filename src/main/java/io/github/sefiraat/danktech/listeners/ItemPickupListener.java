@@ -1,6 +1,8 @@
 package io.github.sefiraat.danktech.listeners;
 
 import io.github.sefiraat.danktech.DankTech;
+import org.bukkit.*;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,24 +36,29 @@ public class ItemPickupListener implements Listener {
                     long dankID = getDankId(iStack, Parent);
                     int dankLevel = getDankLevel(iStack, Parent);
                     ConfigurationSection section = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
-
                     for (int i = 1; i <= dankLevel; i++) {
                         ItemStack PickedStack = e.getItem().getItemStack();
                         ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + i);
-                        if (slotSection.get("STACK") != null) {
+                        if (slotSection.getItemStack("STACK") != null) {
                             ItemStack ExpectantStack = slotSection.getItemStack("STACK");
                             if (ExpectantStack.isSimilar(e.getItem().getItemStack())) {
                                 int CurrentVolume = slotSection.getInt("VOLUME");
                                 if ((CurrentVolume + PickedStack.getAmount()) >= getLimit(dankLevel)) {
                                     int Difference = getLimit(dankLevel) - CurrentVolume;
                                     slotSection.set("VOLUME", getLimit(dankLevel));
-                                    Parent.saveDankStorageConfig();
-                                    e.getItem().remove();
                                 } else {
                                     slotSection.set("VOLUME", CurrentVolume + PickedStack.getAmount());
-                                    Parent.saveDankStorageConfig();
-                                    e.getItem().remove();
                                 }
+                                World w = e.getItem().getLocation().getWorld();
+                                Location l = e.getItem().getLocation();
+                                if (e.getItem().getItemStack().getType().isBlock()) {
+                                    BlockData fallingDustData = e.getItem().getItemStack().getType().createBlockData();
+                                    w.spawnParticle(Particle.BLOCK_CRACK, l, 32, 0.5, 0.5, 0.5, 0.0D, fallingDustData, true);
+                                } else {
+                                    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.RED, 2);
+                                    w.spawnParticle(Particle.REDSTONE, l, 5, 0.5, 0.5, 0.5, 0.0D, dustOptions, true);
+                                }
+                                e.getItem().remove();
                                 e.setCancelled(true);
                                 return;
                             }

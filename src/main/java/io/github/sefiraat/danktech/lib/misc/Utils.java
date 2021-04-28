@@ -1,11 +1,9 @@
 package io.github.sefiraat.danktech.lib.misc;
 
 import io.github.sefiraat.danktech.DankTech;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -101,10 +99,10 @@ public class Utils {
 
     public static int getEmptySlots(Player p) {
         PlayerInventory inventory = p.getInventory();
-        ItemStack[] cont = inventory.getContents();
+        ItemStack[] cont = inventory.getStorageContents();
         int i = 0;
         for (ItemStack item : cont)
-            if (item != null && item.getType() != Material.AIR) {
+            if (item != null) {
                 i++;
             }
         return 36 - i;

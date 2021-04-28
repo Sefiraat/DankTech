@@ -192,19 +192,26 @@ public final class ItemDetails {
         l.add("" + ChatColor.WHITE + "to assign that type to this slot.");
         return l;
     }
-    public static final String GUIDisplayNameWithdraw = "" + ChatColor.GOLD + "Withdraw Stack";
+
+    public static final String GUIDisplayNameWithdraw = "" + ChatColor.RED + "Withdraw / Add Items";
+
+    public static final String GUIDisplayWithdrawLoreLeft = "" + ChatColor.GOLD + "Left Click: " + ChatColor.WHITE + "Withdraw 1";
+    public static final String GUIDisplayWithdrawLoreRight = "" + ChatColor.GOLD + "Right Click: " + ChatColor.WHITE + "Withdraw Stack";
+    public static final String GUIDisplayWithdrawLoreShiftLeft = "" + ChatColor.GOLD + "Shift Left Click: " + ChatColor.WHITE + "Dump Inventory";
+    public static final String GUIDisplayWithdrawLoreShiftRight = "" + ChatColor.GOLD + "Shift Right Click: " + ChatColor.WHITE + "Fill Inventory";
+
     public static List<String> GUIDisplayLoreWithdraw(int amount) {
         List<String> l = new ArrayList<>();
-        l.add("" + ChatColor.WHITE + "");
-        l.add("" + ChatColor.WHITE + "Left click to withdraw 1");
-        l.add("" + ChatColor.WHITE + "Right click to withdraw a stack");
-        l.add("" + ChatColor.WHITE + "Shift Left click to input full inventory");
-        l.add("" + ChatColor.WHITE + "Shift Right click to withdraw max");
-        l.add("" + ChatColor.WHITE + "");
+        l.add("");
+        l.add(GUIDisplayWithdrawLoreLeft);
+        l.add(GUIDisplayWithdrawLoreRight);
+        l.add(GUIDisplayWithdrawLoreShiftLeft);
+        l.add(GUIDisplayWithdrawLoreShiftRight);
+        l.add("");
         if (amount > 0) {
-            l.add("" + ChatColor.GOLD + "Amount: " + ChatColor.WHITE + amount);
+            l.add("" + ChatColor.BLUE + "Amount: " + ChatColor.WHITE + amount);
         } else {
-            l.add("" + ChatColor.GOLD + "Amount: " + ChatColor.WHITE + "Empty");
+            l.add("" + ChatColor.BLUE + "Amount: " + ChatColor.GRAY + "Empty");
         }
         return l;
     }
