@@ -34,15 +34,18 @@ public class ItemRightClickListener implements Listener {
                     if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
                         Player p = e.getPlayer();
                         e.setCancelled(true);
-                        int dankLevel = getDankLevel(i,Parent.getInstance());
-                        long dankId = getDankId(i, Parent.getInstance());
-                        p.sendMessage(Messages.MessageEventOpenPack(dankId));
-                        Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
-                        g.open(p);
+                        if (p.isSneaking()) {
+
+                        } else {
+                            int dankLevel = getDankLevel(i,Parent.getInstance());
+                            long dankId = getDankId(i, Parent.getInstance());
+                            p.sendMessage(Messages.MessageEventOpenPack(dankId));
+                            Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
+                            g.open(p);
+                        }
                     }
                 }
             }
         }
     }
-
 }

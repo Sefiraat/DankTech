@@ -104,7 +104,7 @@ public class CraftListener implements Listener {
                         DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
                         ItemMeta m = Dank.getItemMeta();
                         m.setDisplayName(getDankNameBold(level));
-                        m.setLore(ItemDetails.getDankLore(level, packID));
+                        m.setLore(ItemDetails.getDankLore(level, packID, null));
                         Dank.setItemMeta(m);
                         e.setCurrentItem(Dank);
                         p.sendMessage(Messages.MessageCraftNewPack);
@@ -118,7 +118,7 @@ public class CraftListener implements Listener {
                         DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
                         ItemMeta m = Dank.getItemMeta();
                         m.setDisplayName(getDankNameBold(level));
-                        m.setLore(ItemDetails.getDankLore(level, packID));
+                        m.setLore(ItemDetails.getDankLore(level, packID, null));
                         Dank.setItemMeta(m);
                         e.setCurrentItem(Dank);
                         p.sendMessage(Messages.MessageCraftUpgradePack);

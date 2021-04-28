@@ -2,6 +2,7 @@ package io.github.sefiraat.danktech.finals;
 
 import net.md_5.bungee.api.ChatColor;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,13 +83,21 @@ public final class ItemDetails {
     public static final String DankLoreVoid = "" + ChatColor.RED + "Items over limit are voided";
     public static final String DankLoreRightClick = "" + ChatColor.GOLD + "Right click to open pack";
 
+    public static final String DankLoreSelectedStack(@Nullable String stringOptional) {
+        String itemType = "" + ChatColor.GRAY + "Empty";
+        if (stringOptional != null) {
+            itemType = "" + ChatColor.GREEN + stringOptional;
+        }
+        return "" + ChatColor.GOLD + "Selected Item: " + itemType;
+    }
+
     public static  final String DankBuggyWarnUsers1 = "" + ChatColor.RED + ChatColor.BOLD + "Warning! While every care has been made";
     public static  final String DankBuggyWarnUsers2 = "" + ChatColor.RED + ChatColor.BOLD + "to make this release stable, it may well";
     public static  final String DankBuggyWarnUsers3 = "" + ChatColor.RED + ChatColor.BOLD + "still have bugs. Please ensure you only";
     public static  final String DankBuggyWarnUsers4 = "" + ChatColor.RED + ChatColor.BOLD + "use this for items you wouldn't cry over";
     public static  final String DankBuggyWarnUsers5 = "" + ChatColor.RED + ChatColor.BOLD + "if lost!";
 
-    public static List<String> DankLoreBuilder(String slots, String volume, long dankID) {
+    public static List<String> DankLoreBuilder(String slots, String volume, long dankID, @Nullable String selectedStack) {
         List<String> l = new ArrayList<>();
         l.add(DankInfo1);
         l.add(DankInfo2);
@@ -101,6 +110,7 @@ public final class ItemDetails {
         l.add("");
         l.add(DankLoreRightClick);
         l.add("");
+        l.add(DankLoreSelectedStack(selectedStack));
         l.add(ChatColor.GRAY + "Pack ID: " + dankID);
         if (bugsWarnUsers) {
             l.add("");
@@ -113,18 +123,18 @@ public final class ItemDetails {
         return l;
     }
 
-    public static List<String> getDankLore(int DankLevel, long dankID) {
+    public static List<String> getDankLore(int DankLevel, long dankID, @Nullable String selectedStack) {
         switch (DankLevel) {
-            case 1: return DankLoreBuilder(Dank1_Slots, Dank1_Volume, dankID);
-            case 2: return DankLoreBuilder(Dank2_Slots, Dank2_Volume, dankID);
-            case 3: return DankLoreBuilder(Dank3_Slots, Dank3_Volume, dankID);
-            case 4: return DankLoreBuilder(Dank4_Slots, Dank4_Volume, dankID);
-            case 5: return DankLoreBuilder(Dank5_Slots, Dank5_Volume, dankID);
-            case 6: return DankLoreBuilder(Dank6_Slots, Dank6_Volume, dankID);
-            case 7: return DankLoreBuilder(Dank7_Slots, Dank7_Volume, dankID);
-            case 8: return DankLoreBuilder(Dank8_Slots, Dank8_Volume, dankID);
-            case 9: return DankLoreBuilder(Dank9_Slots, Dank9_Volume, dankID);
-            default: return DankLoreBuilder("ERROR", "ERROR", -1);
+            case 1: return DankLoreBuilder(Dank1_Slots, Dank1_Volume, dankID, selectedStack);
+            case 2: return DankLoreBuilder(Dank2_Slots, Dank2_Volume, dankID, selectedStack);
+            case 3: return DankLoreBuilder(Dank3_Slots, Dank3_Volume, dankID, selectedStack);
+            case 4: return DankLoreBuilder(Dank4_Slots, Dank4_Volume, dankID, selectedStack);
+            case 5: return DankLoreBuilder(Dank5_Slots, Dank5_Volume, dankID, selectedStack);
+            case 6: return DankLoreBuilder(Dank6_Slots, Dank6_Volume, dankID, selectedStack);
+            case 7: return DankLoreBuilder(Dank7_Slots, Dank7_Volume, dankID, selectedStack);
+            case 8: return DankLoreBuilder(Dank8_Slots, Dank8_Volume, dankID, selectedStack);
+            case 9: return DankLoreBuilder(Dank9_Slots, Dank9_Volume, dankID, selectedStack);
+            default: return DankLoreBuilder("ERROR", "ERROR", -1, selectedStack);
         }
     }
 
