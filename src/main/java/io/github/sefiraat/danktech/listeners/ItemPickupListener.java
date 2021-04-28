@@ -41,15 +41,18 @@ public class ItemPickupListener implements Listener {
                         if (slotSection.get("STACK") != null) {
                             ItemStack ExpectantStack = slotSection.getItemStack("STACK");
                             if (ExpectantStack.isSimilar(e.getItem().getItemStack())) {
-                                e.setCancelled(true);
                                 int CurrentVolume = slotSection.getInt("VOLUME");
                                 if ((CurrentVolume + PickedStack.getAmount()) >= getLimit(dankLevel)) {
                                     int Difference = getLimit(dankLevel) - CurrentVolume;
                                     slotSection.set("VOLUME", getLimit(dankLevel));
+                                    Parent.saveDankStorageConfig();
+                                    e.getItem().remove();
                                 } else {
                                     slotSection.set("VOLUME", CurrentVolume + PickedStack.getAmount());
+                                    Parent.saveDankStorageConfig();
+                                    e.getItem().remove();
                                 }
-                                e.getItem().remove();
+                                e.setCancelled(true);
                                 return;
                             }
                         }
