@@ -17,7 +17,7 @@ import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemPickupListener implements Listener {
 
-    final DankTech Parent;
+    DankTech Parent;
 
     public ItemPickupListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -30,12 +30,13 @@ public class ItemPickupListener implements Listener {
             Player p = (Player) e.getEntity();
             if(hasDank(p)) {
                 List<ItemStack> Danks = getDanks(p);
-                for (ItemStack Dank : Danks) {
-                    long dankID = getDankId(Dank, Parent);
-                    int dankLevel = getDankLevel(Dank, Parent);
+                for (ItemStack iStack : Danks) {
+                    long dankID = getDankId(iStack, Parent);
+                    int dankLevel = getDankLevel(iStack, Parent);
                     ConfigurationSection section = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
-                    ItemStack PickedStack = e.getItem().getItemStack();
+
                     for (int i = 1; i <= dankLevel; i++) {
+                        ItemStack PickedStack = e.getItem().getItemStack();
                         ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + i);
                         if (slotSection.get("STACK") != null) {
                             ItemStack ExpectantStack = slotSection.getItemStack("STACK");
@@ -43,6 +44,7 @@ public class ItemPickupListener implements Listener {
                                 e.setCancelled(true);
                                 int CurrentVolume = slotSection.getInt("VOLUME");
                                 if ((CurrentVolume + PickedStack.getAmount()) >= getLimit(dankLevel)) {
+                                    int Difference = getLimit(dankLevel) - CurrentVolume;
                                     slotSection.set("VOLUME", getLimit(dankLevel));
                                 } else {
                                     slotSection.set("VOLUME", CurrentVolume + PickedStack.getAmount());
