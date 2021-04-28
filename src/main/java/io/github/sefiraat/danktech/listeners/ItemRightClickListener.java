@@ -29,16 +29,18 @@ public class ItemRightClickListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onRightClick(PlayerInteractEvent e) {
         if (e.getItem() != null) {
-            ItemStack i = e.getItem();
-            if (isDank(i, Parent.getInstance())) {
-                if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-                    Player p = e.getPlayer();
-                    e.setCancelled(true);
-                    int dankLevel = getDankLevel(i,Parent.getInstance());
-                    long dankId = getDankId(i, Parent.getInstance());
-                    p.sendMessage(Messages.MessageEventOpenPack(dankId));
-                    Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
-                    g.open(p);
+            if (e.getItem().getItemMeta() != null) {
+                ItemStack i = e.getItem();
+                if (isDank(i, Parent.getInstance())) {
+                    if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+                        Player p = e.getPlayer();
+                        e.setCancelled(true);
+                        int dankLevel = getDankLevel(i,Parent.getInstance());
+                        long dankId = getDankId(i, Parent.getInstance());
+                        p.sendMessage(Messages.MessageEventOpenPack(dankId));
+                        Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
+                        g.open(p);
+                    }
                 }
             }
         }
