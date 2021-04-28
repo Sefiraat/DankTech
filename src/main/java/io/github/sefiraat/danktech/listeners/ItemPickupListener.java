@@ -56,7 +56,7 @@ public class ItemPickupListener implements Listener {
                                     w.spawnParticle(Particle.BLOCK_CRACK, l, 32, 0.5, 0.5, 0.5, 0.0D, fallingDustData, true);
                                 } else {
                                     Particle.DustOptions dustOptions = new Particle.DustOptions(Color.RED, 2);
-                                    w.spawnParticle(Particle.REDSTONE, l, 5, 0.5, 0.5, 0.5, 0.0D, dustOptions, true);
+                                    w.spawnParticle(Particle.REDSTONE, l, 32, 0.5, 0.5, 0.5, 0.0D, dustOptions, true);
                                 }
                                 e.getItem().remove();
                                 e.setCancelled(true);

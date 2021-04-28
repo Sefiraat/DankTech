@@ -7,9 +7,11 @@ import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.List;
@@ -133,6 +135,9 @@ public class DankGUI {
                 case SHIFT_RIGHT:
                     if (e.getWhoClicked().getInventory().firstEmpty() != -1) { withdrawShiftRightClick(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot); } else { e.getWhoClicked().sendMessage(Messages.MessageEventWithdrawNoSpace); }
                     break;
+                case DROP:
+                    withdrawDrop(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
+                    break;
             }
         } else {
             e.getWhoClicked().sendMessage(Messages.MessageEventSlotNotAssigned);
@@ -245,6 +250,38 @@ public class DankGUI {
                 gui.updateItem(4, slot, g);
             }
             p.getInventory().addItem(i);
+        }
+    }
+
+    private static void withdrawDrop(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
+        Integer amount = slotSection.getInt("VOLUME");
+        ItemStack i = slotSection.getItemStack("STACK").clone();
+        if (amount > 1) {
+            if (amount <= i.getMaxStackSize()) {
+                i.setAmount(amount - 1);
+                slotSection.set("VOLUME", 1);
+                GuiItem g = GUIItems.GUIPackWithdrawItem(1);
+                g.setAction(event -> {
+                    withdrawItems(gui, dankID, plugin, slot, event);
+                    event.setCancelled(true);
+                });
+                gui.updateItem(4, slot, g);
+            } else {
+                i.setAmount(i.getMaxStackSize());
+                amount = (amount - i.getMaxStackSize());
+                slotSection.set("VOLUME", amount);
+                GuiItem g = GUIItems.GUIPackWithdrawItem(amount);
+                g.setAction(event -> {
+                    withdrawItems(gui, dankID, plugin, slot, event);
+                    event.setCancelled(true);
+                });
+                gui.updateItem(4, slot, g);
+            }
+
+            Item thrownItem = p.getWorld().dropItem(p.getLocation().clone().add(0,1,0), i);
+            thrownItem.setVelocity(p.getLocation().getDirection().multiply(0.45));
+            thrownItem.setPickupDelay(4 * 20);
+
         }
     }
 

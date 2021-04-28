@@ -199,6 +199,7 @@ public final class ItemDetails {
     public static final String GUIDisplayWithdrawLoreRight = "" + ChatColor.GOLD + "Right Click: " + ChatColor.WHITE + "Withdraw Stack";
     public static final String GUIDisplayWithdrawLoreShiftLeft = "" + ChatColor.GOLD + "Shift Left Click: " + ChatColor.WHITE + "Dump Inventory";
     public static final String GUIDisplayWithdrawLoreShiftRight = "" + ChatColor.GOLD + "Shift Right Click: " + ChatColor.WHITE + "Fill Inventory";
+    public static final String GUIDisplayWithdrawLoreDrop = "" + ChatColor.GOLD + "Drop (Q): " + ChatColor.WHITE + "Drop a stack";
 
     public static List<String> GUIDisplayLoreWithdraw(int amount) {
         List<String> l = new ArrayList<>();
@@ -207,6 +208,7 @@ public final class ItemDetails {
         l.add(GUIDisplayWithdrawLoreRight);
         l.add(GUIDisplayWithdrawLoreShiftLeft);
         l.add(GUIDisplayWithdrawLoreShiftRight);
+        l.add(GUIDisplayWithdrawLoreDrop);
         l.add("");
         if (amount > 0) {
             l.add("" + ChatColor.BLUE + "Amount: " + ChatColor.WHITE + amount);
