@@ -1,10 +1,8 @@
 package io.github.sefiraat.danktech.commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.*;
+import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.Messages;
@@ -35,6 +33,7 @@ public class Commands extends BaseCommand {
         }
     }
 
+
     @Subcommand("GiveItem")
     @Description("Gives Debug Items")
     public class GiveItem extends BaseCommand {
@@ -48,9 +47,9 @@ public class Commands extends BaseCommand {
 
         @Subcommand("DankPack")
         @CommandPermission("DankTech.Admin")
-        public void onGiveItemDank(CommandSender sender, int level) {
+        @CommandCompletion("@players @range:1-9")
+        public void onGiveItemDank(CommandSender sender, OnlinePlayer player, int level) {
             if (sender instanceof Player) {
-                Player player = (Player) sender;
                 if (level <= 9) {
                     long packID = getNextPackID(Parent);
                     DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
@@ -58,10 +57,10 @@ public class Commands extends BaseCommand {
                     m.setDisplayName(getDankNameBold(level));
                     m.setLore(ItemDetails.getDankLore(level, packID));
                     Dank.setItemMeta(m);
-                    player.getInventory().addItem(Dank);
-                    player.sendMessage(Messages.MessageCommandPackGiven(packID));
+                    player.getPlayer().getInventory().addItem(Dank);
+                    player.getPlayer().sendMessage(Messages.MessageCommandPackGiven(packID));
                 } else {
-                    player.sendMessage(Messages.MessageCommandPackNoExist);
+                    player.getPlayer().sendMessage(Messages.MessageCommandPackNoExist);
                 }
             }
         }
@@ -96,5 +95,4 @@ public class Commands extends BaseCommand {
             }
         }
     }
-
 }
