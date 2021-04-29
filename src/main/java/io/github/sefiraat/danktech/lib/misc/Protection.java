@@ -91,11 +91,6 @@ public class Protection {
                 canBuildChecks.add(false);
             }
         }
-
-        for (boolean b : canBuildChecks) {
-            p.sendMessage("" + b);
-        }
-
         return !canBuildChecks.contains(false);
     }
 

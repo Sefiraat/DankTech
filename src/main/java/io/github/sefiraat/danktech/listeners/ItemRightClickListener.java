@@ -121,7 +121,6 @@ public class ItemRightClickListener implements Listener {
         if (!slotItemStack.hasItemMeta() && slotItemStack.getType().isBlock()) {
             Block block = e.getClickedBlock().getRelative(e.getBlockFace());
             if (block.getBlockData().getMaterial() == Material.AIR) {
-                p.sendMessage("CANBUILD = " + Parent.getProtection().canBuild(block, p));
                 if (Parent.getProtection().canBuild(block, p)) {
 
                     ConfigurationSection section = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
