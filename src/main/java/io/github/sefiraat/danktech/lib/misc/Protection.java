@@ -1,6 +1,8 @@
 package io.github.sefiraat.danktech.lib.misc;
 
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import com.sun.org.apache.bcel.internal.util.BCELifier;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.github.sefiraat.danktech.DankTech;
 
 import me.ryanhamshire.GriefPrevention.Claim;
@@ -23,6 +25,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Protection {
@@ -66,31 +69,34 @@ public class Protection {
 
     public boolean canBuild(Block block, Player p) {
 
-        boolean canBuild = true;
+        ArrayList<Boolean> canBuildChecks = new ArrayList<>();
         Location blockLocation = block.getLocation();
 
         if (griefPreventionExists) {
             DataStore d = griefPrevention.dataStore;
             Claim c = d.getClaimAt(blockLocation, true, null);
             if (c != null) {
-                canBuild = c.allowBuild((Player) p, block.getType()) == null;
+                canBuildChecks.add(c.allowBuild(p, block.getType()) == null);
             }
         }
 
         if (worldGuardExists) {
             WorldGuardPlatform platform = WorldGuard.getInstance().getPlatform();
-            RegionContainer container = platform.getRegionContainer();
             com.sk89q.worldedit.util.Location loc = BukkitAdapter.adapt(blockLocation);
-            com.sk89q.worldedit.world.World world = BukkitAdapter.adapt(blockLocation.getWorld());
-            LocalPlayer player = worldGuard.wrapOfflinePlayer(p);
+            LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
+            RegionContainer container = platform.getRegionContainer();
+            RegionQuery query = container.createQuery();
 
-            Set<ProtectedRegion> regions = container.get(world).getApplicableRegions(BlockVector3.at(blockLocation.getX(), blockLocation.getY(), blockLocation.getZ())).getRegions();
-            if (!regions.isEmpty()) {
-                canBuild = container.createQuery().testState(loc, player, Flags.BLOCK_PLACE);
+            if (!query.testState(loc, localPlayer, Flags.BUILD)) {
+                canBuildChecks.add(false);
             }
         }
 
-        return canBuild;
+        for (boolean b : canBuildChecks) {
+            p.sendMessage("" + b);
+        }
+
+        return !canBuildChecks.contains(false);
     }
 
 }

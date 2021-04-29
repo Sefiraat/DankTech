@@ -113,15 +113,10 @@ public class Utils {
 
     public static Integer getDankCurrentSlot(ItemStack i, DankTech plugin) {
         NamespacedKey ssKey = new NamespacedKey(plugin.getInstance(),"dank-ss");
-        Integer dankLevel = getDankLevel(i, plugin);
         if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
-            setData(i, ssKey, 0);
+            setData(i, ssKey, 1);
         }
-        Integer nextSlot = ((Integer) getData(i, ssKey, PersistentDataType.INTEGER));
-        if (nextSlot == 0) {
-            nextSlot = dankLevel;
-        }
-        return nextSlot;
+        return ((Integer) getData(i, ssKey, PersistentDataType.INTEGER));
     }
 
     public static ItemStack getSlotItemStack(Long dankID, Integer slot, DankTech plugin) {
