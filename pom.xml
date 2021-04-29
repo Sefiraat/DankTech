@@ -85,6 +85,11 @@
             <artifactId>jsr305</artifactId>
             <version>2.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.TechFortress</groupId>
+            <artifactId>GriefPrevention</artifactId>
+            <version>16.17.1</version>
+        </dependency>
     </dependencies>
 
 </project>

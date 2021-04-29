@@ -32,6 +32,12 @@ public final class Messages {
     public static final String MessageEventInputThisDank = Prefix + Warning + "You cannot put a Dank inside itself silly!";
     public static final String MessageEventWithdrawNoSpace = Prefix + Warning + "You need an empty inventory slot!";
     public static final String MessageEventSlotNotAssigned = Prefix + Warning + "No item registered";
+    public static final String MessageEventSlotCantPlace = Prefix + Error + "The selected item can't be placed via a Dank";
+    public static final String MessageEventSlotNoMoreItems = Prefix + Warning + "The selected item has run out!";
+
+    public static final String MessageEventSlotChanged(String s, Integer slot) {
+         return Prefix + Success + "Selected Slot [" + slot + "] : " + ChatColor.GOLD + s;
+    }
 
     // Crafting
     public static final String MessageCraftNewPack = Prefix + Success + "You have crafted a new Dank Pack";

@@ -10,6 +10,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import javax.annotation.Nullable;
+
 public class Utils {
 
     public static boolean containerHasData(ItemStack i, NamespacedKey key, PersistentDataType type) {
@@ -79,6 +81,57 @@ public class Utils {
     public static void setDankId(ItemStack i, DankTech plugin, long value) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"dank-id");
         setData(i, key, value);
+    }
+
+    public static Integer getDankNextSlot(ItemStack i, DankTech plugin) {
+        NamespacedKey ssKey = new NamespacedKey(plugin.getInstance(),"dank-ss");
+        Integer dankLevel = getDankLevel(i, plugin);
+        if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
+            setData(i, ssKey, 0);
+        }
+        Integer nextSlot = ((Integer) getData(i, ssKey, PersistentDataType.INTEGER)) + 1;
+        if (nextSlot > dankLevel) {
+            nextSlot = 1;
+        }
+        setData(i, ssKey, nextSlot);
+        return nextSlot;
+    }
+
+    public static Integer getDankPreviousSlot(ItemStack i, DankTech plugin) {
+        NamespacedKey ssKey = new NamespacedKey(plugin.getInstance(),"dank-ss");
+        Integer dankLevel = getDankLevel(i, plugin);
+        if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
+            setData(i, ssKey, 0);
+        }
+        Integer nextSlot = ((Integer) getData(i, ssKey, PersistentDataType.INTEGER)) - 1;
+        if (nextSlot == 0) {
+            nextSlot = dankLevel;
+        }
+        setData(i, ssKey, nextSlot);
+        return nextSlot;
+    }
+
+    public static Integer getDankCurrentSlot(ItemStack i, DankTech plugin) {
+        NamespacedKey ssKey = new NamespacedKey(plugin.getInstance(),"dank-ss");
+        Integer dankLevel = getDankLevel(i, plugin);
+        if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
+            setData(i, ssKey, 0);
+        }
+        Integer nextSlot = ((Integer) getData(i, ssKey, PersistentDataType.INTEGER));
+        if (nextSlot == 0) {
+            nextSlot = dankLevel;
+        }
+        return nextSlot;
+    }
+
+    public static ItemStack getSlotItemStack(Long dankID, Integer slot, DankTech plugin) {
+        ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
+        ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + slot);
+        ItemStack stack = null;
+        if (slotSection.getItemStack("STACK") != null) {
+            stack = slotSection.getItemStack("STACK").clone();
+        }
+        return stack;
     }
 
     public static long getNextPackID(DankTech plugin) {

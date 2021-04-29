@@ -3,11 +3,13 @@ package io.github.sefiraat.danktech;
 import co.aikar.commands.PaperCommandManager;
 import io.github.sefiraat.danktech.commands.Commands;
 import io.github.sefiraat.danktech.finals.Recipes;
+import io.github.sefiraat.danktech.lib.misc.Protection;
 import io.github.sefiraat.danktech.listeners.CraftListener;
 import io.github.sefiraat.danktech.listeners.ItemPickupListener;
 import io.github.sefiraat.danktech.listeners.ItemRightClickListener;
 import io.github.sefiraat.danktech.listeners.UnloadingListener;
 import io.github.sefiraat.danktech.timers.TimerSave;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,21 +26,22 @@ public class DankTech extends JavaPlugin {
     private FileConfiguration DankStorageConfig;
     private PaperCommandManager CommandManager;
     private final Timer Repeater = new Timer();
+    private Protection protection;
 
     public File getDankStorageConfigFile() {
         return DankStorageConfigFile;
     }
-
     public FileConfiguration getDankStorageConfig() {
         return DankStorageConfig;
     }
-
     public PaperCommandManager getCommandManager() {
         return CommandManager;
     }
-
     public DankTech getInstance() {
         return instance;
+    }
+    public Protection getProtection() {
+        return protection;
     }
 
     @Override
@@ -58,6 +61,8 @@ public class DankTech extends JavaPlugin {
         saveDefaultConfig();
         createDankStorageConfig();
         registerCommands();
+
+        protection = new Protection(this);
 
         new ItemPickupListener(this.getInstance());
         new ItemRightClickListener(this.getInstance());
