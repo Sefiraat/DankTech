@@ -7,12 +7,11 @@ The plugin currently features:
 * 9 tiers of Dank Packs. Each Tier has additional slots available inside it and each slot, in turn, has more space for items.
 * Automatically moving picked up items into the relevant pack.
 * Voiding for any items over the slot's limit.
-* Withdrawl of items 1 by 1 or in stacks.
+* Withdrawl of items 1, by stack, by a full inventory
+* Input of all matching items in inventory
+* Dropping stacks into the world directly from the pack 
+* Hopping items out of the Dank by placing it into a hopper
 
 ## Planned
 The planned features for DankTech are:
-* Dank T★ with;
-  *  Block cycling/selection and Placement
-  * When placed in a hopper, the Pack stays and the items inside the pack are hopped
-* Dank T۩ with;
-  * Whoever opens the dank gets their own personal instance of a T9 (acts like an Ender Dank Pack)
+ *  Block cycling/selection and Placement
