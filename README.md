@@ -11,7 +11,15 @@ The plugin currently features:
 * Input of all matching items in inventory
 * Dropping stacks into the world directly from the pack 
 * Hopping items out of the Dank by placing it into a hopper
+* Using blocks inside dank to build
 
-## Planned
-The planned features for DankTech are:
- *  Block cycling/selection and Placement
+## Pages
+* [What is a dank?](https://github.com/Sefiraat/DankTech/wiki/What-does-a-dank-do%3F)
+* [Crafting your first dank](https://github.com/Sefiraat/DankTech/wiki/Crafting-Dank-Packs)
+* [How to use the Dank GUI](https://github.com/Sefiraat/DankTech/wiki/Dank-GUI)
+* [Build using your Dank](https://github.com/Sefiraat/DankTech/wiki/Building)
+* [Making an unloader](https://github.com/Sefiraat/DankTech/wiki/Unloading)
+
+
+## Credits
+A big shout out to the owners of [mct.tantrum.org](https://mct.enjin.com/) who let me test on their server even once it was clear I barely knew what I was doing! <3
