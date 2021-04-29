@@ -36,9 +36,7 @@ public class UnloadingListener implements Listener {
                 e.setCancelled(true);
 
                 for (String s : section.getKeys(false)) {
-                    Parent.getLogger().info(s);
                     if (s.matches(".*SLOT.*")) {
-                        Parent.getLogger().info(" >> Matches");
                         if (section.getConfigurationSection(s).getItemStack("STACK") != null && section.getConfigurationSection(s).getInt("VOLUME") > 1) {
                             slotSection = section.getConfigurationSection(s);
                             break;
