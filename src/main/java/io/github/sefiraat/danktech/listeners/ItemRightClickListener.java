@@ -1,5 +1,6 @@
 package io.github.sefiraat.danktech.listeners;
 
+import com.gmail.nossr50.mcMMO;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.GUIItems;
 import io.github.sefiraat.danktech.finals.Messages;
@@ -132,6 +133,7 @@ public class ItemRightClickListener implements Listener {
                         slotSection.set("VOLUME", amount);
                         ItemStack i = getSlotItemStack(dankID, slot, Parent);
                         block.setType(i.getType());
+                        mcMMO.getPlaceStore().setTrue(block);
                     } else {
                         p.sendMessage(Messages.MessageEventSlotNoMoreItems);
                     }

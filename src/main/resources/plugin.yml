@@ -2,4 +2,7 @@ name: DankTech
 version: 1.0
 main: io.github.sefiraat.danktech.DankTech
 api-version: 1.16
-softdepend: [GriefPrevention]
+softdepend:
+  - GriefPrevention
+  - WorldGuard
+  - mcMMO
