@@ -1,6 +1,7 @@
-# DankTech
+<img src="https://github.com/Sefiraat/DankTech/blob/master/images/wiki/logo_large.png">
 
-DankTech is an attempt to recreate the [Dank Storage](https://www.curseforge.com/minecraft/mc-mods/dank-storage) mod (and \dank\null\ etc.) from a plugin.
+
+DankTech is an attempt to recreate the [Dank Storage](https://www.curseforge.com/minecraft/mc-mods/dank-storage) mod, [/dank/null](https://www.curseforge.com/minecraft/mc-mods/dank-null) and OpenBlocks /dev/null in the form of a plugin.
 
 ## Features
 The plugin currently features:
