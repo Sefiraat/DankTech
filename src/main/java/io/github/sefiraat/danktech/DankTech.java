@@ -1,6 +1,7 @@
 package io.github.sefiraat.danktech;
 
 import co.aikar.commands.PaperCommandManager;
+import com.gmail.nossr50.mcmmo.metrics.bstats.bukkit.Metrics;
 import io.github.sefiraat.danktech.commands.Commands;
 import io.github.sefiraat.danktech.finals.Recipes;
 import io.github.sefiraat.danktech.lib.misc.Protection;
@@ -9,7 +10,6 @@ import io.github.sefiraat.danktech.listeners.ItemPickupListener;
 import io.github.sefiraat.danktech.listeners.ItemRightClickListener;
 import io.github.sefiraat.danktech.listeners.UnloadingListener;
 import io.github.sefiraat.danktech.timers.TimerSave;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -72,6 +72,9 @@ public class DankTech extends JavaPlugin {
         addRecipes();
 
         Repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
+
+        int pluginId = 11208;
+        Metrics metrics = new Metrics(this, pluginId);
 
     }
 

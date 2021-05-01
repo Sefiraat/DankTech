@@ -6,7 +6,7 @@
 
     <groupId>io.github.sefiraat</groupId>
     <artifactId>DankTech</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
 
     <build>
         <plugins>
@@ -22,11 +22,15 @@
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>io.github.sefiraat.danktech.acf</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>io.github.sefiraat.danktech.acf</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>io.github.sefiraat.danktech.locales</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>io.github.sefiraat.danktech.locales</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>io.github.sefiraat.danktech.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -116,7 +120,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>2.2.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

@@ -10,8 +10,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import javax.annotation.Nullable;
-
 public class Utils {
 
     public static boolean containerHasData(ItemStack i, NamespacedKey key, PersistentDataType type) {
