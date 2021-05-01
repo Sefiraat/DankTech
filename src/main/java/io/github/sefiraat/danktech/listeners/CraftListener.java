@@ -101,7 +101,7 @@ public class CraftListener implements Listener {
                     int level = res.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.INTEGER);
                     if (level == 1) {
                         long packID = getNextPackID(Parent);
-                        DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
+                        DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent, p);
                         ItemMeta m = Dank.getItemMeta();
                         m.setDisplayName(getDankNameBold(level));
                         m.setLore(ItemDetails.getDankLore(level, packID, null));
@@ -115,7 +115,7 @@ public class CraftListener implements Listener {
                         c.set("LEVEL",level);
                         c.set("SLOT" + level + ".STACK", null);
                         c.set("SLOT" + level + ".VOLUME", 0);
-                        DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
+                        DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent, p);
                         ItemMeta m = Dank.getItemMeta();
                         m.setDisplayName(getDankNameBold(level));
                         m.setLore(ItemDetails.getDankLore(level, packID, null));

@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-import static io.github.sefiraat.danktech.lib.misc.DankGUI.getDankGUI;
+import static io.github.sefiraat.danktech.implementation.GUI.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemRightClickListener implements Listener {
@@ -68,6 +68,7 @@ public class ItemRightClickListener implements Listener {
         int dankLevel = getDankLevel(i,Parent.getInstance());
         long dankId = getDankId(i, Parent.getInstance());
         p.sendMessage(Messages.MessageEventOpenPack(dankId));
+        setLastOpenedBy(dankId, Parent, p);
         Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
         g.open(p);
     }

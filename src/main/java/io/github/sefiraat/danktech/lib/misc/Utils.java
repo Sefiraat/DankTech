@@ -1,6 +1,8 @@
 package io.github.sefiraat.danktech.lib.misc;
 
 import io.github.sefiraat.danktech.DankTech;
+import io.github.sefiraat.danktech.finals.ItemDetails;
+import io.github.sefiraat.danktech.implementation.abstracts.DankPack;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -9,6 +11,14 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
+import static io.github.sefiraat.danktech.finals.Materials.getDankMaterial;
 
 public class Utils {
 
@@ -81,6 +91,26 @@ public class Utils {
         setData(i, key, value);
     }
 
+    public static void setLastOpenedBy(Long dankID, DankTech plugin, Player p) {
+        ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
+        section.set("LAST_OPENED_BY_UUID", p.getUniqueId().toString());
+        section.set("LAST_OPENED_BY", p.getDisplayName());
+        section.set("LAST_OPENED_ON", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        plugin.saveDankStorageConfig();
+    }
+
+    public static String getLastOpenedBy(Long dankID, DankTech plugin) {
+        return plugin.getInstance().getDankStorageConfig().getString("PACKS.PACKS_BY_ID." + dankID + ".LAST_OPENED_BY");
+    }
+
+    public static String getLastOpenedByUUID(Long dankID, DankTech plugin) {
+        return plugin.getInstance().getDankStorageConfig().getString("PACKS.PACKS_BY_ID." + dankID + ".LAST_OPENED_BY_UUID");
+    }
+
+    public static String getLastOpenedOn(Long dankID, DankTech plugin) {
+        return plugin.getInstance().getDankStorageConfig().getString("PACKS.PACKS_BY_ID." + dankID + ".LAST_OPENED_ON");
+    }
+
     public static Integer getDankNextSlot(ItemStack i, DankTech plugin) {
         NamespacedKey ssKey = new NamespacedKey(plugin.getInstance(),"dank-ss");
         Integer dankLevel = getDankLevel(i, plugin);
@@ -129,14 +159,35 @@ public class Utils {
 
     public static long getNextPackID(DankTech plugin) {
         ConfigurationSection sec = plugin.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID");
-        int maxValue = 1;
-        for (String key : sec.getKeys(false)) {
-            int value = Integer.parseInt(key);
-            if (value > maxValue) {
-                maxValue = value;
+        int nextValue = 1;
+        if (sec != null) {
+            for (String key : sec.getKeys(false)) {
+                int value = Integer.parseInt(key);
+                if (value > nextValue) {
+                    nextValue = value;
+                }
+            }
+            nextValue++;
+        }
+        return nextValue;
+    }
+
+    public static List<ItemStack> getAllDanks(DankTech plugin) {
+        List<ItemStack> l = new ArrayList<>();
+        ConfigurationSection sec = plugin.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID");
+        if (sec != null) {
+            for (String s : sec.getKeys(false)) {
+                Long dankID = Long.valueOf(s);
+                int level = plugin.getInstance().getDankStorageConfig().getInt("PACKS.PACKS_BY_ID." + dankID + ".LEVEL");
+                DankPack Dank = new DankPack(getDankMaterial(level), level, dankID, plugin, null);
+                ItemMeta m = Dank.getItemMeta();
+                m.setDisplayName(getDankNameBold(level));
+                m.setLore(ItemDetails.getDankLore(level, dankID, null));
+                Dank.setItemMeta(m);
+                l.add(Dank);
             }
         }
-        return maxValue + 1;
+        return l;
     }
 
     public static ConfigurationSection getDankSection(DankTech plugin, long DankID) {

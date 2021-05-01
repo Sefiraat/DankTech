@@ -4,9 +4,11 @@ import io.github.sefiraat.danktech.DankTech;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
@@ -27,7 +29,7 @@ public class DankPack extends ItemStack {
         return section.contains(slot + ".STACK");
     }
 
-    public DankPack(@Nonnull Material material, @Nonnull Integer level, @Nonnull Long packID, @Nonnull DankTech parent) {
+    public DankPack(@Nonnull Material material, @Nonnull Integer level, @Nonnull Long packID, @Nonnull DankTech parent, @Nullable Player p) {
         super(material);
         this.level = level;
 
@@ -41,6 +43,11 @@ public class DankPack extends ItemStack {
         makeDank(this, parent);
         setDankId(this, parent, packID);
         setDankLevel(this, parent, this.level);
+
+        if (p!= null) {
+            setLastOpenedBy(packID, parent, p);
+        }
+
     }
 
     private void setupSection(Configuration config, long packID) {

@@ -1,8 +1,9 @@
-package io.github.sefiraat.danktech.lib.misc;
+package io.github.sefiraat.danktech.implementation.GUI;
 
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.GUIItems;
 import io.github.sefiraat.danktech.finals.Messages;
+import io.github.sefiraat.danktech.lib.misc.Utils;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import org.bukkit.Material;

@@ -6,8 +6,10 @@ import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.Messages;
+import io.github.sefiraat.danktech.implementation.GUI.AdminGUI;
 import io.github.sefiraat.danktech.implementation.abstracts.DankPack;
 import jdk.jfr.Description;
+import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -52,7 +54,7 @@ public class Commands extends BaseCommand {
             if (sender instanceof Player) {
                 if (level <= 9) {
                     long packID = getNextPackID(Parent);
-                    DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent);
+                    DankPack Dank = new DankPack(getDankMaterial(level), level, packID, Parent, player.getPlayer());
                     ItemMeta m = Dank.getItemMeta();
                     m.setDisplayName(getDankNameBold(level));
                     m.setLore(ItemDetails.getDankLore(level, packID, null));
@@ -85,7 +87,7 @@ public class Commands extends BaseCommand {
 
                 int level = Parent.getInstance().getDankStorageConfig().getInt("PACKS.PACKS_BY_ID." + ID + ".LEVEL");
 
-                DankPack Dank = new DankPack(getDankMaterial(level), level, ID, Parent);
+                DankPack Dank = new DankPack(getDankMaterial(level), level, ID, Parent, null);
                 ItemMeta m = Dank.getItemMeta();
                 m.setDisplayName(getDankNameBold(level));
                 m.setLore(ItemDetails.getDankLore(level, ID, null));
@@ -94,5 +96,20 @@ public class Commands extends BaseCommand {
                 player.sendMessage(Messages.MessageCommandPackGiven(ID));
             }
         }
+    }
+
+    @Subcommand("ViewPacks")
+    @Description("Opens a GUI of pre-existing packs")
+    public class ViewPacks extends BaseCommand {
+
+        @Default
+        public void onDefault(CommandSender sender) {
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
+                PaginatedGui adminGUI = AdminGUI.getDankAdminGUI(Parent);
+                adminGUI.open(p);
+            }
+        }
+
     }
 }
