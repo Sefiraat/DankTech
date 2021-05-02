@@ -100,6 +100,7 @@ public class Commands extends BaseCommand {
 
     @Subcommand("ViewPacks")
     @Description("Opens a GUI of pre-existing packs")
+    @CommandPermission("DankTech.Admin")
     public class ViewPacks extends BaseCommand {
 
         @Default
