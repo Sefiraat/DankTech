@@ -14,15 +14,19 @@ import static io.github.sefiraat.danktech.finals.Materials.getDankMaterial;
 
 public class ItemStacks {
 
+    private ItemStacks() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static ItemStack getCell(int level, DankTech plugin) {
-        ItemStack Cell = new ItemStack(getDankCellMaterial(level));
-        ItemMeta m = Cell.getItemMeta();
+        ItemStack cell = new ItemStack(getDankCellMaterial(level));
+        ItemMeta m = cell.getItemMeta();
         m.setDisplayName(getDankCellName(level));
         PersistentDataContainer c = m.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin,"dank");
         c.set(key, PersistentDataType.INTEGER, 1);
-        Cell.setItemMeta(m);
-        return Cell;
+        cell.setItemMeta(m);
+        return cell;
     }
 
     public static ItemStack getShallowDank(int level) {

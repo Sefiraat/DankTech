@@ -22,20 +22,20 @@ import java.util.Timer;
 public class DankTech extends JavaPlugin {
 
     private DankTech instance;
-    private File DankStorageConfigFile;
-    private FileConfiguration DankStorageConfig;
-    private PaperCommandManager CommandManager;
-    private final Timer Repeater = new Timer();
+    private File dankStorageConfigFile;
+    private FileConfiguration dankStorageConfig;
+    private PaperCommandManager commandManager;
+    private final Timer repeater = new Timer();
     private Protection protection;
 
     public File getDankStorageConfigFile() {
-        return DankStorageConfigFile;
+        return dankStorageConfigFile;
     }
     public FileConfiguration getDankStorageConfig() {
-        return DankStorageConfig;
+        return dankStorageConfig;
     }
     public PaperCommandManager getCommandManager() {
-        return CommandManager;
+        return commandManager;
     }
     public DankTech getInstance() {
         return instance;
@@ -71,7 +71,7 @@ public class DankTech extends JavaPlugin {
 
         addRecipes();
 
-        Repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
+        repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
 
         int pluginId = 11208;
         Metrics metrics = new Metrics(this, pluginId);
@@ -84,19 +84,19 @@ public class DankTech extends JavaPlugin {
     }
 
     private void registerCommands() {
-        CommandManager = new PaperCommandManager(this.getInstance());
-        CommandManager.registerCommand(new Commands(this.getInstance()));
+        commandManager = new PaperCommandManager(this.getInstance());
+        commandManager.registerCommand(new Commands(this.getInstance()));
     }
 
     private void createDankStorageConfig() {
-        DankStorageConfigFile = new File(getDataFolder(), "DankStorages.yml");
-        if (!DankStorageConfigFile.exists()) {
-            DankStorageConfigFile.getParentFile().mkdirs();
+        dankStorageConfigFile = new File(getDataFolder(), "DankStorages.yml");
+        if (!dankStorageConfigFile.exists()) {
+            dankStorageConfigFile.getParentFile().mkdirs();
             saveResource("DankStorages.yml", false);
         }
-        DankStorageConfig = new YamlConfiguration();
+        dankStorageConfig = new YamlConfiguration();
         try {
-            DankStorageConfig.load(DankStorageConfigFile);
+            dankStorageConfig.load(dankStorageConfigFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -104,9 +104,9 @@ public class DankTech extends JavaPlugin {
 
     public void saveDankStorageConfig() {
         try {
-            DankStorageConfig.save(DankStorageConfigFile);
+            dankStorageConfig.save(dankStorageConfigFile);
         } catch (IOException e) {
-            this.getLogger().warning("Unable to save " + DankStorageConfigFile.getName());
+            this.getLogger().warning("Unable to save " + dankStorageConfigFile.getName());
         }
     }
 
