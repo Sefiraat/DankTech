@@ -64,46 +64,6 @@ public class DankPack extends ItemStack {
             }
         }
 
-        /*if (level >= 2) {
-            ConfigurationSection c = config.createSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID + ".SLOT2");
-            c.set(CONFIG_GETTER_VAL_STACK, null);
-            c.set(CONFIG_GETTER_VAL_VOLUME, 0);
-        }
-        if (level >= 3) {
-            ConfigurationSection c = config.createSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID + ".SLOT3");
-            c.set(CONFIG_GETTER_VAL_STACK, null);
-            c.set(CONFIG_GETTER_VAL_VOLUME, 0);
-        }
-        if (level >= 4) {
-            ConfigurationSection c = config.createSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID + ".SLOT4");
-            c.set(CONFIG_GETTER_VAL_STACK, null);
-            c.set(CONFIG_GETTER_VAL_VOLUME, 0);
-        }
-        if (level >= 5) {
-            ConfigurationSection c = config.createSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID + ".SLOT5");
-            c.set(CONFIG_GETTER_VAL_STACK, null);
-            c.set(CONFIG_GETTER_VAL_VOLUME, 0);
-        }
-        if (level >= 6) {
-            ConfigurationSection c = config.createSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID + ".SLOT6");
-            c.set(CONFIG_GETTER_VAL_STACK, null);
-            c.set(CONFIG_GETTER_VAL_VOLUME, 0);
-        }
-        if (level >= 7) {
-            ConfigurationSection c = config.createSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID + ".SLOT7");
-            c.set(CONFIG_GETTER_VAL_STACK, null);
-            c.set(CONFIG_GETTER_VAL_VOLUME, 0);
-        }
-        if (level >= 8) {
-            ConfigurationSection c = config.createSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID + ".SLOT8");
-            c.set(CONFIG_GETTER_VAL_STACK, null);
-            c.set(CONFIG_GETTER_VAL_VOLUME, 0);
-        }
-        if (level >= 9) {
-            ConfigurationSection c = config.createSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID + ".SLOT9");
-            c.set(CONFIG_GETTER_VAL_STACK, null);
-            c.set(CONFIG_GETTER_VAL_VOLUME, 0);
-        }*/
     }
 
 

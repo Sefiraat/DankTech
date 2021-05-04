@@ -23,7 +23,7 @@ public class GUIItems {
         im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         i.setItemMeta(im);
         g.setItemStack(i);
-        g.setAction(event -> {event.setCancelled(true);});
+        g.setAction(event -> event.setCancelled(true));
         return g;
     }
     public static GuiItem guiPackInfo(long packID, int packLevel) {

@@ -138,7 +138,7 @@ public class DankGUI {
                     break;
                 case RIGHT:
                     if (firstEmpty != -1) {
-                        withdrawRightClick(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
+                        withdrawStack(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot, false);
                     } else {
                         e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_WITHDRAW_NO_SPACE);
                     }
@@ -154,7 +154,7 @@ public class DankGUI {
                     }
                     break;
                 case DROP:
-                    withdrawDrop(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
+                    withdrawStack(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot, true);
                     break;
                 default:
                     break;
@@ -192,7 +192,7 @@ public class DankGUI {
         p.getInventory().addItem(i);
     }
 
-    private static void withdrawRightClick(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
+    private static void withdrawStack(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot, boolean isDrop) {
         Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
         ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
         if (amount > 1) {
@@ -216,7 +216,13 @@ public class DankGUI {
                 });
                 gui.updateItem(4, slot, g);
             }
-            p.getInventory().addItem(i);
+            if (!isDrop) {
+                p.getInventory().addItem(i);
+            } else {
+                Item thrownItem = p.getWorld().dropItem(p.getLocation().clone().add(0,1,0), i);
+                thrownItem.setVelocity(p.getLocation().getDirection().multiply(0.45));
+                thrownItem.setPickupDelay(4 * 20);
+            }
         }
     }
 
@@ -272,37 +278,4 @@ public class DankGUI {
             p.getInventory().addItem(i);
         }
     }
-
-    private static void withdrawDrop(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
-        Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
-        ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
-        if (amount > 1) {
-            if (amount <= i.getMaxStackSize()) {
-                i.setAmount(amount - 1);
-                slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
-                GuiItem g = GUIItems.guiPackWithdrawItem(1);
-                g.setAction(event -> {
-                    withdrawItems(gui, dankID, plugin, slot, event);
-                    event.setCancelled(true);
-                });
-                gui.updateItem(4, slot, g);
-            } else {
-                i.setAmount(i.getMaxStackSize());
-                amount = (amount - i.getMaxStackSize());
-                slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
-                GuiItem g = GUIItems.guiPackWithdrawItem(amount);
-                g.setAction(event -> {
-                    withdrawItems(gui, dankID, plugin, slot, event);
-                    event.setCancelled(true);
-                });
-                gui.updateItem(4, slot, g);
-            }
-
-            Item thrownItem = p.getWorld().dropItem(p.getLocation().clone().add(0,1,0), i);
-            thrownItem.setVelocity(p.getLocation().getDirection().multiply(0.45));
-            thrownItem.setPickupDelay(4 * 20);
-
-        }
-    }
-
 }
