@@ -131,7 +131,7 @@ public class DankGUI {
             switch (e.getClick()) {
                 case LEFT:
                     if (firstEmpty != -1) {
-                        withdrawLeftClick(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
+                        withdrawOne(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
                     } else {
                         e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_WITHDRAW_NO_SPACE);
                     }
@@ -144,11 +144,11 @@ public class DankGUI {
                     }
                     break;
                 case SHIFT_LEFT:
-                    withdrawShiftLeftClick(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
+                    depositAll(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
                     break;
                 case SHIFT_RIGHT:
                     if (firstEmpty != -1) {
-                        withdrawShiftRightClick(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
+                        withdrawMax(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
                     } else {
                         e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_WITHDRAW_NO_SPACE);
                     }
@@ -164,7 +164,7 @@ public class DankGUI {
         }
     }
 
-    private static void withdrawLeftClick(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
+    private static void withdrawOne(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
         Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
         ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
         if (amount == 1) {
@@ -226,7 +226,7 @@ public class DankGUI {
         }
     }
 
-    private static void withdrawShiftLeftClick(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
+    private static void depositAll(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
         Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
         Integer additionalAmount = 0;
         ItemStack stack = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
@@ -249,7 +249,7 @@ public class DankGUI {
         }
     }
 
-    private static void withdrawShiftRightClick(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
+    private static void withdrawMax(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
         Integer freeSlots = Utils.getEmptySlots(p);
         Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
         ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
