@@ -13,6 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.swing.plaf.SplitPaneUI;
+
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.finals.Materials.getDankMaterial;
 import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;

@@ -49,5 +49,10 @@ public class DankTechTest {
         Assertions.assertNotNull(plugin.getProtection());
     }
 
+    @Test
+    @DisplayName("Protections loaded")
+    void testCommandManager() {
+        Assertions.assertNotNull(plugin.getCommandManager());
+    }
 
 }
