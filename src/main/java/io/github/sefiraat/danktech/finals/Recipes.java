@@ -101,7 +101,7 @@ public final class Recipes {
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', Materials.getDankCellMaterial(1));
-        r.setIngredient('E', Material.DRAGON_EGG);
+        r.setIngredient('E', Material.NETHER_STAR);
         return r;
     }
 
