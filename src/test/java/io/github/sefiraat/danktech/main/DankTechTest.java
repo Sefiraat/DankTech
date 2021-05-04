@@ -1,9 +1,10 @@
-package io.github.sefiraat.danktech;
+package io.github.sefiraat.danktech.main;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 
+import io.github.sefiraat.danktech.DankTech;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.AfterAll;
@@ -12,28 +13,40 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DankTechTests {
+public class DankTechTest {
 
-    private ServerMock server;
-    private DankTech plugin;
+    private static ServerMock server;
+    private static DankTech plugin;
 
-    @Before
-    public void setUp()
+    @BeforeAll
+    public static void setUp()
     {
         server = MockBukkit.mock();
         plugin = MockBukkit.load(DankTech.class);
     }
 
-    @After
-    public void tearDown()
+    @AfterAll
+    public static void tearDown()
     {
         MockBukkit.unmock();
     }
 
     @Test
+    @DisplayName("Instance is initialized")
+    void testInstance() {
+        Assertions.assertNotNull(plugin.getInstance());
+    }
+
+    @Test
     @DisplayName("Config files loaded")
-    public void testConfigurations() {
+    void testConfigurations() {
         Assertions.assertNotNull(plugin.getDankStorageConfig());
+    }
+
+    @Test
+    @DisplayName("Protections loaded")
+    void testProtection() {
+        Assertions.assertNotNull(plugin.getProtection());
     }
 
 
