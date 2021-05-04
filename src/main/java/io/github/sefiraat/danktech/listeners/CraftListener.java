@@ -1,7 +1,10 @@
 package io.github.sefiraat.danktech.listeners;
 
 import io.github.sefiraat.danktech.DankTech;
-import io.github.sefiraat.danktech.finals.*;
+import io.github.sefiraat.danktech.finals.ItemDetails;
+import io.github.sefiraat.danktech.finals.ItemStacks;
+import io.github.sefiraat.danktech.finals.Materials;
+import io.github.sefiraat.danktech.finals.Messages;
 import io.github.sefiraat.danktech.implementation.abstracts.DankPack;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
