@@ -23,8 +23,8 @@ public class Commands extends BaseCommand {
 
     public final DankTech parent;
 
-    public Commands(DankTech Parent) {
-        this.parent = Parent;
+    public Commands(DankTech parent) {
+        this.parent = parent;
     }
 
     @Default

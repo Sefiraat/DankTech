@@ -38,7 +38,7 @@ public class CraftListener implements Listener {
     public void onPreCraft(PrepareItemCraftEvent e) {
         // TODO Really messy now and CC too high
         if (e.getView().getPlayer() instanceof Player) {
-            if (e.getRecipe() != null && e.getRecipe().getResult() != null) {
+            if (e.getRecipe() != null) {
                 ItemStack res = e.getRecipe().getResult();
                 if (isResultDank(res.getType())) {
 

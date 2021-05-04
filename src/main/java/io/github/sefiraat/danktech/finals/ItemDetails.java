@@ -74,18 +74,22 @@ public final class ItemDetails {
         }
     }
 
-    public static final String DANK_1_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_1;
-    public static final String DANK_2_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_2;
-    public static final String DANK_3_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_3;
-    public static final String DANK_4_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_4;
-    public static final String DANK_5_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_5;
-    public static final String DANK_6_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_6;
-    public static final String DANK_7_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_7;
-    public static final String DANK_8_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_8;
-    public static final String DANK_9_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_9;
+    public static final String DANK_VOLUME_PER_SLOT = "Volume per slot: ";
+
+    public static final String DANK_1_VOLUME = "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT + LIMIT_1;
+    public static final String DANK_2_VOLUME = "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT + LIMIT_2;
+    public static final String DANK_3_VOLUME = "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT + LIMIT_3;
+    public static final String DANK_4_VOLUME = "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT + LIMIT_4;
+    public static final String DANK_5_VOLUME = "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT + LIMIT_5;
+    public static final String DANK_6_VOLUME = "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT + LIMIT_6;
+    public static final String DANK_7_VOLUME = "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT + LIMIT_7;
+    public static final String DANK_8_VOLUME = "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT + LIMIT_8;
+    public static final String DANK_9_VOLUME = "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT + LIMIT_9;
 
     public static final String DANK_LORE_VOID = "" + ChatColor.RED + "Items over limit are voided";
     public static final String DANK_LORE_RIGHT_CLICK = "" + ChatColor.GOLD + "Right click to open pack";
+
+    public static final String DANK_ERROR_STRING = "DANK_ERR";
 
     public static final String dankLoreSelectedStack(@Nullable String stringOptional) {
         String itemType = "" + ChatColor.GRAY + "Empty";
@@ -153,7 +157,7 @@ public final class ItemDetails {
             case 7: return NAME_DANK_7;
             case 8: return NAME_DANK_8;
             case 9: return NAME_DANK_9;
-            default: return "DANK_ERR";
+            default: return DANK_ERROR_STRING;
         }
     }
 
@@ -168,7 +172,7 @@ public final class ItemDetails {
             case 7: return ChatColor.BOLD + NAME_DANK_7;
             case 8: return ChatColor.BOLD + NAME_DANK_8;
             case 9: return ChatColor.BOLD + NAME_DANK_9;
-            default: return "DANK_ERR";
+            default: return DANK_ERROR_STRING;
         }
     }
 
@@ -183,7 +187,7 @@ public final class ItemDetails {
             case 7: return NAME_DANK_CELL_7;
             case 8: return NAME_DANK_CELL_8;
             case 9: return NAME_DANK_CELL_9;
-            default: return "DANK_ERR";
+            default: return DANK_ERROR_STRING;
         }
     }
 
