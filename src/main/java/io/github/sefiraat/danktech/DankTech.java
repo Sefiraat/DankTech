@@ -9,13 +9,13 @@ import io.github.sefiraat.danktech.listeners.ItemPickupListener;
 import io.github.sefiraat.danktech.listeners.ItemRightClickListener;
 import io.github.sefiraat.danktech.listeners.UnloadingListener;
 import io.github.sefiraat.danktech.timers.TimerSave;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
+import org.bstats.bukkit.Metrics;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +29,7 @@ public class DankTech extends JavaPlugin {
     private PaperCommandManager commandManager;
     private final Timer repeater = new Timer();
     private Protection protection;
+    private boolean isUnitTest = false;
 
     public File getDankStorageConfigFile() {
         return dankStorageConfigFile;
@@ -52,6 +53,7 @@ public class DankTech extends JavaPlugin {
 
     protected DankTech(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
+        isUnitTest = true;
     }
 
     @Override
@@ -83,8 +85,10 @@ public class DankTech extends JavaPlugin {
 
         repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
 
-        int pluginId = 11208;
-        Metrics metrics = new Metrics(this, pluginId);
+        if (!isUnitTest) {
+            int pluginId = 11208;
+            Metrics metrics = new Metrics(this, pluginId);
+        }
 
     }
 
