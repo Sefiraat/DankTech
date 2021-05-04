@@ -7,4 +7,4 @@
 .classpath
 dependency-reduced-pom.xml
 .DS_Store
-/.github/Workflows/
+/.github/workflows/
