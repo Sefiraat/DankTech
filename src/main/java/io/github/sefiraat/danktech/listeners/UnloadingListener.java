@@ -11,52 +11,49 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.lib.misc.Utils.getDankId;
 import static io.github.sefiraat.danktech.lib.misc.Utils.isDank;
 
 public class UnloadingListener implements Listener {
 
-    final DankTech Parent;
+    final DankTech parent;
 
     public UnloadingListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        Parent = plugin;
+        parent = plugin;
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onHop(InventoryMoveItemEvent e) {
-        if (e.getSource().getType() == InventoryType.HOPPER) {
-            if (isDank(e.getItem(), Parent)) {
-                ItemStack Dank = e.getItem();
-                Long dankID = getDankId(Dank, Parent.getInstance());
-                ConfigurationSection section = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
-                ConfigurationSection slotSection = null;
-                e.setCancelled(true);
-                for (String s : section.getKeys(false)) {
-                    if (s.matches(".*SLOT.*")) {
-                        if (section.getConfigurationSection(s).getItemStack("STACK") != null && section.getConfigurationSection(s).getInt("VOLUME") > 1) {
-                            slotSection = section.getConfigurationSection(s);
-                            break;
-                        }
+        if (e.getSource().getType() == InventoryType.HOPPER && isDank(e.getItem(), parent)) {
+            ItemStack dank = e.getItem();
+            Long dankID = getDankId(dank, parent.getInstance());
+            ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
+            ConfigurationSection slotSection = null;
+            e.setCancelled(true);
+            for (String s : section.getKeys(false)) {
+                if (s.matches(".*SLOT.*")) {
+                    if (section.getConfigurationSection(s).getItemStack(CONFIG_GETTER_VAL_STACK) != null && section.getConfigurationSection(s).getInt(CONFIG_GETTER_VAL_VOLUME) > 1) {
+                        slotSection = section.getConfigurationSection(s);
+                        break;
                     }
                 }
+            }
 
-                if (slotSection != null) {
-                    if (e.getDestination().firstEmpty() != -1) {
-                        Integer amount = slotSection.getInt("VOLUME");
-                        ItemStack i = slotSection.getItemStack("STACK").clone();
-                        if (amount > 1) {
-                            if (amount <= i.getMaxStackSize()) {
-                                i.setAmount(amount - 1);
-                                slotSection.set("VOLUME", 1);
-                            } else {
-                                i.setAmount(i.getMaxStackSize());
-                                amount = (amount - i.getMaxStackSize());
-                                slotSection.set("VOLUME", amount);
-                            }
-                            e.getDestination().addItem(i);
-                        }
+            if (slotSection != null && e.getDestination().firstEmpty() != -1) {
+                Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
+                ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
+                if (amount > 1) {
+                    if (amount <= i.getMaxStackSize()) {
+                        i.setAmount(amount - 1);
+                        slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
+                    } else {
+                        i.setAmount(i.getMaxStackSize());
+                        amount = (amount - i.getMaxStackSize());
+                        slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
                     }
+                    e.getDestination().addItem(i);
                 }
             }
         }

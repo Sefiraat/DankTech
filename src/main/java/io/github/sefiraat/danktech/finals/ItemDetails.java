@@ -6,84 +6,88 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.github.sefiraat.danktech.finals.Debug.bugsWarnUsers;
+import static io.github.sefiraat.danktech.finals.Debug.BUGS_WARN_USERS;
 
 public final class ItemDetails {
 
+    private ItemDetails() {
+        throw new IllegalStateException("Utility class");
+    }
+
     // Dank Stuff
 
-    public static final String NameDank1 = "" + ChatColor.GRAY + "Dank Storage Pack [T1]";
-    public static final String NameDank2 = "" + ChatColor.DARK_GRAY + "Dank Storage Pack [T2]";
-    public static final String NameDank3 = "" + ChatColor.GREEN + "Dank Storage Pack [T3]";
-    public static final String NameDank4 = "" + ChatColor.DARK_GREEN + "Dank Storage Pack [T4]";
-    public static final String NameDank5 = "" + ChatColor.BLUE + "Dank Storage Pack [T5]";
-    public static final String NameDank6 = "" + ChatColor.DARK_BLUE + "Dank Storage Pack [T6]";
-    public static final String NameDank7 = "" + ChatColor.LIGHT_PURPLE + "Dank Storage Pack [T7]";
-    public static final String NameDank8 = "" + ChatColor.DARK_PURPLE + "Dank Storage Pack [T8]";
-    public static final String NameDank9 = "" + ChatColor.RED + "Dank Storage Pack [Master]";
+    public static final String NAME_DANK_1 = "" + ChatColor.GRAY + "Dank Storage Pack [T1]";
+    public static final String NAME_DANK_2 = "" + ChatColor.DARK_GRAY + "Dank Storage Pack [T2]";
+    public static final String NAME_DANK_3 = "" + ChatColor.GREEN + "Dank Storage Pack [T3]";
+    public static final String NAME_DANK_4 = "" + ChatColor.DARK_GREEN + "Dank Storage Pack [T4]";
+    public static final String NAME_DANK_5 = "" + ChatColor.BLUE + "Dank Storage Pack [T5]";
+    public static final String NAME_DANK_6 = "" + ChatColor.DARK_BLUE + "Dank Storage Pack [T6]";
+    public static final String NAME_DANK_7 = "" + ChatColor.LIGHT_PURPLE + "Dank Storage Pack [T7]";
+    public static final String NAME_DANK_8 = "" + ChatColor.DARK_PURPLE + "Dank Storage Pack [T8]";
+    public static final String NAME_DANK_9 = "" + ChatColor.RED + "Dank Storage Pack [Master]";
 
-    public static final String NameDankCell1 = "" + ChatColor.GRAY + "Storage Cell [T1]";
-    public static final String NameDankCell2 = "" + ChatColor.DARK_GRAY + "Storage Cell [T2]";
-    public static final String NameDankCell3 = "" + ChatColor.GREEN + "Storage Cell [T3]";
-    public static final String NameDankCell4 = "" + ChatColor.DARK_GREEN + "Storage Cell [T4]";
-    public static final String NameDankCell5 = "" + ChatColor.BLUE + "Storage Cell [T5]";
-    public static final String NameDankCell6 = "" + ChatColor.DARK_BLUE + "Storage Cell [T6]";
-    public static final String NameDankCell7 = "" + ChatColor.LIGHT_PURPLE + "Storage Cell [T7]";
-    public static final String NameDankCell8 = "" + ChatColor.DARK_PURPLE + "Storage Cell [T8]";
-    public static final String NameDankCell9 = "" + ChatColor.RED + "Storage Cell [Master]";
+    public static final String NAME_DANK_CELL_1 = "" + ChatColor.GRAY + "Storage Cell [T1]";
+    public static final String NAME_DANK_CELL_2 = "" + ChatColor.DARK_GRAY + "Storage Cell [T2]";
+    public static final String NAME_DANK_CELL_3 = "" + ChatColor.GREEN + "Storage Cell [T3]";
+    public static final String NAME_DANK_CELL_4 = "" + ChatColor.DARK_GREEN + "Storage Cell [T4]";
+    public static final String NAME_DANK_CELL_5 = "" + ChatColor.BLUE + "Storage Cell [T5]";
+    public static final String NAME_DANK_CELL_6 = "" + ChatColor.DARK_BLUE + "Storage Cell [T6]";
+    public static final String NAME_DANK_CELL_7 = "" + ChatColor.LIGHT_PURPLE + "Storage Cell [T7]";
+    public static final String NAME_DANK_CELL_8 = "" + ChatColor.DARK_PURPLE + "Storage Cell [T8]";
+    public static final String NAME_DANK_CELL_9 = "" + ChatColor.RED + "Storage Cell [Master]";
 
-    public static final String DankInfo1 = ChatColor.GRAY + "A dimension folded into a single point of";
-    public static final String DankInfo2 = ChatColor.GRAY + "space and time. All this just to hold";
-    public static final String DankInfo3 = ChatColor.GRAY + "your trash!";
+    public static final String DANK_INFO_1 = ChatColor.GRAY + "A dimension folded into a single point of";
+    public static final String DANK_INFO_2 = ChatColor.GRAY + "space and time. All this just to hold";
+    public static final String DANK_INFO_3 = ChatColor.GRAY + "your trash!";
 
-    public static final String Dank1_Slots = "" + ChatColor.WHITE + "Slots: 1";
-    public static final String Dank2_Slots = "" + ChatColor.WHITE + "Slots: 2";
-    public static final String Dank3_Slots = "" + ChatColor.WHITE + "Slots: 3";
-    public static final String Dank4_Slots = "" + ChatColor.WHITE + "Slots: 4";
-    public static final String Dank5_Slots = "" + ChatColor.WHITE + "Slots: 5";
-    public static final String Dank6_Slots = "" + ChatColor.WHITE + "Slots: 6";
-    public static final String Dank7_Slots = "" + ChatColor.WHITE + "Slots: 7";
-    public static final String Dank8_Slots = "" + ChatColor.WHITE + "Slots: 8";
-    public static final String Dank9_Slots = "" + ChatColor.WHITE + "Slots: 9";
+    public static final String DANK_1_SLOTS = "" + ChatColor.WHITE + "Slots: 1";
+    public static final String DANK_2_SLOTS = "" + ChatColor.WHITE + "Slots: 2";
+    public static final String DANK_3_SLOTS = "" + ChatColor.WHITE + "Slots: 3";
+    public static final String DANK_4_SLOTS = "" + ChatColor.WHITE + "Slots: 4";
+    public static final String DANK_5_SLOTS = "" + ChatColor.WHITE + "Slots: 5";
+    public static final String DANK_6_SLOTS = "" + ChatColor.WHITE + "Slots: 6";
+    public static final String DANK_7_SLOTS = "" + ChatColor.WHITE + "Slots: 7";
+    public static final String DANK_8_SLOTS = "" + ChatColor.WHITE + "Slots: 8";
+    public static final String DANK_9_SLOTS = "" + ChatColor.WHITE + "Slots: 9";
 
-    public static final Integer Limit1 = 256;
-    public static final Integer Limit2 = 1024;
-    public static final Integer Limit3 = 2048;
-    public static final Integer Limit4 = 4096;
-    public static final Integer Limit5 = 8192;
-    public static final Integer Limit6 = 16384;
-    public static final Integer Limit7 = 65536;
-    public static final Integer Limit8 = 524288;
-    public static final Integer Limit9 = 2147483547;
+    public static final Integer LIMIT_1 = 256;
+    public static final Integer LIMIT_2 = 1024;
+    public static final Integer LIMIT_3 = 2048;
+    public static final Integer LIMIT_4 = 4096;
+    public static final Integer LIMIT_5 = 8192;
+    public static final Integer LIMIT_6 = 16384;
+    public static final Integer LIMIT_7 = 65536;
+    public static final Integer LIMIT_8 = 524288;
+    public static final Integer LIMIT_9 = 2147483547;
 
     public static Integer getLimit(int level) {
         switch(level) {
-            case 1: return Limit1;
-            case 2: return Limit2;
-            case 3: return Limit3;
-            case 4: return Limit4;
-            case 5: return Limit5;
-            case 6: return Limit6;
-            case 7: return Limit7;
-            case 8: return Limit8;
-            default: return Limit9;
+            case 1: return LIMIT_1;
+            case 2: return LIMIT_2;
+            case 3: return LIMIT_3;
+            case 4: return LIMIT_4;
+            case 5: return LIMIT_5;
+            case 6: return LIMIT_6;
+            case 7: return LIMIT_7;
+            case 8: return LIMIT_8;
+            default: return LIMIT_9;
         }
     }
 
-    public static final String Dank1_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit1;
-    public static final String Dank2_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit2;
-    public static final String Dank3_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit3;
-    public static final String Dank4_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit4;
-    public static final String Dank5_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit5;
-    public static final String Dank6_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit6;
-    public static final String Dank7_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit7;
-    public static final String Dank8_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit8;
-    public static final String Dank9_Volume = "" + ChatColor.WHITE + "Volume per slot: " + Limit9;
+    public static final String DANK_1_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_1;
+    public static final String DANK_2_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_2;
+    public static final String DANK_3_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_3;
+    public static final String DANK_4_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_4;
+    public static final String DANK_5_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_5;
+    public static final String DANK_6_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_6;
+    public static final String DANK_7_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_7;
+    public static final String DANK_8_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_8;
+    public static final String DANK_9_VOLUME = "" + ChatColor.WHITE + "Volume per slot: " + LIMIT_9;
 
-    public static final String DankLoreVoid = "" + ChatColor.RED + "Items over limit are voided";
-    public static final String DankLoreRightClick = "" + ChatColor.GOLD + "Right click to open pack";
+    public static final String DANK_LORE_VOID = "" + ChatColor.RED + "Items over limit are voided";
+    public static final String DANK_LORE_RIGHT_CLICK = "" + ChatColor.GOLD + "Right click to open pack";
 
-    public static final String DankLoreSelectedStack(@Nullable String stringOptional) {
+    public static final String dankLoreSelectedStack(@Nullable String stringOptional) {
         String itemType = "" + ChatColor.GRAY + "Empty";
         if (stringOptional != null) {
             itemType = "" + ChatColor.GREEN + stringOptional;
@@ -91,134 +95,134 @@ public final class ItemDetails {
         return "" + ChatColor.GOLD + "Selected Item: " + itemType;
     }
 
-    public static  final String DankBuggyWarnUsers1 = "" + ChatColor.RED + ChatColor.BOLD + "Warning! While every care has been made";
-    public static  final String DankBuggyWarnUsers2 = "" + ChatColor.RED + ChatColor.BOLD + "to make this release stable, it may well";
-    public static  final String DankBuggyWarnUsers3 = "" + ChatColor.RED + ChatColor.BOLD + "still have bugs. Please ensure you only";
-    public static  final String DankBuggyWarnUsers4 = "" + ChatColor.RED + ChatColor.BOLD + "use this for items you wouldn't cry over";
-    public static  final String DankBuggyWarnUsers5 = "" + ChatColor.RED + ChatColor.BOLD + "if lost!";
+    public static  final String DANK_BUGGY_WARN_USERS_1 = "" + ChatColor.RED + ChatColor.BOLD + "WARNING! While every care has been made";
+    public static  final String DANK_BUGGY_WARN_USERS_2 = "" + ChatColor.RED + ChatColor.BOLD + "to make this release stable, it may well";
+    public static  final String DANK_BUGGY_WARN_USERS_3 = "" + ChatColor.RED + ChatColor.BOLD + "still have bugs. Please ensure you only";
+    public static  final String DANK_BUGGY_WARN_USERS_4 = "" + ChatColor.RED + ChatColor.BOLD + "use this for items you wouldn't cry over";
+    public static  final String DANK_BUGGY_WARN_USERS_5 = "" + ChatColor.RED + ChatColor.BOLD + "if lost!";
 
-    public static List<String> DankLoreBuilder(String slots, String volume, long dankID, @Nullable String selectedStack) {
+    public static List<String> dankLoreBuilder(String slots, String volume, long dankID, @Nullable String selectedStack) {
         List<String> l = new ArrayList<>();
-        l.add(DankInfo1);
-        l.add(DankInfo2);
-        l.add(DankInfo3);
+        l.add(DANK_INFO_1);
+        l.add(DANK_INFO_2);
+        l.add(DANK_INFO_3);
         l.add("");
         l.add(slots);
         l.add(volume);
         l.add("");
-        l.add(DankLoreVoid);
+        l.add(DANK_LORE_VOID);
         l.add("");
-        l.add(DankLoreRightClick);
+        l.add(DANK_LORE_RIGHT_CLICK);
         l.add("");
-        l.add(DankLoreSelectedStack(selectedStack));
+        l.add(dankLoreSelectedStack(selectedStack));
         l.add(ChatColor.GRAY + "Pack ID: " + dankID);
-        if (bugsWarnUsers) {
+        if (BUGS_WARN_USERS) {
             l.add("");
-            l.add(DankBuggyWarnUsers1);
-            l.add(DankBuggyWarnUsers2);
-            l.add(DankBuggyWarnUsers3);
-            l.add(DankBuggyWarnUsers4);
-            l.add(DankBuggyWarnUsers5);
+            l.add(DANK_BUGGY_WARN_USERS_1);
+            l.add(DANK_BUGGY_WARN_USERS_2);
+            l.add(DANK_BUGGY_WARN_USERS_3);
+            l.add(DANK_BUGGY_WARN_USERS_4);
+            l.add(DANK_BUGGY_WARN_USERS_5);
         }
         return l;
     }
 
-    public static List<String> getDankLore(int DankLevel, long dankID, @Nullable String selectedStack) {
-        switch (DankLevel) {
-            case 1: return DankLoreBuilder(Dank1_Slots, Dank1_Volume, dankID, selectedStack);
-            case 2: return DankLoreBuilder(Dank2_Slots, Dank2_Volume, dankID, selectedStack);
-            case 3: return DankLoreBuilder(Dank3_Slots, Dank3_Volume, dankID, selectedStack);
-            case 4: return DankLoreBuilder(Dank4_Slots, Dank4_Volume, dankID, selectedStack);
-            case 5: return DankLoreBuilder(Dank5_Slots, Dank5_Volume, dankID, selectedStack);
-            case 6: return DankLoreBuilder(Dank6_Slots, Dank6_Volume, dankID, selectedStack);
-            case 7: return DankLoreBuilder(Dank7_Slots, Dank7_Volume, dankID, selectedStack);
-            case 8: return DankLoreBuilder(Dank8_Slots, Dank8_Volume, dankID, selectedStack);
-            case 9: return DankLoreBuilder(Dank9_Slots, Dank9_Volume, dankID, selectedStack);
-            default: return DankLoreBuilder("ERROR", "ERROR", -1, selectedStack);
+    public static List<String> getDankLore(int dankLevel, long dankID, @Nullable String selectedStack) {
+        switch (dankLevel) {
+            case 1: return dankLoreBuilder(DANK_1_SLOTS, DANK_1_VOLUME, dankID, selectedStack);
+            case 2: return dankLoreBuilder(DANK_2_SLOTS, DANK_2_VOLUME, dankID, selectedStack);
+            case 3: return dankLoreBuilder(DANK_3_SLOTS, DANK_3_VOLUME, dankID, selectedStack);
+            case 4: return dankLoreBuilder(DANK_4_SLOTS, DANK_4_VOLUME, dankID, selectedStack);
+            case 5: return dankLoreBuilder(DANK_5_SLOTS, DANK_5_VOLUME, dankID, selectedStack);
+            case 6: return dankLoreBuilder(DANK_6_SLOTS, DANK_6_VOLUME, dankID, selectedStack);
+            case 7: return dankLoreBuilder(DANK_7_SLOTS, DANK_7_VOLUME, dankID, selectedStack);
+            case 8: return dankLoreBuilder(DANK_8_SLOTS, DANK_8_VOLUME, dankID, selectedStack);
+            case 9: return dankLoreBuilder(DANK_9_SLOTS, DANK_9_VOLUME, dankID, selectedStack);
+            default: return dankLoreBuilder("ERROR", "ERROR", -1, selectedStack);
         }
     }
 
-    public static String getDankName(int DankLevel) {
-        switch (DankLevel) {
-            case 1: return NameDank1;
-            case 2: return NameDank2;
-            case 3: return NameDank3;
-            case 4: return NameDank4;
-            case 5: return NameDank5;
-            case 6: return NameDank6;
-            case 7: return NameDank7;
-            case 8: return NameDank8;
-            case 9: return NameDank9;
-            default: return "Error";
+    public static String getDankName(int dankLevel) {
+        switch (dankLevel) {
+            case 1: return NAME_DANK_1;
+            case 2: return NAME_DANK_2;
+            case 3: return NAME_DANK_3;
+            case 4: return NAME_DANK_4;
+            case 5: return NAME_DANK_5;
+            case 6: return NAME_DANK_6;
+            case 7: return NAME_DANK_7;
+            case 8: return NAME_DANK_8;
+            case 9: return NAME_DANK_9;
+            default: return "DANK_ERR";
         }
     }
 
-    public static String getDankNameBold(int DankLevel) {
-        switch (DankLevel) {
-            case 1: return ChatColor.BOLD + NameDank1;
-            case 2: return ChatColor.BOLD + NameDank2;
-            case 3: return ChatColor.BOLD + NameDank3;
-            case 4: return ChatColor.BOLD + NameDank4;
-            case 5: return ChatColor.BOLD + NameDank5;
-            case 6: return ChatColor.BOLD + NameDank6;
-            case 7: return ChatColor.BOLD + NameDank7;
-            case 8: return ChatColor.BOLD + NameDank8;
-            case 9: return ChatColor.BOLD + NameDank9;
-            default: return "Error";
+    public static String getDankNameBold(int dankLevel) {
+        switch (dankLevel) {
+            case 1: return ChatColor.BOLD + NAME_DANK_1;
+            case 2: return ChatColor.BOLD + NAME_DANK_2;
+            case 3: return ChatColor.BOLD + NAME_DANK_3;
+            case 4: return ChatColor.BOLD + NAME_DANK_4;
+            case 5: return ChatColor.BOLD + NAME_DANK_5;
+            case 6: return ChatColor.BOLD + NAME_DANK_6;
+            case 7: return ChatColor.BOLD + NAME_DANK_7;
+            case 8: return ChatColor.BOLD + NAME_DANK_8;
+            case 9: return ChatColor.BOLD + NAME_DANK_9;
+            default: return "DANK_ERR";
         }
     }
 
-    public static String getDankCellName(int DankLevel) {
-        switch (DankLevel) {
-            case 1: return NameDankCell1;
-            case 2: return NameDankCell2;
-            case 3: return NameDankCell3;
-            case 4: return NameDankCell4;
-            case 5: return NameDankCell5;
-            case 6: return NameDankCell6;
-            case 7: return NameDankCell7;
-            case 8: return NameDankCell8;
-            case 9: return NameDankCell9;
-            default: return "Error";
+    public static String getDankCellName(int dankLevel) {
+        switch (dankLevel) {
+            case 1: return NAME_DANK_CELL_1;
+            case 2: return NAME_DANK_CELL_2;
+            case 3: return NAME_DANK_CELL_3;
+            case 4: return NAME_DANK_CELL_4;
+            case 5: return NAME_DANK_CELL_5;
+            case 6: return NAME_DANK_CELL_6;
+            case 7: return NAME_DANK_CELL_7;
+            case 8: return NAME_DANK_CELL_8;
+            case 9: return NAME_DANK_CELL_9;
+            default: return "DANK_ERR";
         }
     }
 
 
     // GUI Stuff
 
-    public static final String GUIDisplayNameFiller = "" + ChatColor.GRAY + "Get Dank";
-    public static final String GUIDisplayNameInfo = "" + ChatColor.RED + "Pack Info";
-    public static final String GUIDisplayNameLocked = "" + ChatColor.RED + "Locked Slot";
-    public static List<String> GUIDisplayLoreInfo(long DankID, int DankLevel) {
+    public static final String GUI_DISPLAY_NAME_FILLER = "" + ChatColor.GRAY + "Get Dank";
+    public static final String GUI_DISPLAY_NAME_INFO = "" + ChatColor.RED + "Pack Info";
+    public static final String GUI_DISPLAY_NAME_LOCKED = "" + ChatColor.RED + "Locked Slot";
+    public static List<String> guiDisplayLoreInfo(long dankID, int dankLevel) {
         List<String> l = new ArrayList<>();
-        l.add("" + ChatColor.GOLD + ChatColor.BOLD + "Dank ID: " + ChatColor.WHITE + DankID);
-        l.add("" + ChatColor.GOLD + ChatColor.BOLD + "Dank Tier: " + ChatColor.WHITE + DankLevel);
+        l.add("" + ChatColor.GOLD + ChatColor.BOLD + "Dank ID: " + ChatColor.WHITE + dankID);
+        l.add("" + ChatColor.GOLD + ChatColor.BOLD + "Dank Tier: " + ChatColor.WHITE + dankLevel);
         return l;
     }
-    public static final String GUIDisplayNameUnassigned = "" + ChatColor.GRAY + "Unassigned Slot";
-    public static List<String> GUIDisplayLoreUnassigned() {
+    public static final String GUI_DISPLAY_NAME_UNASSIGNED = "" + ChatColor.GRAY + "Unassigned Slot";
+    public static List<String> guiDisplayLoreUnassigned() {
         List<String> l = new ArrayList<>();
         l.add("" + ChatColor.WHITE + "Slot unassigned, place an item below");
         l.add("" + ChatColor.WHITE + "to assign that type to this slot.");
         return l;
     }
 
-    public static final String GUIDisplayNameWithdraw = "" + ChatColor.RED + "Withdraw / Add Items";
+    public static final String GUI_DISPLAY_NAME_WITHDRAW = "" + ChatColor.RED + "Withdraw / Add Items";
 
-    public static final String GUIDisplayWithdrawLoreLeft = "" + ChatColor.GOLD + "Left Click: " + ChatColor.WHITE + "Withdraw 1";
-    public static final String GUIDisplayWithdrawLoreRight = "" + ChatColor.GOLD + "Right Click: " + ChatColor.WHITE + "Withdraw Stack";
-    public static final String GUIDisplayWithdrawLoreShiftLeft = "" + ChatColor.GOLD + "Shift Left Click: " + ChatColor.WHITE + "Dump Inventory";
-    public static final String GUIDisplayWithdrawLoreShiftRight = "" + ChatColor.GOLD + "Shift Right Click: " + ChatColor.WHITE + "Fill Inventory";
-    public static final String GUIDisplayWithdrawLoreDrop = "" + ChatColor.GOLD + "Drop (Q): " + ChatColor.WHITE + "Drop a stack";
+    public static final String GUI_DISPLAY_WITHDRAW_LORE_LEFT = "" + ChatColor.GOLD + "Left Click: " + ChatColor.WHITE + "Withdraw 1";
+    public static final String GUI_DISPLAY_WITHDRAW_LORE_RIGHT = "" + ChatColor.GOLD + "Right Click: " + ChatColor.WHITE + "Withdraw Stack";
+    public static final String GUI_DISPLAY_WITHDRAW_LORE_SHIFT_LEFT = "" + ChatColor.GOLD + "Shift Left Click: " + ChatColor.WHITE + "Dump Inventory";
+    public static final String GUI_DISPLAY_WITHDRAW_LORE_SHIFT_RIGHT = "" + ChatColor.GOLD + "Shift Right Click: " + ChatColor.WHITE + "Fill Inventory";
+    public static final String GUI_DISPLAY_WITHDRAW_LORE_DROP = "" + ChatColor.GOLD + "Drop (Q): " + ChatColor.WHITE + "Drop a stack";
 
-    public static List<String> GUIDisplayLoreWithdraw(int amount) {
+    public static List<String> guiDisplayLoreWithdraw(int amount) {
         List<String> l = new ArrayList<>();
         l.add("");
-        l.add(GUIDisplayWithdrawLoreLeft);
-        l.add(GUIDisplayWithdrawLoreRight);
-        l.add(GUIDisplayWithdrawLoreShiftLeft);
-        l.add(GUIDisplayWithdrawLoreShiftRight);
-        l.add(GUIDisplayWithdrawLoreDrop);
+        l.add(GUI_DISPLAY_WITHDRAW_LORE_LEFT);
+        l.add(GUI_DISPLAY_WITHDRAW_LORE_RIGHT);
+        l.add(GUI_DISPLAY_WITHDRAW_LORE_SHIFT_LEFT);
+        l.add(GUI_DISPLAY_WITHDRAW_LORE_SHIFT_RIGHT);
+        l.add(GUI_DISPLAY_WITHDRAW_LORE_DROP);
         l.add("");
         if (amount > 0) {
             l.add("" + ChatColor.BLUE + "Amount: " + ChatColor.WHITE + amount);

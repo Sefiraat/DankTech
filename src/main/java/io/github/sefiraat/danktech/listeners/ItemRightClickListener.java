@@ -19,45 +19,45 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-import static io.github.sefiraat.danktech.implementation.GUI.DankGUI.getDankGUI;
+import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemRightClickListener implements Listener {
 
-    final DankTech Parent;
+    final DankTech parent;
 
     public ItemRightClickListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        Parent = plugin;
+        parent = plugin;
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onRightClick(PlayerInteractEvent e) {
-        if (e.getItem() != null) {
-            if (e.getItem().getItemMeta() != null) {
-                ItemStack i = e.getItem();
-                if (isDank(i, Parent.getInstance())) {
-                    Player p = e.getPlayer();
-                    if (p.isSneaking()) {
-                        switch (e.getAction()) {
-                            case LEFT_CLICK_AIR:
-                                e.setCancelled(true);
-                                cycleBackward(i, p);
-                                break;
-                            case RIGHT_CLICK_AIR:
-                                e.setCancelled(true);
-                                cycleForward(i, p);
-                                break;
-                            case RIGHT_CLICK_BLOCK:
-                                e.setCancelled(true);
-                                placeBlock(e, i, p);
-                                break;
-                        }
-                    } else {
-                        if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+        if (e.getItem() != null && e.getItem().getItemMeta() != null) {
+            ItemStack i = e.getItem();
+            if (isDank(i, parent.getInstance())) {
+                Player p = e.getPlayer();
+                if (p.isSneaking()) {
+                    switch (e.getAction()) {
+                        case LEFT_CLICK_AIR:
                             e.setCancelled(true);
-                            openDankPack(i, p);
-                        }
+                            cycleBackward(i, p);
+                            break;
+                        case RIGHT_CLICK_AIR:
+                            e.setCancelled(true);
+                            cycleForward(i, p);
+                            break;
+                        case RIGHT_CLICK_BLOCK:
+                            e.setCancelled(true);
+                            placeBlock(e, i, p);
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+                        e.setCancelled(true);
+                        openDankPack(i, p);
                     }
                 }
             }
@@ -65,18 +65,18 @@ public class ItemRightClickListener implements Listener {
     }
 
     private void openDankPack(ItemStack i, Player p) {
-        int dankLevel = getDankLevel(i,Parent.getInstance());
-        long dankId = getDankId(i, Parent.getInstance());
-        p.sendMessage(Messages.MessageEventOpenPack(dankId));
-        setLastOpenedBy(dankId, Parent, p);
-        Gui g = getDankGUI(dankId, dankLevel, Parent.getInstance());
+        int dankLevel = getDankLevel(i, parent.getInstance());
+        long dankId = getDankId(i, parent.getInstance());
+        p.sendMessage(Messages.messageEventOpenPack(dankId));
+        setLastOpenedBy(dankId, parent, p);
+        Gui g = getDankGUI(dankId, dankLevel, parent.getInstance());
         g.open(p);
     }
 
     private void cycleForward(ItemStack dank, Player p) {
-        Integer slot = getDankNextSlot(dank, Parent);
-        Long dankID = getDankId(dank,Parent);
-        ItemStack slotItemStack = getSlotItemStack(dankID, slot, Parent);
+        Integer slot = getDankNextSlot(dank, parent);
+        Long dankID = getDankId(dank, parent);
+        ItemStack slotItemStack = getSlotItemStack(dankID, slot, parent);
         String itemName = "EMPTY";
         if (slotItemStack != null) {
             if (slotItemStack.getItemMeta().hasDisplayName()) {
@@ -85,13 +85,13 @@ public class ItemRightClickListener implements Listener {
                 itemName = slotItemStack.getType().name().replace("_"," ");
             }
         }
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.MessageEventSlotChanged(itemName, slot)));
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(itemName, slot)));
     }
 
     private void cycleBackward(ItemStack dank, Player p) {
-        Integer slot = getDankPreviousSlot(dank, Parent);
-        Long dankID = getDankId(dank,Parent);
-        ItemStack slotItemStack = getSlotItemStack(dankID, slot, Parent);
+        Integer slot = getDankPreviousSlot(dank, parent);
+        Long dankID = getDankId(dank, parent);
+        ItemStack slotItemStack = getSlotItemStack(dankID, slot, parent);
         String itemName = "EMPTY";
         if (slotItemStack != null) {
             if (slotItemStack.getItemMeta().hasDisplayName()) {
@@ -100,35 +100,32 @@ public class ItemRightClickListener implements Listener {
                 itemName = slotItemStack.getType().name().replace("_"," ");
             }
         }
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.MessageEventSlotChanged(itemName, slot)));
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(itemName, slot)));
     }
 
     private void placeBlock(PlayerInteractEvent e, ItemStack dank, Player p) {
-        Integer slot = getDankCurrentSlot(dank, Parent);
-        Long dankID = getDankId(dank,Parent);
-        ItemStack slotItemStack = getSlotItemStack(dankID, slot, Parent);
+        Integer slot = getDankCurrentSlot(dank, parent);
+        Long dankID = getDankId(dank, parent);
+        ItemStack slotItemStack = getSlotItemStack(dankID, slot, parent);
         if (!slotItemStack.hasItemMeta() && slotItemStack.getType().isBlock()) {
             Block block = e.getClickedBlock().getRelative(e.getBlockFace());
-            if (block.getBlockData().getMaterial() == Material.AIR) {
-                if (Parent.getProtection().canBuild(block, p)) {
+            if (block.getBlockData().getMaterial() == Material.AIR && parent.getProtection().canBuild(block, p)) {
+                ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
+                ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + slot);
 
-                    ConfigurationSection section = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
-                    ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + slot);
-
-                    Integer amount = slotSection.getInt("VOLUME");
-                    if (amount > 1) {
-                        amount--;
-                        slotSection.set("VOLUME", amount);
-                        ItemStack i = getSlotItemStack(dankID, slot, Parent);
-                        block.setType(i.getType());
-                        mcMMO.getPlaceStore().setTrue(block);
-                    } else {
-                        p.sendMessage(Messages.MessageEventSlotNoMoreItems);
-                    }
+                Integer amount = slotSection.getInt("VOLUME");
+                if (amount > 1) {
+                    amount--;
+                    slotSection.set("VOLUME", amount);
+                    ItemStack i = getSlotItemStack(dankID, slot, parent);
+                    block.setType(i.getType());
+                    mcMMO.getPlaceStore().setTrue(block);
+                } else {
+                    p.sendMessage(Messages.MESSAGE_EVENT_SLOT_NO_MORE_ITEMS);
                 }
             }
         } else {
-            p.sendMessage(Messages.MessageEventSlotCantPlace);
+            p.sendMessage(Messages.MESSAGE_EVENT_SLOT_CANT_PLACE);
         }
     }
 

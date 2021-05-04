@@ -15,39 +15,41 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getLimit;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemPickupListener implements Listener {
 
-    DankTech Parent;
+    DankTech parent;
 
     public ItemPickupListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        Parent = plugin;
+        parent = plugin;
     }
 
     @EventHandler
     public void onItemPickup(EntityPickupItemEvent e) {
+        // TODO Reduce CC
         if(e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
             if(hasDank(p)) {
-                List<ItemStack> Danks = getDanks(p);
-                for (ItemStack Dank : Danks) {
-                    long dankID = getDankId(Dank, Parent);
-                    int dankLevel = getDankLevel(Dank, Parent);
-                    ConfigurationSection section = Parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
+                List<ItemStack> danks = getDanks(p);
+                for (ItemStack dank : danks) {
+                    long dankID = getDankId(dank, parent);
+                    int dankLevel = getDankLevel(dank, parent);
+                    ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
                     for (int i = 1; i <= dankLevel; i++) {
-                        ItemStack PickedStack = e.getItem().getItemStack();
-                        ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + i);
-                        if (slotSection.getItemStack("STACK") != null) {
-                            ItemStack ExpectantStack = slotSection.getItemStack("STACK");
-                            if (ExpectantStack.isSimilar(PickedStack)) {
-                                int CurrentVolume = slotSection.getInt("VOLUME");
-                                if ((CurrentVolume + PickedStack.getAmount()) >= getLimit(dankLevel)) {
-                                    slotSection.set("VOLUME", getLimit(dankLevel));
+                        ItemStack pickedStack = e.getItem().getItemStack();
+                        ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + i);
+                        if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
+                            ItemStack expectantStack = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK);
+                            if (expectantStack.isSimilar(pickedStack)) {
+                                int currentVolume = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
+                                if ((currentVolume + pickedStack.getAmount()) >= getLimit(dankLevel)) {
+                                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, getLimit(dankLevel));
                                 } else {
-                                    slotSection.set("VOLUME", CurrentVolume + PickedStack.getAmount());
+                                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, currentVolume + pickedStack.getAmount());
                                 }
                                 spawnParticle(e.getItem());
                                 e.getItem().remove();
@@ -63,10 +65,8 @@ public class ItemPickupListener implements Listener {
 
     private boolean hasDank(Player p) {
         for (ItemStack i : p.getInventory().getContents()) {
-            if (i != null) {
-                if (isDank(i, Parent.getInstance())) {
-                    return true;
-                }
+            if (i != null && isDank(i, parent.getInstance())) {
+                return true;
             }
         }
         return false;
@@ -75,10 +75,8 @@ public class ItemPickupListener implements Listener {
     private List<ItemStack> getDanks(Player p) {
         List<ItemStack> l = new ArrayList<>();
         for (ItemStack i : p.getInventory().getContents()) {
-            if (i != null) {
-                if (isDank(i, Parent.getInstance())) {
-                    l.add(i);
-                }
+            if (i != null && isDank(i, parent.getInstance())) {
+                l.add(i);
             }
         }
         return l;

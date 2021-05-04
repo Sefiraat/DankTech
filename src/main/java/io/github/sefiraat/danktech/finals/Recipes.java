@@ -8,6 +8,11 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 
 public final class Recipes {
+
+    private Recipes() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static Recipe recipeCell1(DankTech plugin) {
         ItemStack i = ItemStacks.getCell(1, plugin).clone();
         NamespacedKey key = new NamespacedKey(plugin, "Cell_1");

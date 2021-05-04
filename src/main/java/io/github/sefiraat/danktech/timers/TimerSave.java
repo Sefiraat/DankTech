@@ -7,17 +7,17 @@ import java.util.TimerTask;
 
 public class TimerSave extends TimerTask {
 
-    public final DankTech Parent;
+    public final DankTech parent;
 
-    public TimerSave(DankTech Parent) {
-        this.Parent = Parent;
+    public TimerSave(DankTech parent) {
+        this.parent = parent;
     }
 
     public void run() {
         try {
-            Parent.getInstance().getDankStorageConfig().save(Parent.getDankStorageConfigFile());
+            parent.getInstance().getDankStorageConfig().save(parent.getDankStorageConfigFile());
         } catch (IOException e) {
-            Parent.getLogger().warning("Unable to save " + Parent.getInstance().getDankStorageConfig().getName());
+            parent.getLogger().warning("Unable to save " + parent.getInstance().getDankStorageConfig().getName());
         }
     }
 }

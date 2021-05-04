@@ -1,4 +1,4 @@
-package io.github.sefiraat.danktech.implementation.GUI;
+package io.github.sefiraat.danktech.implementation.gui;
 
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.GUIItems;
@@ -21,11 +21,14 @@ import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.finals.Materials.getDankMaterial;
-import static io.github.sefiraat.danktech.implementation.GUI.DankGUI.getDankGUI;
+import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class AdminGUI {
 
+    private AdminGUI() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static PaginatedGui getDankAdminGUI(DankTech parent) {
 
@@ -36,7 +39,7 @@ public class AdminGUI {
 
         PaginatedGui g = new PaginatedGui(6, "Admin Dank GUI");
 
-        g.setItem(listFillerSlots, GUIItems.GUIPackFiller());
+        g.setItem(listFillerSlots, GUIItems.guiPackFiller());
         g.setItem(backSlot, ItemBuilder.from(Material.PAPER).setName("Previous").asGuiItem(event -> g.previous()));
         g.setItem(forwardSlot, ItemBuilder.from(Material.PAPER).setName("Next").asGuiItem(event -> g.next()));
 
@@ -54,14 +57,12 @@ public class AdminGUI {
             lore.add(ChatColor.GREEN + "Right click recover");
             im.setLore(lore);
             i.setItemMeta(im);
-            GuiItem dankGuiItem = new GuiItem(i, event -> {
-                adminClickDank(event, dankId, dankLevel, parent);
-            });
+            GuiItem dankGuiItem = new GuiItem(i, event -> adminClickDank(event, dankId, dankLevel, parent));
             g.addItem(dankGuiItem);
         }
 
-        g.setDefaultClickAction(event -> { event.setCancelled(true); });
-        g.setDragAction(event -> { event.setCancelled(true); });
+        g.setDefaultClickAction(event -> event.setCancelled(true));
+        g.setDragAction(event -> event.setCancelled(true));
 
         return g;
     }
@@ -69,21 +70,17 @@ public class AdminGUI {
     public static void adminClickDank(InventoryClickEvent event, Long dankId, Integer dankLevel, DankTech plugin) {
         Player p = (Player) event.getWhoClicked();
         if (event.isLeftClick()) {
-            p.sendMessage(Messages.MessageEventOpenPack(dankId));
+            p.sendMessage(Messages.messageEventOpenPack(dankId));
             Gui dankGUI = getDankGUI(dankId, dankLevel, plugin.getInstance());
-            //dankGUI.setCloseGuiAction(event2 -> {
-            //    PaginatedGui gInner = getDankAdminGUI(plugin);
-            //    gInner.open(event2.getPlayer());
-            //});
             dankGUI.open(p);
         } else {
-            DankPack Dank = new DankPack(getDankMaterial(dankLevel), dankLevel, dankId, plugin, null);
-            ItemMeta m = Dank.getItemMeta();
+            DankPack dank = new DankPack(getDankMaterial(dankLevel), dankLevel, dankId, plugin, null);
+            ItemMeta m = dank.getItemMeta();
             m.setDisplayName(getDankNameBold(dankLevel));
             m.setLore(ItemDetails.getDankLore(dankLevel, dankId, null));
-            Dank.setItemMeta(m);
-            p.getInventory().addItem(Dank);
-            p.sendMessage(Messages.MessageCommandPackGiven(dankId));
+            dank.setItemMeta(m);
+            p.getInventory().addItem(dank);
+            p.sendMessage(Messages.messageCommandPackGiven(dankId));
         }
     }
 
