@@ -51,6 +51,18 @@ public class DankPack extends ItemStack {
 
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) {
+            return false;
+        }
+        DankPack fobj = (DankPack) obj;
+        if (section.equals(fobj.section)) {
+            return true;
+        }
+        return false;
+    }
+
     private void setupSection(Configuration config, long packID) {
 
         config.createSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID);
