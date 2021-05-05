@@ -31,6 +31,8 @@ public class DankTech extends JavaPlugin {
     private Protection protection;
     private boolean isUnitTest = false;
 
+    private boolean McMMO = false;
+
     public File getDankStorageConfigFile() {
         return dankStorageConfigFile;
     }
@@ -45,6 +47,9 @@ public class DankTech extends JavaPlugin {
     }
     public Protection getProtection() {
         return protection;
+    }
+    public boolean isMcMMO() {
+        return McMMO;
     }
 
     public DankTech() {
@@ -82,6 +87,8 @@ public class DankTech extends JavaPlugin {
         new UnloadingListener(this.getInstance());
 
         addRecipes();
+
+        McMMO = getServer().getPluginManager().isPluginEnabled("mcMMO");
 
         repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
 
@@ -144,5 +151,6 @@ public class DankTech extends JavaPlugin {
         this.getServer().addRecipe(Recipes.recipeDank8(this));
         this.getServer().addRecipe(Recipes.recipeDank9(this));
     }
+
 
 }

@@ -9,6 +9,8 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,6 +21,9 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+import java.util.Collection;
+
+import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
@@ -107,19 +112,22 @@ public class ItemRightClickListener implements Listener {
         Integer slot = getDankCurrentSlot(dank, parent);
         Long dankID = getDankId(dank, parent);
         ItemStack slotItemStack = getSlotItemStack(dankID, slot, parent);
-        if (!slotItemStack.hasItemMeta() && slotItemStack.getType().isBlock()) {
+        if (slotItemStack != null && !slotItemStack.hasItemMeta() && slotItemStack.getType().isBlock()) {
             Block block = e.getClickedBlock().getRelative(e.getBlockFace());
-            if (block.getBlockData().getMaterial() == Material.AIR && parent.getProtection().canBuild(block, p)) {
-                ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection("PACKS.PACKS_BY_ID." + dankID);
-                ConfigurationSection slotSection = section.getConfigurationSection("SLOT" + slot);
+            if (isSafeToBuild(block, p)) {
 
-                Integer amount = slotSection.getInt("VOLUME");
+                ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
+                ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + slot);
+
+                Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
                 if (amount > 1) {
                     amount--;
-                    slotSection.set("VOLUME", amount);
+                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
                     ItemStack i = getSlotItemStack(dankID, slot, parent);
                     block.setType(i.getType());
-                    mcMMO.getPlaceStore().setTrue(block);
+                    if (parent.isMcMMO()) {
+                        mcMMO.getPlaceStore().setTrue(block);
+                    }
                 } else {
                     p.sendMessage(Messages.MESSAGE_EVENT_SLOT_NO_MORE_ITEMS);
                 }
@@ -127,6 +135,21 @@ public class ItemRightClickListener implements Listener {
         } else {
             p.sendMessage(Messages.MESSAGE_EVENT_SLOT_CANT_PLACE);
         }
+    }
+
+    private boolean isSafeToBuild(Block block, Player p) {
+        if (block.getBlockData().getMaterial() == Material.AIR && parent.getProtection().canBuild(block, p)) {
+            Collection<Entity> entities = block.getWorld().getNearbyEntities(block.getLocation(), 0.5, 0.5, 0.5);
+            if (!entities.isEmpty()) {
+                for (Entity e : entities) {
+                    if (e.getType() != EntityType.DROPPED_ITEM) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
 }
