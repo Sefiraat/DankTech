@@ -4,18 +4,19 @@ import co.aikar.commands.PaperCommandManager;
 import io.github.sefiraat.danktech.commands.Commands;
 import io.github.sefiraat.danktech.finals.Recipes;
 import io.github.sefiraat.danktech.lib.misc.Protection;
+import io.github.sefiraat.danktech.lib.misc.SlimefunDankAddon;
 import io.github.sefiraat.danktech.listeners.CraftListener;
 import io.github.sefiraat.danktech.listeners.ItemPickupListener;
 import io.github.sefiraat.danktech.listeners.ItemRightClickListener;
 import io.github.sefiraat.danktech.listeners.UnloadingListener;
 import io.github.sefiraat.danktech.timers.TimerSave;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
-import org.bstats.bukkit.Metrics;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +32,9 @@ public class DankTech extends JavaPlugin {
     private Protection protection;
     private boolean isUnitTest = false;
 
-    private boolean McMMO = false;
+    private boolean mcMMO = false;
+    private boolean slimefun = false;
+    private SlimefunDankAddon slimefunAddon;
 
     public File getDankStorageConfigFile() {
         return dankStorageConfigFile;
@@ -48,8 +51,15 @@ public class DankTech extends JavaPlugin {
     public Protection getProtection() {
         return protection;
     }
+
     public boolean isMcMMO() {
-        return McMMO;
+        return mcMMO;
+    }
+    public boolean isSlimefun() {
+        return slimefun;
+    }
+    public SlimefunDankAddon getSlimefunAddon() {
+        return slimefunAddon;
     }
 
     public DankTech() {
@@ -88,7 +98,12 @@ public class DankTech extends JavaPlugin {
 
         addRecipes();
 
-        McMMO = getServer().getPluginManager().isPluginEnabled("mcMMO");
+        mcMMO = getServer().getPluginManager().isPluginEnabled("mcMMO");
+        slimefun = getServer().getPluginManager().isPluginEnabled("Slimefun");
+
+        if (isSlimefun()) {
+            slimefunAddon = new SlimefunDankAddon(this.getInstance());
+        }
 
         repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
 
@@ -131,7 +146,7 @@ public class DankTech extends JavaPlugin {
         }
     }
 
-    public void addRecipes() {
+    private void addRecipes() {
         this.getServer().addRecipe(Recipes.recipeCell1(this));
         this.getServer().addRecipe(Recipes.recipeCell2(this));
         this.getServer().addRecipe(Recipes.recipeCell3(this));
@@ -151,6 +166,5 @@ public class DankTech extends JavaPlugin {
         this.getServer().addRecipe(Recipes.recipeDank8(this));
         this.getServer().addRecipe(Recipes.recipeDank9(this));
     }
-
 
 }

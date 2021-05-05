@@ -5,14 +5,17 @@ import co.aikar.commands.annotation.*;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemDetails;
+import io.github.sefiraat.danktech.finals.ItemStacks;
 import io.github.sefiraat.danktech.finals.Messages;
 import io.github.sefiraat.danktech.implementation.abstracts.DankPack;
 import io.github.sefiraat.danktech.implementation.gui.AdminGUI;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_DANK_ID;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.finals.Materials.getDankMaterial;
 import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;
@@ -65,6 +68,18 @@ public class Commands extends BaseCommand {
                 }
             }
         }
+
+        @Subcommand("DankCell")
+        @CommandPermission("DankTech.Admin")
+        @CommandCompletion("@players @range:1-9 @range:1-64")
+        public void onGiveItemCell(CommandSender sender, OnlinePlayer player, int level, int amount) {
+            if (sender instanceof Player) {
+                ItemStack i = ItemStacks.getCell(level, parent).clone();
+                i.setAmount(amount);
+                player.getPlayer().getInventory().addItem(i);
+            }
+        }
+
     }
 
     @Subcommand("RecoverPack")
@@ -84,7 +99,7 @@ public class Commands extends BaseCommand {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
-                int level = parent.getInstance().getDankStorageConfig().getInt("PACKS.PACKS_BY_ID." + id + ".LEVEL");
+                int level = parent.getInstance().getDankStorageConfig().getInt(CONFIG_GETTER_SECTION_DANK_ID + "." + id + ".LEVEL");
 
                 DankPack dank = new DankPack(getDankMaterial(level), level, id, parent, null);
                 ItemMeta m = dank.getItemMeta();

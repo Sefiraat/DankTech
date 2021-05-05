@@ -1,11 +1,16 @@
 package io.github.sefiraat.danktech.finals;
 
 import io.github.sefiraat.danktech.DankTech;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
+
+import javax.annotation.Nullable;
+
+import static io.github.sefiraat.danktech.finals.Materials.getDankCellMaterial;
 
 public final class Recipes {
 
@@ -13,13 +18,30 @@ public final class Recipes {
         throw new IllegalStateException("Utility class");
     }
 
+    public static Material getCellCraftingMaterial(Integer level) {
+        switch (level) {
+            case 1: return Material.IRON_INGOT;
+            case 2: return Material.GOLD_INGOT;
+            case 3: return Material.IRON_BLOCK;
+            case 4: return Material.GOLD_BLOCK;
+            case 5: return Material.DIAMOND;
+            case 6: return Material.EMERALD;
+            case 7: return Material.DIAMOND_BLOCK;
+            case 8: return Material.EMERALD_BLOCK;
+            default: return Material.NETHER_STAR;
+        }
+    }
+
+    public static final Material CELL_CORE_MATERIAL = Material.GLASS_PANE;
+    public static final Material DANK_CORE_MATERIAL = Material.NETHER_STAR;
+
     public static Recipe recipeCell1(DankTech plugin) {
         ItemStack i = ItemStacks.getCell(1, plugin).clone();
         NamespacedKey key = new NamespacedKey(plugin, "Cell_1");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.IRON_INGOT);
-        r.setIngredient('E', Material.GLASS_PANE);
+        r.setIngredient('N', getCellCraftingMaterial(1));
+        r.setIngredient('E', CELL_CORE_MATERIAL);
         return r;
     }
     public static Recipe recipeCell2(DankTech plugin) {
@@ -27,8 +49,8 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_2");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.GOLD_INGOT);
-        r.setIngredient('E', Material.GLASS_PANE);
+        r.setIngredient('N', getCellCraftingMaterial(2));
+        r.setIngredient('E', CELL_CORE_MATERIAL);
         return r;
     }
     public static Recipe recipeCell3(DankTech plugin) {
@@ -36,8 +58,8 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_3");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.IRON_BLOCK);
-        r.setIngredient('E', Material.GLASS_PANE);
+        r.setIngredient('N', getCellCraftingMaterial(3));
+        r.setIngredient('E', CELL_CORE_MATERIAL);
         return r;
     }
     public static Recipe recipeCell4(DankTech plugin) {
@@ -45,8 +67,8 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_4");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.GOLD_BLOCK);
-        r.setIngredient('E', Material.GLASS_PANE);
+        r.setIngredient('N', getCellCraftingMaterial(4));
+        r.setIngredient('E', CELL_CORE_MATERIAL);
         return r;
     }
     public static Recipe recipeCell5(DankTech plugin) {
@@ -54,8 +76,8 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_5");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.DIAMOND);
-        r.setIngredient('E', Material.GLASS_PANE);
+        r.setIngredient('N', getCellCraftingMaterial(5));
+        r.setIngredient('E', CELL_CORE_MATERIAL);
         return r;
     }
     public static Recipe recipeCell6(DankTech plugin) {
@@ -63,8 +85,8 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_6");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.EMERALD);
-        r.setIngredient('E', Material.GLASS_PANE);
+        r.setIngredient('N', getCellCraftingMaterial(6));
+        r.setIngredient('E', CELL_CORE_MATERIAL);
         return r;
     }
     public static Recipe recipeCell7(DankTech plugin) {
@@ -72,8 +94,8 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_7");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.DIAMOND_BLOCK);
-        r.setIngredient('E', Material.GLASS_PANE);
+        r.setIngredient('N', getCellCraftingMaterial(7));
+        r.setIngredient('E', CELL_CORE_MATERIAL);
         return r;
     }
     public static Recipe recipeCell8(DankTech plugin) {
@@ -81,8 +103,8 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_8");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.EMERALD_BLOCK);
-        r.setIngredient('E', Material.GLASS_PANE);
+        r.setIngredient('N', getCellCraftingMaterial(8));
+        r.setIngredient('E', CELL_CORE_MATERIAL);
         return r;
     }
     public static Recipe recipeCell9(DankTech plugin) {
@@ -90,8 +112,8 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Cell_9");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Material.NETHER_STAR);
-        r.setIngredient('E', Material.GLASS_PANE);
+        r.setIngredient('N', getCellCraftingMaterial(9));
+        r.setIngredient('E', CELL_CORE_MATERIAL);
         return r;
     }
 
@@ -100,8 +122,8 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Dank_1");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Materials.getDankCellMaterial(1));
-        r.setIngredient('E', Material.NETHER_STAR);
+        r.setIngredient('N', getDankCellMaterial(1));
+        r.setIngredient('E', DANK_CORE_MATERIAL);
         return r;
     }
 
@@ -110,7 +132,7 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Dank_2");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Materials.getDankCellMaterial(2));
+        r.setIngredient('N', getDankCellMaterial(2));
         r.setIngredient('E', Materials.getDankMaterial(1));
         return r;
     }
@@ -119,7 +141,7 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Dank_3");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Materials.getDankCellMaterial(3));
+        r.setIngredient('N', getDankCellMaterial(3));
         r.setIngredient('E', Materials.getDankMaterial(2));
         return r;
     }
@@ -128,7 +150,7 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Dank_4");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Materials.getDankCellMaterial(4));
+        r.setIngredient('N', getDankCellMaterial(4));
         r.setIngredient('E', Materials.getDankMaterial(3));
         return r;
     }
@@ -137,7 +159,7 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Dank_5");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Materials.getDankCellMaterial(5));
+        r.setIngredient('N', getDankCellMaterial(5));
         r.setIngredient('E', Materials.getDankMaterial(4));
         return r;
     }
@@ -146,7 +168,7 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Dank_6");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Materials.getDankCellMaterial(6));
+        r.setIngredient('N', getDankCellMaterial(6));
         r.setIngredient('E', Materials.getDankMaterial(5));
         return r;
     }
@@ -155,7 +177,7 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Dank_7");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Materials.getDankCellMaterial(7));
+        r.setIngredient('N', getDankCellMaterial(7));
         r.setIngredient('E', Materials.getDankMaterial(6));
         return r;
     }
@@ -164,7 +186,7 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Dank_8");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Materials.getDankCellMaterial(8));
+        r.setIngredient('N', getDankCellMaterial(8));
         r.setIngredient('E', Materials.getDankMaterial(7));
         return r;
     }
@@ -173,10 +195,34 @@ public final class Recipes {
         NamespacedKey key = new NamespacedKey(plugin, "Dank_9");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
-        r.setIngredient('N', Materials.getDankCellMaterial(9));
+        r.setIngredient('N', getDankCellMaterial(9));
         r.setIngredient('E', Materials.getDankMaterial(8));
         return r;
     }
 
+    public static ItemStack[] getSlimefunCellRecipe(Integer level) {
+        return new ItemStack[] {
+            new ItemStack(getCellCraftingMaterial(level)), new ItemStack(getCellCraftingMaterial(level)),     new ItemStack(getCellCraftingMaterial(level)),
+            new ItemStack(getCellCraftingMaterial(level)), new ItemStack(CELL_CORE_MATERIAL),                 new ItemStack(getCellCraftingMaterial(level)),
+            new ItemStack(getCellCraftingMaterial(level)), new ItemStack(getCellCraftingMaterial(level)),     new ItemStack(getCellCraftingMaterial(level))
+        };
+    }
 
+    public static ItemStack[] getSlimefunPackRecipe(SlimefunItemStack stack, @Nullable SlimefunItemStack core) {
+        ItemStack[] i;
+        if (core != null) {
+            i = new ItemStack[]{
+                    stack, stack, stack,
+                    stack, core, stack,
+                    stack, stack, stack
+            };
+        } else {
+            i = new ItemStack[]{
+                    stack, stack, stack,
+                    stack, new ItemStack(DANK_CORE_MATERIAL), stack,
+                    stack, stack, stack
+            };
+        }
+        return i;
+    }
 }

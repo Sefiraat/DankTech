@@ -37,62 +37,61 @@ public class CraftListener implements Listener {
     @EventHandler
     public void onPreCraft(PrepareItemCraftEvent e) {
         // TODO Really messy now and CC too high
-        if (e.getView().getPlayer() instanceof Player) {
-            if (e.getRecipe() != null) {
-                ItemStack res = e.getRecipe().getResult();
-                if (isResultDank(res.getType())) {
+        if (e.getView().getPlayer() instanceof Player && e.getRecipe() != null) {
 
-                    ItemStack[] contents = e.getInventory().getMatrix();
-                    boolean isNew = false;
-                    boolean hasDankItems = false;
-                    int[] slots = {0, 1, 2, 3, 5, 6, 7, 8};
-                    boolean itemsCorrect = true;
-                    int dankLevel = 1;
-                    long dankID = -1;
+            ItemStack res = e.getRecipe().getResult();
+            if (isResultDank(res.getType())) {
 
-                    if (res.getType() == Materials.DANK_1) {
-                        isNew = true;
-                        if(contents[4].getType() == Material.DRAGON_EGG) {
-                            hasDankItems = true;
-                        }
+                ItemStack[] contents = e.getInventory().getMatrix();
+                boolean isNew = false;
+                boolean hasDankItems = false;
+                int[] slots = {0, 1, 2, 3, 5, 6, 7, 8};
+                boolean itemsCorrect = true;
+                int dankLevel = 1;
+                long dankID = -1;
+
+                if (res.getType() == Materials.DANK_1) {
+                    isNew = true;
+                    if(contents[4].getType() == Material.DRAGON_EGG) {
+                        hasDankItems = true;
                     }
-
-                    for (int i : slots) {
-                        NamespacedKey key = new NamespacedKey(parent, "dank");
-                        if (!contents[i].getItemMeta().getPersistentDataContainer().has(key, PersistentDataType.INTEGER)) {
-                            itemsCorrect = false;
-                        } else {
-                            hasDankItems = true;
-                        }
-                    }
-
-                    if (!isNew) {
-                        NamespacedKey levelKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL);
-                        NamespacedKey idKey = new NamespacedKey(parent.getInstance(), KEY_ID);
-                        if (contents[4].getItemMeta().getPersistentDataContainer().has(levelKey, PersistentDataType.INTEGER)) {
-                            dankLevel = contents[4].getItemMeta().getPersistentDataContainer().get(levelKey, PersistentDataType.INTEGER) + 1;
-                            dankID = contents[4].getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
-                        } else {
-                            itemsCorrect = false;
-                        }
-                    }
-
-                    if (itemsCorrect) {
-                        NamespacedKey key = new NamespacedKey(parent.getInstance(), KEY_LEVEL);
-                        NamespacedKey idKey = new NamespacedKey(parent.getInstance(),KEY_ID);
-                        ItemStack r = ItemStacks.getShallowDank(dankLevel);
-                        ItemMeta im = r.getItemMeta();
-                        im.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, dankLevel);
-                        im.getPersistentDataContainer().set(idKey, PersistentDataType.LONG, dankID);
-                        r.setItemMeta(im);
-                        e.getInventory().setResult(r);
-                    } else {
-                        if (hasDankItems) {
-                            e.getInventory().setResult(new ItemStack(Material.AIR));
-                        }
-                    }
-
                 }
+
+                for (int i : slots) {
+                    NamespacedKey key = new NamespacedKey(parent, "dank");
+                    if (!contents[i].getItemMeta().getPersistentDataContainer().has(key, PersistentDataType.INTEGER)) {
+                        itemsCorrect = false;
+                    } else {
+                        hasDankItems = true;
+                    }
+                }
+
+                if (!isNew) {
+                    NamespacedKey levelKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL);
+                    NamespacedKey idKey = new NamespacedKey(parent.getInstance(), KEY_ID);
+                    if (contents[4].getItemMeta().getPersistentDataContainer().has(levelKey, PersistentDataType.INTEGER)) {
+                        dankLevel = contents[4].getItemMeta().getPersistentDataContainer().get(levelKey, PersistentDataType.INTEGER) + 1;
+                        dankID = contents[4].getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
+                    } else {
+                        itemsCorrect = false;
+                    }
+                }
+
+                if (itemsCorrect) {
+                    NamespacedKey key = new NamespacedKey(parent.getInstance(), KEY_LEVEL);
+                    NamespacedKey idKey = new NamespacedKey(parent.getInstance(),KEY_ID);
+                    ItemStack r = ItemStacks.getShallowDank(dankLevel);
+                    ItemMeta im = r.getItemMeta();
+                    im.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, dankLevel);
+                    im.getPersistentDataContainer().set(idKey, PersistentDataType.LONG, dankID);
+                    r.setItemMeta(im);
+                    e.getInventory().setResult(r);
+                } else {
+                    if (hasDankItems) {
+                        e.getInventory().setResult(new ItemStack(Material.AIR));
+                    }
+                }
+
             }
         }
     }

@@ -235,4 +235,7 @@ public final class ItemDetails {
         }
         return l;
     }
+
+    public static final String SLIMEFUN_DISPLAY_CATEGORY_NAME = "" + ChatColor.YELLOW + "DankTech";
+
 }

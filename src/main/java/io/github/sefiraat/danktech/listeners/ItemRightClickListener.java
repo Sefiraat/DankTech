@@ -20,7 +20,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-
 import java.util.Collection;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;

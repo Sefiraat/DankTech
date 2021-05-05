@@ -9,6 +9,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 
+import static io.github.sefiraat.danktech.finals.Constants.*;
+
 public class GUIItems {
 
     private GUIItems() {
@@ -62,7 +64,7 @@ public class GUIItems {
         return g;
     }
     public static GuiItem guiPackAssignedSlot(@Nonnull Long dankID, @Nonnull Integer slot, @Nonnull DankTech plugin) {
-        ItemStack i = plugin.getDankStorageConfig().getItemStack("PACKS.PACKS_BY_ID." + dankID + ".SLOT" + slot + ".STACK");
+        ItemStack i = plugin.getDankStorageConfig().getItemStack(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID + "." + CONFIG_GETTER_VAL_SLOT + slot + "." + CONFIG_GETTER_VAL_STACK);
         GuiItem g = new GuiItem(i);
         g.setAction(event -> event.setCancelled(true));
         return g;
