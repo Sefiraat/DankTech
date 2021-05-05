@@ -39,6 +39,10 @@ public class ItemRightClickListener implements Listener {
     public void onRightClick(PlayerInteractEvent e) {
         if (e.getItem() != null && e.getItem().getItemMeta() != null) {
             ItemStack i = e.getItem();
+            if (isDankMaterial(i, parent.getInstance()) && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                e.setCancelled(true);
+                return;
+            }
             if (isDank(i, parent.getInstance())) {
                 Player p = e.getPlayer();
                 if (p.isSneaking()) {

@@ -24,6 +24,7 @@ import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.finals.Materials.getDankMaterial;
 import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;
+import static io.github.sefiraat.danktech.lib.misc.Utils.isDankMaterial;
 
 public class CraftListener implements Listener {
 
@@ -58,8 +59,9 @@ public class CraftListener implements Listener {
                 }
 
                 for (int i : slots) {
+                    ItemStack item = contents[i];
                     NamespacedKey key = new NamespacedKey(parent, "dank");
-                    if (!contents[i].getItemMeta().getPersistentDataContainer().has(key, PersistentDataType.INTEGER)) {
+                    if (isDankMaterial(item, parent)) {
                         itemsCorrect = false;
                     } else {
                         hasDankItems = true;

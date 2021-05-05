@@ -41,7 +41,7 @@ public class SlimefunDankAddon implements SlimefunAddon {
         List<SlimefunItemStack> cells =  new ArrayList<>();
         for (int i = 1; i < 10; i++) {
             SlimefunItemStack dankCellStack = new SlimefunItemStack( "DANK_CELL_" + i, ItemStacks.getCell(i, parent));
-            SlimefunItem dankCell = new SlimefunItem(dankCategory, dankCellStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunCellRecipe(i));
+            SlimefunItem dankCell = new DankSlimefunItem(dankCategory, dankCellStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunCellRecipe(i));
             dankCell.register(this);
             cells.add(dankCellStack);
         }
@@ -51,9 +51,9 @@ public class SlimefunDankAddon implements SlimefunAddon {
             SlimefunItemStack dankPackStack = new SlimefunItemStack( "DANK_PACK_" + i, ItemStacks.getShallowDank(i));
             SlimefunItem dankPack;
             if (i == 1) {
-                dankPack = new SlimefunItem(dankCategory, dankPackStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunPackRecipe(cells.get(0),null));
+                dankPack = new DankSlimefunItem(dankCategory, dankPackStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunPackRecipe(cells.get(0),null));
             } else {
-                dankPack = new SlimefunItem(dankCategory, dankPackStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunPackRecipe(cells.get(i - 1), danks.get(i - 2)));
+                dankPack = new DankSlimefunItem(dankCategory, dankPackStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunPackRecipe(cells.get(i - 1), danks.get(i - 2)));
             }
             dankPack.register(this);
             danks.add(dankPackStack);

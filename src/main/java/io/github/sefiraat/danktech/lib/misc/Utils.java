@@ -65,6 +65,12 @@ public class Utils {
         return containerHasData(i, key, PersistentDataType.INTEGER);
     }
 
+    public static boolean isDankMaterial(ItemStack i, DankTech plugin) {
+        NamespacedKey key = new NamespacedKey(plugin, "dank");
+        return containerHasData(i, key, PersistentDataType.INTEGER);
+    }
+
+
     public static void makeDank(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-dank");
         setData(i, key, 1);
