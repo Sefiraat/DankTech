@@ -6,6 +6,7 @@ public final class Materials {
 
     public static final Material CELL_CORE_MATERIAL = Material.GLASS_PANE;
     public static final Material DANK_CORE_MATERIAL = Material.NETHER_STAR;
+    public static final Material TRASH_CORE_MATERIAL = Material.IRON_BLOCK;
 
     private Materials() {
         throw new IllegalStateException("Utility class");
@@ -43,6 +44,8 @@ public final class Materials {
     public static final String DANK_TRASH_8_TEXTURE = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDBkYjFiNzY0ZjY5YTMzNmE0OTNlZTJhMTgyNDA4NmE1ZDI4YmQzY2MwZGRhMDUzNzBiNzNjZDc1OGRkNDFmYiJ9fX0=";
     public static final String DANK_TRASH_9_TEXTURE = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ2NWY4MGJmMDJiNDA4ODg1OTg3YjAwOTU3Y2E1ZTllYjg3NGMzZmE4ODMwNTA5OTU5N2EzMzNhMzM2ZWUxNSJ9fX0=";
 
+    public static final String DANK_SLIMEFUN_CATEGORY = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzRmZWM1Y2RjMmUyMjQwMWE0YjViYTM3NmZmZTY0NzI3OWVkM2Y5NGZkNzVmODA1NmQ5ODZmMzNjOTMxYWM1NSJ9fX0=";
+
     public static String getDankTexture(int dankLevel) {
         switch (dankLevel) {
             case 1: return DANK_1_TEXTURE;
@@ -54,6 +57,20 @@ public final class Materials {
             case 7: return DANK_7_TEXTURE;
             case 8: return DANK_8_TEXTURE;
             default: return DANK_9_TEXTURE;
+        }
+    }
+
+    public static String getTrashTexture(int dankLevel) {
+        switch (dankLevel) {
+            case 1: return DANK_TRASH_1_TEXTURE;
+            case 2: return DANK_TRASH_2_TEXTURE;
+            case 3: return DANK_TRASH_3_TEXTURE;
+            case 4: return DANK_TRASH_4_TEXTURE;
+            case 5: return DANK_TRASH_5_TEXTURE;
+            case 6: return DANK_TRASH_6_TEXTURE;
+            case 7: return DANK_TRASH_7_TEXTURE;
+            case 8: return DANK_TRASH_8_TEXTURE;
+            default: return DANK_TRASH_9_TEXTURE;
         }
     }
 

@@ -95,7 +95,7 @@ public class DankGUI {
             if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
                 gui.setItem(2, i, GUIItems.guiPackAssignedSlot(dankID, i, plugin));
             } else {
-                gui.setItem(2, i, GUIItems.guiPackUnassignedSlot());
+                gui.setItem(2, i, GUIItems.guiUnassignedSlot());
             }
         }
     }
@@ -171,7 +171,7 @@ public class DankGUI {
             i.setAmount(amount);
             slotSection.set(CONFIG_GETTER_VAL_VOLUME, 0);
             slotSection.set(CONFIG_GETTER_VAL_STACK, null);
-            gui.updateItem(2, slot, GUIItems.guiPackUnassignedSlot());
+            gui.updateItem(2, slot, GUIItems.guiUnassignedSlot());
             GuiItem g = GUIItems.guiPackWithdrawItem(0);
             g.setAction(event -> {
                 withdrawItems(gui, dankID, plugin, slot, event);

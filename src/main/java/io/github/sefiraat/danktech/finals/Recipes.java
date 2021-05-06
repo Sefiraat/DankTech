@@ -134,6 +134,26 @@ public final class Recipes {
         return r;
     }
 
+    public static Recipe recipeTrash(DankTech plugin) {
+        ItemStack i = new ItemStack(Material.PLAYER_HEAD, 1);
+        NamespacedKey key = new NamespacedKey(plugin, "Trash_All");
+        ShapedRecipe r = new ShapedRecipe(key, i);
+        r.shape("NNN","NEN","NNN");
+        r.setIngredient('N', Material.PLAYER_HEAD);
+        r.setIngredient('E', Material.PLAYER_HEAD);
+        return r;
+    }
+
+    public static Recipe recipeTrash1(DankTech plugin) {
+        ItemStack i = new ItemStack(Materials.getDankMaterial(1), 1);
+        NamespacedKey key = new NamespacedKey(plugin, "Trash_1");
+        ShapedRecipe r = new ShapedRecipe(key, i);
+        r.shape("NNN","NEN","NNN");
+        r.setIngredient('N', Material.PLAYER_HEAD);
+        r.setIngredient('E', Materials.TRASH_CORE_MATERIAL);
+        return r;
+    }
+
     public static Recipe recipeDank2(DankTech plugin) {
         ItemStack i = new ItemStack(Materials.getDankMaterial(2), 1);
         NamespacedKey key = new NamespacedKey(plugin, "Dank_2");
@@ -232,4 +252,23 @@ public final class Recipes {
         }
         return i;
     }
+
+    public static ItemStack[] getSlimefunTrashRecipe(SlimefunItemStack stack, @Nullable SlimefunItemStack core) {
+        ItemStack[] i;
+        if (core != null) {
+            i = new ItemStack[]{
+                    stack, stack, stack,
+                    stack, core, stack,
+                    stack, stack, stack
+            };
+        } else {
+            i = new ItemStack[]{
+                    stack, stack, stack,
+                    stack, new ItemStack(Materials.TRASH_CORE_MATERIAL), stack,
+                    stack, stack, stack
+            };
+        }
+        return i;
+    }
+
 }

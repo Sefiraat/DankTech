@@ -1,27 +1,28 @@
 package io.github.sefiraat.danktech.lib.misc;
 
+import dev.dbassett.skullcreator.SkullCreator;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemStacks;
+import io.github.sefiraat.danktech.finals.Materials;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.recipes.MinecraftRecipe;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.ItemDetails.SLIMEFUN_DISPLAY_CATEGORY_NAME;
-import static io.github.sefiraat.danktech.finals.Recipes.getSlimefunCellRecipe;
-import static io.github.sefiraat.danktech.finals.Recipes.getSlimefunPackRecipe;
+import static io.github.sefiraat.danktech.finals.Recipes.*;
 
 public class SlimefunDankAddon implements SlimefunAddon {
 
@@ -34,7 +35,12 @@ public class SlimefunDankAddon implements SlimefunAddon {
 
         // Category
         NamespacedKey categoryIdMain = new NamespacedKey(parent, "danktech_main");
-        ItemStack categoryItemMain = new CustomItem(Material.RED_STAINED_GLASS, SLIMEFUN_DISPLAY_CATEGORY_NAME, "", "&a> Click to open");
+
+        ItemStack categoryItemMain = SkullCreator.itemFromBase64(Materials.DANK_SLIMEFUN_CATEGORY);
+        ItemMeta im = categoryItemMain.getItemMeta();
+        im.setDisplayName(SLIMEFUN_DISPLAY_CATEGORY_NAME);
+        im.setLore(Collections.singletonList("&a> Click to open"));
+        categoryItemMain.setItemMeta(im);
         dankCategory = new Category(categoryIdMain, categoryItemMain);
 
         // Items
@@ -57,6 +63,19 @@ public class SlimefunDankAddon implements SlimefunAddon {
             }
             dankPack.register(this);
             danks.add(dankPackStack);
+        }
+
+        List<SlimefunItemStack> trashes = new ArrayList<>();
+        for (int i = 1; i < 10; i++) {
+            SlimefunItemStack dankTrashStack = new SlimefunItemStack( "DANK_TRASH_" + i, ItemStacks.getShallowTrash(i));
+            SlimefunItem trashPack;
+            if (i == 1) {
+                trashPack = new DankSlimefunItem(dankCategory, dankTrashStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunTrashRecipe(cells.get(0),null));
+            } else {
+                trashPack = new DankSlimefunItem(dankCategory, dankTrashStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunTrashRecipe(cells.get(i - 1), trashes.get(i - 2)));
+            }
+            trashPack.register(this);
+            trashes.add(dankTrashStack);
         }
 
     }

@@ -28,6 +28,10 @@ public final class Messages {
         return (PREFIX + SUCCESS + "Pack created. ID: " + packID);
     }
 
+    public static String messageCommandTrashGiven(long trashID) {
+        return (PREFIX + SUCCESS + "Trash Pack created. ID: " + trashID);
+    }
+
     public static String messageCommandPackUpdated(long packID) {
         return (PREFIX + WARNING + "This pack is old! Updating to the new format. ID: " + packID);
     }
@@ -35,6 +39,9 @@ public final class Messages {
     // Events
     public static String messageEventOpenPack(long packID) {
         return (PREFIX + PASSIVE + "Opening Dank Pack. ID: " + packID);
+    }
+    public static String messageEventOpenTrash(long trashID) {
+        return (PREFIX + PASSIVE + "Opening Dank Trash. ID: " + trashID);
     }
     public static final String MESSAGE_EVENT_INPUT_EXISTING = PREFIX + WARNING + "Slot is already assigned.";
     public static final String MESSAGE_EVENT_INPUT_THIS_DANK = PREFIX + WARNING + "You cannot put a Dank inside itself silly!";
@@ -50,4 +57,6 @@ public final class Messages {
     // Crafting
     public static final String MESSAGE_CRAFT_NEW_PACK = PREFIX + SUCCESS + "You have crafted a new Dank Pack";
     public static final String MESSAGE_CRAFT_UPGRADE_PACK = PREFIX + SUCCESS + "You have upgraded a Dank Pack";
+    public static final String MESSAGE_CRAFT_NEW_TRASH = PREFIX + SUCCESS + "You have crafted a new Dank Trash Can";
+    public static final String MESSAGE_CRAFT_UPGRADE_TRASH = PREFIX + SUCCESS + "You have upgraded a Dank Trash Can";
 }

@@ -8,10 +8,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import static io.github.sefiraat.danktech.finals.ItemDetails.getDankCellName;
-import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
-import static io.github.sefiraat.danktech.finals.Materials.getDankCellTexture;
-import static io.github.sefiraat.danktech.finals.Materials.getDankTexture;
+import static io.github.sefiraat.danktech.finals.ItemDetails.*;
+import static io.github.sefiraat.danktech.finals.Materials.*;
 
 public class ItemStacks {
 
@@ -38,6 +36,14 @@ public class ItemStacks {
         m.setDisplayName(getDankNameBold(level));
         dank.setItemMeta(m);
         return dank;
+    }
+
+    public static ItemStack getShallowTrash(int level) {
+        ItemStack trash = createSkull(getTrashTexture(level));
+        ItemMeta m = trash.getItemMeta();
+        m.setDisplayName(getTrashNameBold(level));
+        trash.setItemMeta(m);
+        return trash;
     }
 
     public static ItemStack createSkull(String base64val) {

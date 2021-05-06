@@ -28,6 +28,7 @@ import java.util.Collection;
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
+import static io.github.sefiraat.danktech.implementation.gui.DankTrashGUI.getTrashGUI;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class ItemRightClickListener implements Listener {
@@ -49,35 +50,49 @@ public class ItemRightClickListener implements Listener {
                 return;
             }
             if (isDank(i, parent.getInstance())) {
-                if (isOldDank(i)) {
-                    replaceDank(i, p);
-                    e.setCancelled(true);
-                    return;
-                }
-                if (p.isSneaking()) {
-                    switch (e.getAction()) {
-                        case LEFT_CLICK_AIR:
-                            e.setCancelled(true);
-                            cycleBackward(i, p);
-                            break;
-                        case RIGHT_CLICK_AIR:
-                            e.setCancelled(true);
-                            cycleForward(i, p);
-                            break;
-                        case RIGHT_CLICK_BLOCK:
-                            e.setCancelled(true);
-                            placeBlock(e, i, p);
-                            break;
-                        default:
-                            break;
-                    }
-                } else {
-                    if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-                        e.setCancelled(true);
-                        openDankPack(i, p);
-                    }
-                }
+                handleDank(e, i, p);
             }
+            if (isTrash(i, parent.getInstance())) {
+                handleTrash(e, i, p);
+            }
+        }
+    }
+
+    private void handleDank(PlayerInteractEvent e, ItemStack i, Player p) {
+        if (isOldDank(i)) {
+            replaceDank(i, p);
+            e.setCancelled(true);
+            return;
+        }
+        if (p.isSneaking()) {
+            switch (e.getAction()) {
+                case LEFT_CLICK_AIR:
+                    e.setCancelled(true);
+                    cycleBackward(i, p);
+                    break;
+                case RIGHT_CLICK_AIR:
+                    e.setCancelled(true);
+                    cycleForward(i, p);
+                    break;
+                case RIGHT_CLICK_BLOCK:
+                    e.setCancelled(true);
+                    placeBlock(e, i, p);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+                e.setCancelled(true);
+                openDankPack(i, p);
+            }
+        }
+    }
+
+    private void handleTrash(PlayerInteractEvent e, ItemStack i, Player p) {
+        if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+            e.setCancelled(true);
+            openTrashPack(i, p);
         }
     }
 
@@ -124,6 +139,15 @@ public class ItemRightClickListener implements Listener {
         p.sendMessage(Messages.messageEventOpenPack(dankId));
         setLastOpenedBy(dankId, parent, p);
         Gui g = getDankGUI(dankId, dankLevel, parent.getInstance());
+        g.open(p);
+    }
+
+    private void openTrashPack(ItemStack i, Player p) {
+        int trashLevel = getTrashLevel(i, parent.getInstance());
+        long trashId = getTrashId(i, parent.getInstance());
+        p.sendMessage(Messages.messageEventOpenPack(trashId));
+        setLastOpenedBy(trashId, parent, p);
+        Gui g = getTrashGUI(trashId, trashLevel, parent.getInstance());
         g.open(p);
     }
 

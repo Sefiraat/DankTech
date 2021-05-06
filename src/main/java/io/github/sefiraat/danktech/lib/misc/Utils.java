@@ -64,15 +64,24 @@ public class Utils {
         return containerHasData(i, key, PersistentDataType.INTEGER);
     }
 
-    public static boolean isDankMaterial(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin, "dank");
-        return containerHasData(i, key, PersistentDataType.INTEGER);
-    }
-
-
     public static void makeDank(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-dank");
         setData(i, key, 1);
+    }
+
+    public static boolean isTrash(ItemStack i, DankTech plugin) {
+        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-trash");
+        return containerHasData(i, key, PersistentDataType.INTEGER);
+    }
+
+    public static void makeTrash(ItemStack i, DankTech plugin) {
+        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-trash");
+        setData(i, key, 1);
+    }
+
+    public static boolean isDankMaterial(ItemStack i, DankTech plugin) {
+        NamespacedKey key = new NamespacedKey(plugin, "dank");
+        return containerHasData(i, key, PersistentDataType.INTEGER);
     }
 
     public static int getDankLevel(ItemStack i, DankTech plugin) {
@@ -88,6 +97,19 @@ public class Utils {
         setData(i, key, value);
     }
 
+    public static int getTrashLevel(ItemStack i, DankTech plugin) {
+        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-level");
+        if (containerHasData(i, key, PersistentDataType.INTEGER)) {
+            return (int) getData(i, key, PersistentDataType.INTEGER);
+        }
+        return 0;
+    }
+
+    public static void setTrashLevel(ItemStack i, DankTech plugin, int value) {
+        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-level");
+        setData(i, key, value);
+    }
+
     public static long getDankId(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"dank-id");
         if (containerHasData(i, key, PersistentDataType.LONG)) {
@@ -100,6 +122,20 @@ public class Utils {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"dank-id");
         setData(i, key, value);
     }
+
+    public static long getTrashId(ItemStack i, DankTech plugin) {
+        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-id");
+        if (containerHasData(i, key, PersistentDataType.LONG)) {
+            return (long) getData(i, key, PersistentDataType.LONG);
+        }
+        return 0;
+    }
+
+    public static void setTrashId(ItemStack i, DankTech plugin, long value) {
+        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-id");
+        setData(i, key, value);
+    }
+
 
     public static void setLastOpenedBy(Long dankID, DankTech plugin, Player p) {
         ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
@@ -182,6 +218,21 @@ public class Utils {
         return nextValue;
     }
 
+    public static long getNextTrashID(DankTech plugin) {
+        ConfigurationSection sec = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID);
+        int nextValue = 1;
+        if (sec != null) {
+            for (String key : sec.getKeys(false)) {
+                int value = Integer.parseInt(key);
+                if (value > nextValue) {
+                    nextValue = value;
+                }
+            }
+            nextValue++;
+        }
+        return nextValue;
+    }
+
     public static List<ItemStack> getAllDanks(DankTech plugin) {
         List<ItemStack> l = new ArrayList<>();
         ConfigurationSection sec = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID);
@@ -214,4 +265,5 @@ public class Utils {
             }
         return 36 - i;
     }
+
 }

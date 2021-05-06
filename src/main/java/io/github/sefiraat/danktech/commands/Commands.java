@@ -8,6 +8,7 @@ import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.ItemStacks;
 import io.github.sefiraat.danktech.finals.Messages;
 import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
+import io.github.sefiraat.danktech.implementation.dankpacks.TrashPack;
 import io.github.sefiraat.danktech.implementation.gui.AdminGUI;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.command.CommandSender;
@@ -17,7 +18,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_DANK_ID;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
+import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashNameBold;
 import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;
+import static io.github.sefiraat.danktech.lib.misc.Utils.getNextTrashID;
 
 @CommandAlias("DankTech|DT")
 @Description("DankTech Main")
@@ -62,6 +65,26 @@ public class Commands extends BaseCommand {
                     dank.setItemMeta(m);
                     player.getPlayer().getInventory().addItem(dank);
                     player.getPlayer().sendMessage(Messages.messageCommandPackGiven(packID));
+                } else {
+                    player.getPlayer().sendMessage(Messages.MESSAGE_COMMAND_PACK_NO_EXIST);
+                }
+            }
+        }
+
+        @Subcommand("TrashPack")
+        @CommandPermission("DankTech.Admin")
+        @CommandCompletion("@players @range:1-9")
+        public void onGiveItemTrash(CommandSender sender, OnlinePlayer player, int level) {
+            if (sender instanceof Player) {
+                if (level <= 9) {
+                    long packID = getNextTrashID(parent);
+                    ItemStack trash = TrashPack.TrashPack(level, packID, parent, player.getPlayer());
+                    ItemMeta m = trash.getItemMeta();
+                    m.setDisplayName(getTrashNameBold(level));
+                    m.setLore(ItemDetails.getTrashLore(level, packID));
+                    trash.setItemMeta(m);
+                    player.getPlayer().getInventory().addItem(trash);
+                    player.getPlayer().sendMessage(Messages.messageCommandTrashGiven(packID));
                 } else {
                     player.getPlayer().sendMessage(Messages.MESSAGE_COMMAND_PACK_NO_EXIST);
                 }

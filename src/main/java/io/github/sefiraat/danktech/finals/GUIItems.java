@@ -51,7 +51,7 @@ public class GUIItems {
         g.setAction(event -> event.setCancelled(true));
         return g;
     }
-    public static GuiItem guiPackUnassignedSlot() {
+    public static GuiItem guiUnassignedSlot() {
         GuiItem g = new GuiItem(Material.BARRIER);
         ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
@@ -70,6 +70,13 @@ public class GUIItems {
         return g;
     }
 
+    public static GuiItem guiTrashAssignedSlot(@Nonnull Long trashId, @Nonnull Integer slot, @Nonnull DankTech plugin) {
+        ItemStack i = plugin.getDankStorageConfig().getItemStack(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashId + "." + CONFIG_GETTER_VAL_SLOT + slot + "." + CONFIG_GETTER_VAL_STACK);
+        GuiItem g = new GuiItem(i);
+        g.setAction(event -> event.setCancelled(true));
+        return g;
+    }
+
     public static GuiItem guiPackWithdrawItem(int amount) {
         ItemStack i = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta im = i.getItemMeta();
@@ -82,8 +89,8 @@ public class GUIItems {
     public static GuiItem guiTrashWithdrawItem(int amount) {
         ItemStack i = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta im = i.getItemMeta();
-        im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_WITHDRAW);
-        im.setLore(ItemDetails.guiDisplayLoreWithdraw(amount));
+        im.setDisplayName(ItemDetails.GUI_DISPLAY_TRASH_NAME_WITHDRAW);
+        im.setLore(ItemDetails.guiDisplayLoreTrash());
         i.setItemMeta(im);
         return new GuiItem(i);
     }

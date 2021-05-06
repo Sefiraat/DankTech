@@ -6,6 +6,7 @@ import io.github.sefiraat.danktech.finals.ItemStacks;
 import io.github.sefiraat.danktech.finals.Materials;
 import io.github.sefiraat.danktech.finals.Messages;
 import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
+import io.github.sefiraat.danktech.implementation.dankpacks.TrashPack;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
@@ -22,7 +23,9 @@ import javax.annotation.Nonnull;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
+import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashNameBold;
 import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;
+import static io.github.sefiraat.danktech.lib.misc.Utils.getNextTrashID;
 
 public class CraftListener implements Listener {
 
@@ -44,8 +47,6 @@ public class CraftListener implements Listener {
             boolean hasDankItems = false;
             int[] slots = {0, 1, 2, 3, 5, 6, 7, 8};
             boolean itemsCorrect = true;
-            int dankLevel = 1;
-            long dankID = -1;
 
             if (!allSlotsFilled(contents)) {
                 return;
@@ -53,28 +54,55 @@ public class CraftListener implements Listener {
 
             ItemStack c = contents[4];
 
-            NamespacedKey levelKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL);
-            NamespacedKey idKey = new NamespacedKey(parent.getInstance(), KEY_ID);
+            NamespacedKey levelDankKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_DANK);
+            NamespacedKey idDankKey = new NamespacedKey(parent.getInstance(), KEY_ID_DANK);
 
-            if (c.getType() == Materials.DANK_CORE_MATERIAL || c.getItemMeta().getPersistentDataContainer().has(levelKey, PersistentDataType.INTEGER)) {
+            NamespacedKey levelTrashKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_TRASH);
+            NamespacedKey idTrashKey = new NamespacedKey(parent.getInstance(), KEY_ID_TRASH);
+
+            if (c.getType() == Materials.DANK_CORE_MATERIAL || c.getItemMeta().getPersistentDataContainer().has(levelDankKey, PersistentDataType.INTEGER)) {
                 // Core denotes a DANK PACK craft
+
+                int dankLevel = 1;
+                long dankID = -1;
+
                 if (c.getType() == Materials.DANK_CORE_MATERIAL) {
                     dankID = getNextPackID(parent);
                 } else {
-                    dankLevel = c.getItemMeta().getPersistentDataContainer().get(levelKey, PersistentDataType.INTEGER) + 1;
-                    dankID = c.getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
+                    dankLevel = c.getItemMeta().getPersistentDataContainer().get(levelDankKey, PersistentDataType.INTEGER) + 1;
+                    dankID = c.getItemMeta().getPersistentDataContainer().get(idDankKey, PersistentDataType.LONG);
                 }
 
                 if (cellMatchLevel(dankLevel, contents, parent)) {
                     ItemStack r = ItemStacks.getShallowDank(dankLevel);
                     ItemMeta im = r.getItemMeta();
-                    im.getPersistentDataContainer().set(levelKey, PersistentDataType.INTEGER, dankLevel);
-                    im.getPersistentDataContainer().set(idKey, PersistentDataType.LONG, dankID);
+                    im.getPersistentDataContainer().set(levelDankKey, PersistentDataType.INTEGER, dankLevel);
+                    im.getPersistentDataContainer().set(idDankKey, PersistentDataType.LONG, dankID);
+                    r.setItemMeta(im);
+                    e.getInventory().setResult(r);
+                }
+            } else  if (c.getType() == Materials.TRASH_CORE_MATERIAL || c.getItemMeta().getPersistentDataContainer().has(levelTrashKey, PersistentDataType.INTEGER)) {
+                // Core denotes a DANK TRASH craft
+
+                int trashLevel = 1;
+                long trashID = -1;
+
+                if (c.getType() == Materials.TRASH_CORE_MATERIAL) {
+                    trashID = getNextTrashID(parent);
+                } else {
+                    trashLevel = c.getItemMeta().getPersistentDataContainer().get(levelTrashKey, PersistentDataType.INTEGER) + 1;
+                    trashID = c.getItemMeta().getPersistentDataContainer().get(idTrashKey, PersistentDataType.LONG);
+                }
+
+                if (cellMatchLevel(trashLevel, contents, parent)) {
+                    ItemStack r = ItemStacks.getShallowTrash(trashLevel);
+                    ItemMeta im = r.getItemMeta();
+                    im.getPersistentDataContainer().set(levelTrashKey, PersistentDataType.INTEGER, trashLevel);
+                    im.getPersistentDataContainer().set(idTrashKey, PersistentDataType.LONG, trashID);
                     r.setItemMeta(im);
                     e.getInventory().setResult(r);
                 }
             }
-
 //            if (res.getType() == Materials.DANK_1) {
 //                isNew = true;
 //                if(contents[4].getType() == Materials.DANK_CORE_MATERIAL) {
@@ -105,8 +133,8 @@ public class CraftListener implements Listener {
 //            }
 //
 //            if (itemsCorrect) {
-//                NamespacedKey key = new NamespacedKey(parent.getInstance(), KEY_LEVEL);
-//                NamespacedKey idKey = new NamespacedKey(parent.getInstance(),KEY_ID);
+//                NamespacedKey key = new NamespacedKey(parent.getInstance(), KEY_LEVEL_DANK);
+//                NamespacedKey idKey = new NamespacedKey(parent.getInstance(),KEY_ID_DANK);
 //                ItemStack r = ItemStacks.getShallowDank(dankLevel);
 //                ItemMeta im = r.getItemMeta();
 //                im.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, dankLevel);
@@ -130,12 +158,14 @@ public class CraftListener implements Listener {
         if (e.getWhoClicked() instanceof Player) {
             Player p = (Player) e.getWhoClicked();
             if (e.getInventory().getResult() != null) {
-                NamespacedKey key = new NamespacedKey(parent.getInstance(), KEY_LEVEL);
                 ItemStack res = e.getInventory().getResult();
-                // boolean isDank = isResultDank(res.getType());
-                boolean hasKey = res.getItemMeta().getPersistentDataContainer().has(key, PersistentDataType.INTEGER);
-                if (hasKey) {
-                    int level = res.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.INTEGER);
+                NamespacedKey dankKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_DANK);
+                boolean hasDankKey = res.getItemMeta().getPersistentDataContainer().has(dankKey, PersistentDataType.INTEGER);
+                NamespacedKey trashKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_TRASH);
+                boolean hasTrashKey = res.getItemMeta().getPersistentDataContainer().has(trashKey, PersistentDataType.INTEGER);
+
+                if (hasDankKey) {
+                    int level = res.getItemMeta().getPersistentDataContainer().get(dankKey, PersistentDataType.INTEGER);
                     if (level == 1) {
                         long packID = getNextPackID(parent);
                         ItemStack dank = DankPack.DankPack(level, packID, parent, p);
@@ -146,10 +176,10 @@ public class CraftListener implements Listener {
                         e.setCurrentItem(dank);
                         p.sendMessage(Messages.MESSAGE_CRAFT_NEW_PACK);
                     } else {
-                        NamespacedKey idKey = new NamespacedKey(parent.getInstance(), KEY_ID);
+                        NamespacedKey idKey = new NamespacedKey(parent.getInstance(), KEY_ID_DANK);
                         long packID = res.getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
                         ConfigurationSection c = parent.getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID);
-                        c.set(CONFIG_GETTER_VAL_LEVEL,level);
+                        c.set(CONFIG_GETTER_VAL_LEVEL, level);
                         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_STACK, null);
                         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_VOLUME , 0);
                         ItemStack dank = DankPack.DankPack(level, packID, parent, p);
@@ -159,6 +189,36 @@ public class CraftListener implements Listener {
                         dank.setItemMeta(m);
                         e.setCurrentItem(dank);
                         p.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_PACK);
+                    }
+                }
+                if (hasTrashKey) {
+                    int level = res.getItemMeta().getPersistentDataContainer().get(trashKey, PersistentDataType.INTEGER);
+                    if (level == 1) {
+                        long trashID = getNextTrashID(parent);
+                        ItemStack trash = TrashPack.TrashPack(level, trashID, parent, p);
+                        ItemMeta m = trash.getItemMeta();
+                        m.setDisplayName(getTrashNameBold(level));
+                        m.setLore(ItemDetails.getTrashLore(level, trashID));
+                        trash.setItemMeta(m);
+                        e.setCurrentItem(trash);
+                        p.sendMessage(Messages.MESSAGE_CRAFT_NEW_TRASH);
+                    } else {
+                        NamespacedKey idKey = new NamespacedKey(parent.getInstance(), KEY_ID_TRASH);
+                        long trashID = res.getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
+                        ConfigurationSection c = parent.getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashID);
+                        c.set(CONFIG_GETTER_VAL_LEVEL, ((level*2)-1));
+                        c.set(CONFIG_GETTER_VAL_SLOT + ((level*2)-1) + "." + CONFIG_GETTER_VAL_STACK, null);
+                        c.set(CONFIG_GETTER_VAL_SLOT + ((level*2)-1) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
+                        c.set(CONFIG_GETTER_VAL_LEVEL, (level*2));
+                        c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_STACK, null);
+                        c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
+                        ItemStack trash = TrashPack.TrashPack(level, trashID, parent, p);
+                        ItemMeta m = trash.getItemMeta();
+                        m.setDisplayName(getTrashNameBold(level));
+                        m.setLore(ItemDetails.getTrashLore(level, trashID));
+                        trash.setItemMeta(m);
+                        e.setCurrentItem(trash);
+                        p.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_TRASH);
                     }
                 }
             } else {

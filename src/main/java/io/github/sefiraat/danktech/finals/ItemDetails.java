@@ -26,6 +26,16 @@ public final class ItemDetails {
     public static final String NAME_DANK_8 = "" + ChatColor.DARK_PURPLE + "Dank Storage Pack [T8]";
     public static final String NAME_DANK_9 = "" + ChatColor.RED + "Dank Storage Pack [Master]";
 
+    public static final String NAME_TRASH_1 = "" + ChatColor.GRAY + "Dank Trash Pack [T1]";
+    public static final String NAME_TRASH_2 = "" + ChatColor.DARK_GRAY + "Dank Trash Pack [T2]";
+    public static final String NAME_TRASH_3 = "" + ChatColor.GREEN + "Dank Trash Pack [T3]";
+    public static final String NAME_TRASH_4 = "" + ChatColor.DARK_GREEN + "Dank Trash Pack [T4]";
+    public static final String NAME_TRASH_5 = "" + ChatColor.BLUE + "Dank Trash Pack [T5]";
+    public static final String NAME_TRASH_6 = "" + ChatColor.DARK_BLUE + "Dank Trash Pack [T6]";
+    public static final String NAME_TRASH_7 = "" + ChatColor.LIGHT_PURPLE + "Dank Trash Pack [T7]";
+    public static final String NAME_TRASH_8 = "" + ChatColor.DARK_PURPLE + "Dank Trash Pack [T8]";
+    public static final String NAME_TRASH_9 = "" + ChatColor.RED + "Dank Trash Pack [Master]";
+
     public static final String NAME_DANK_CELL_1 = "" + ChatColor.GRAY + "Storage Cell [T1]";
     public static final String NAME_DANK_CELL_2 = "" + ChatColor.DARK_GRAY + "Storage Cell [T2]";
     public static final String NAME_DANK_CELL_3 = "" + ChatColor.GREEN + "Storage Cell [T3]";
@@ -49,6 +59,16 @@ public final class ItemDetails {
     public static final String DANK_7_SLOTS = "" + ChatColor.WHITE + "Slots: 7";
     public static final String DANK_8_SLOTS = "" + ChatColor.WHITE + "Slots: 8";
     public static final String DANK_9_SLOTS = "" + ChatColor.WHITE + "Slots: 9";
+
+    public static final String TRASH_1_SLOTS = "" + ChatColor.WHITE + "Slots: 2";
+    public static final String TRASH_2_SLOTS = "" + ChatColor.WHITE + "Slots: 4";
+    public static final String TRASH_3_SLOTS = "" + ChatColor.WHITE + "Slots: 6";
+    public static final String TRASH_4_SLOTS = "" + ChatColor.WHITE + "Slots: 8";
+    public static final String TRASH_5_SLOTS = "" + ChatColor.WHITE + "Slots: 10";
+    public static final String TRASH_6_SLOTS = "" + ChatColor.WHITE + "Slots: 12";
+    public static final String TRASH_7_SLOTS = "" + ChatColor.WHITE + "Slots: 14";
+    public static final String TRASH_8_SLOTS = "" + ChatColor.WHITE + "Slots: 16";
+    public static final String TRASH_9_SLOTS = "" + ChatColor.WHITE + "Slots: 18";
 
     public static final Integer LIMIT_1 = 256;
     public static final Integer LIMIT_2 = 1024;
@@ -89,6 +109,8 @@ public final class ItemDetails {
 
     public static final String DANK_LORE_VOID = "" + ChatColor.RED + "Items over limit are voided";
     public static final String DANK_LORE_RIGHT_CLICK = "" + ChatColor.GOLD + "Right click to open pack";
+
+    public static final String DANK_TRASH_VOID = "" + ChatColor.RED + "All matching items will be voided";
 
     public static final String DANK_ERROR_STRING = "DANK_ERR";
 
@@ -132,6 +154,29 @@ public final class ItemDetails {
         return l;
     }
 
+    public static List<String> trashLoreBuilder(String slots, long dankID) {
+        List<String> l = new ArrayList<>();
+        l.add(DANK_INFO_1);
+        l.add(DANK_INFO_2);
+        l.add(DANK_INFO_3);
+        l.add("");
+        l.add(slots);
+        l.add("");
+        l.add(DANK_TRASH_VOID);
+        l.add("");
+        l.add(DANK_LORE_RIGHT_CLICK);
+        l.add(ChatColor.GRAY + "Pack ID: " + dankID);
+        if (BUGS_WARN_USERS) {
+            l.add("");
+            l.add(DANK_BUGGY_WARN_USERS_1);
+            l.add(DANK_BUGGY_WARN_USERS_2);
+            l.add(DANK_BUGGY_WARN_USERS_3);
+            l.add(DANK_BUGGY_WARN_USERS_4);
+            l.add(DANK_BUGGY_WARN_USERS_5);
+        }
+        return l;
+    }
+
     public static List<String> getDankLore(int dankLevel, long dankID, @Nullable String selectedStack) {
         switch (dankLevel) {
             case 1: return dankLoreBuilder(DANK_1_SLOTS, DANK_1_VOLUME, dankID, selectedStack);
@@ -144,6 +189,21 @@ public final class ItemDetails {
             case 8: return dankLoreBuilder(DANK_8_SLOTS, DANK_8_VOLUME, dankID, selectedStack);
             case 9: return dankLoreBuilder(DANK_9_SLOTS, DANK_9_VOLUME, dankID, selectedStack);
             default: return dankLoreBuilder("ERROR", "ERROR", -1, selectedStack);
+        }
+    }
+
+    public static List<String> getTrashLore(int dankLevel, long dankID) {
+        switch (dankLevel) {
+            case 1: return trashLoreBuilder(TRASH_1_SLOTS, dankID);
+            case 2: return trashLoreBuilder(TRASH_2_SLOTS, dankID);
+            case 3: return trashLoreBuilder(TRASH_3_SLOTS, dankID);
+            case 4: return trashLoreBuilder(TRASH_4_SLOTS, dankID);
+            case 5: return trashLoreBuilder(TRASH_5_SLOTS, dankID);
+            case 6: return trashLoreBuilder(TRASH_6_SLOTS, dankID);
+            case 7: return trashLoreBuilder(TRASH_7_SLOTS, dankID);
+            case 8: return trashLoreBuilder(TRASH_8_SLOTS, dankID);
+            case 9: return trashLoreBuilder(TRASH_9_SLOTS, dankID);
+            default: return trashLoreBuilder("ERROR", -1);
         }
     }
 
@@ -162,6 +222,21 @@ public final class ItemDetails {
         }
     }
 
+    public static String getTrashName(int trashLevel) {
+        switch (trashLevel) {
+            case 1: return NAME_TRASH_1;
+            case 2: return NAME_TRASH_2;
+            case 3: return NAME_TRASH_3;
+            case 4: return NAME_TRASH_4;
+            case 5: return NAME_TRASH_5;
+            case 6: return NAME_TRASH_6;
+            case 7: return NAME_TRASH_7;
+            case 8: return NAME_TRASH_8;
+            case 9: return NAME_TRASH_9;
+            default: return DANK_ERROR_STRING;
+        }
+    }
+
     public static String getDankNameBold(int dankLevel) {
         switch (dankLevel) {
             case 1: return ChatColor.BOLD + NAME_DANK_1;
@@ -173,6 +248,21 @@ public final class ItemDetails {
             case 7: return ChatColor.BOLD + NAME_DANK_7;
             case 8: return ChatColor.BOLD + NAME_DANK_8;
             case 9: return ChatColor.BOLD + NAME_DANK_9;
+            default: return DANK_ERROR_STRING;
+        }
+    }
+
+    public static String getTrashNameBold(int trashLevel) {
+        switch (trashLevel) {
+            case 1: return ChatColor.BOLD + NAME_TRASH_1;
+            case 2: return ChatColor.BOLD + NAME_TRASH_2;
+            case 3: return ChatColor.BOLD + NAME_TRASH_3;
+            case 4: return ChatColor.BOLD + NAME_TRASH_4;
+            case 5: return ChatColor.BOLD + NAME_TRASH_5;
+            case 6: return ChatColor.BOLD + NAME_TRASH_6;
+            case 7: return ChatColor.BOLD + NAME_TRASH_7;
+            case 8: return ChatColor.BOLD + NAME_TRASH_8;
+            case 9: return ChatColor.BOLD + NAME_TRASH_9;
             default: return DANK_ERROR_STRING;
         }
     }
@@ -213,6 +303,7 @@ public final class ItemDetails {
     }
 
     public static final String GUI_DISPLAY_NAME_WITHDRAW = "" + ChatColor.RED + "Withdraw / Add Items";
+    public static final String GUI_DISPLAY_TRASH_NAME_WITHDRAW = "" + ChatColor.RED + "Remove Item";
 
     public static final String GUI_DISPLAY_WITHDRAW_LORE_LEFT = "" + ChatColor.GOLD + "Left Click: " + ChatColor.WHITE + "Withdraw 1";
     public static final String GUI_DISPLAY_WITHDRAW_LORE_RIGHT = "" + ChatColor.GOLD + "Right Click: " + ChatColor.WHITE + "Withdraw Stack";
@@ -238,16 +329,10 @@ public final class ItemDetails {
         return l;
     }
 
-    public static List<String> guiDisplayLoreTrash(int amount) {
+    public static List<String> guiDisplayLoreTrash() {
         List<String> l = new ArrayList<>();
         l.add("");
         l.add(GUI_DISPLAY_TRASH_LORE_LEFT);
-        l.add("");
-        if (amount > 0) {
-            l.add("" + ChatColor.BLUE + "Amount: " + ChatColor.WHITE + amount);
-        } else {
-            l.add("" + ChatColor.BLUE + "Amount: " + ChatColor.GRAY + "Empty");
-        }
         return l;
     }
 
