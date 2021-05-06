@@ -7,7 +7,7 @@ import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.ItemStacks;
 import io.github.sefiraat.danktech.finals.Messages;
-import io.github.sefiraat.danktech.implementation.abstracts.DankPack;
+import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
 import io.github.sefiraat.danktech.implementation.gui.AdminGUI;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.command.CommandSender;
@@ -17,7 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_DANK_ID;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
-import static io.github.sefiraat.danktech.finals.Materials.getDankMaterial;
 import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;
 
 @CommandAlias("DankTech|DT")
@@ -56,7 +55,7 @@ public class Commands extends BaseCommand {
             if (sender instanceof Player) {
                 if (level <= 9) {
                     long packID = getNextPackID(parent);
-                    DankPack dank = new DankPack(getDankMaterial(level), level, packID, parent, player.getPlayer());
+                    ItemStack dank = DankPack.DankPack(level, packID, parent, player.getPlayer());
                     ItemMeta m = dank.getItemMeta();
                     m.setDisplayName(getDankNameBold(level));
                     m.setLore(ItemDetails.getDankLore(level, packID, null));
@@ -101,7 +100,7 @@ public class Commands extends BaseCommand {
 
                 int level = parent.getInstance().getDankStorageConfig().getInt(CONFIG_GETTER_SECTION_DANK_ID + "." + id + ".LEVEL");
 
-                DankPack dank = new DankPack(getDankMaterial(level), level, id, parent, null);
+                ItemStack dank = DankPack.DankPack(level, id, parent, player.getPlayer());
                 ItemMeta m = dank.getItemMeta();
                 m.setDisplayName(getDankNameBold(level));
                 m.setLore(ItemDetails.getDankLore(level, id, null));

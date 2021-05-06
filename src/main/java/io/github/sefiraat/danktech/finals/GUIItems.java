@@ -78,4 +78,13 @@ public class GUIItems {
         i.setItemMeta(im);
         return new GuiItem(i);
     }
+
+    public static GuiItem guiTrashWithdrawItem(int amount) {
+        ItemStack i = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        ItemMeta im = i.getItemMeta();
+        im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_WITHDRAW);
+        im.setLore(ItemDetails.guiDisplayLoreWithdraw(amount));
+        i.setItemMeta(im);
+        return new GuiItem(i);
+    }
 }

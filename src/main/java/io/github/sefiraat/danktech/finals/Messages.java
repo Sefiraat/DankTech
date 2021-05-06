@@ -28,6 +28,10 @@ public final class Messages {
         return (PREFIX + SUCCESS + "Pack created. ID: " + packID);
     }
 
+    public static String messageCommandPackUpdated(long packID) {
+        return (PREFIX + WARNING + "This pack is old! Updating to the new format. ID: " + packID);
+    }
+
     // Events
     public static String messageEventOpenPack(long packID) {
         return (PREFIX + PASSIVE + "Opening Dank Pack. ID: " + packID);

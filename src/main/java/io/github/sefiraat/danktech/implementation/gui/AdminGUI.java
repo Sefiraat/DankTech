@@ -4,7 +4,7 @@ import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.GUIItems;
 import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.Messages;
-import io.github.sefiraat.danktech.implementation.abstracts.DankPack;
+import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
 import me.mattstudios.mfgui.gui.components.ItemBuilder;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
-import static io.github.sefiraat.danktech.finals.Materials.getDankMaterial;
 import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
@@ -74,7 +73,7 @@ public class AdminGUI {
             Gui dankGUI = getDankGUI(dankId, dankLevel, plugin.getInstance());
             dankGUI.open(p);
         } else {
-            DankPack dank = new DankPack(getDankMaterial(dankLevel), dankLevel, dankId, plugin, null);
+            ItemStack dank = DankPack.DankPack(dankLevel, dankId, plugin, p.getPlayer());
             ItemMeta m = dank.getItemMeta();
             m.setDisplayName(getDankNameBold(dankLevel));
             m.setLore(ItemDetails.getDankLore(dankLevel, dankId, null));

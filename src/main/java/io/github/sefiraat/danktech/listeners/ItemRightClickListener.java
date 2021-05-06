@@ -2,7 +2,9 @@ package io.github.sefiraat.danktech.listeners;
 
 import com.gmail.nossr50.mcMMO;
 import io.github.sefiraat.danktech.DankTech;
+import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.Messages;
+import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -18,11 +20,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
+import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
@@ -38,13 +42,18 @@ public class ItemRightClickListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onRightClick(PlayerInteractEvent e) {
         if (e.getItem() != null && e.getItem().getItemMeta() != null) {
+            Player p = e.getPlayer();
             ItemStack i = e.getItem();
             if (isDankMaterial(i, parent.getInstance()) && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 e.setCancelled(true);
                 return;
             }
             if (isDank(i, parent.getInstance())) {
-                Player p = e.getPlayer();
+                if (isOldDank(i)) {
+                    replaceDank(i, p);
+                    e.setCancelled(true);
+                    return;
+                }
                 if (p.isSneaking()) {
                     switch (e.getAction()) {
                         case LEFT_CLICK_AIR:
@@ -70,6 +79,43 @@ public class ItemRightClickListener implements Listener {
                 }
             }
         }
+    }
+
+    private boolean isOldDank(ItemStack i) {
+        Material m = i.getType();
+        if (
+                i.getType() == Material.GRAY_STAINED_GLASS ||
+                i.getType() == Material.BLACK_STAINED_GLASS ||
+                i.getType() == Material.LIME_STAINED_GLASS ||
+                i.getType() == Material.GREEN_STAINED_GLASS ||
+                i.getType() == Material.LIGHT_BLUE_STAINED_GLASS ||
+                i.getType() == Material.BLUE_STAINED_GLASS ||
+                i.getType() == Material.PINK_STAINED_GLASS ||
+                i.getType() == Material.PURPLE_STAINED_GLASS ||
+                i.getType() == Material.RED_STAINED_GLASS
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    private void replaceDank(ItemStack i, Player player) {
+
+        getDankLevel(i, parent);
+
+        int level = getDankLevel(i, parent);
+        long id = getDankId(i, parent);
+
+        i.setAmount(0);
+
+        ItemStack dank = DankPack.DankPack(level, id, parent, player.getPlayer());
+        ItemMeta m = dank.getItemMeta();
+        m.setDisplayName(getDankNameBold(level));
+        m.setLore(ItemDetails.getDankLore(level, id, null));
+        dank.setItemMeta(m);
+        // player.getInventory().addItem(dank);
+        player.getInventory().setItem(player.getInventory().getHeldItemSlot(), dank);
+        player.sendMessage(Messages.messageCommandPackUpdated(id));
     }
 
     private void openDankPack(ItemStack i, Player p) {

@@ -2,7 +2,7 @@ package io.github.sefiraat.danktech.lib.misc;
 
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemDetails;
-import io.github.sefiraat.danktech.implementation.abstracts.DankPack;
+import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -19,7 +19,6 @@ import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
-import static io.github.sefiraat.danktech.finals.Materials.getDankMaterial;
 
 public class Utils {
 
@@ -190,7 +189,7 @@ public class Utils {
             for (String s : sec.getKeys(false)) {
                 Long dankID = Long.valueOf(s);
                 int level = plugin.getInstance().getDankStorageConfig().getInt(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID + "." + CONFIG_GETTER_VAL_LEVEL);
-                DankPack dank = new DankPack(getDankMaterial(level), level, dankID, plugin, null);
+                ItemStack dank = DankPack.DankPack(level, dankID, plugin, null);
                 ItemMeta m = dank.getItemMeta();
                 m.setDisplayName(getDankNameBold(level));
                 m.setLore(ItemDetails.getDankLore(level, dankID, null));

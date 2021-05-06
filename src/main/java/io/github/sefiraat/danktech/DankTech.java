@@ -157,14 +157,15 @@ public class DankTech extends JavaPlugin {
         this.getServer().addRecipe(Recipes.recipeCell8(this));
         this.getServer().addRecipe(Recipes.recipeCell9(this));
         this.getServer().addRecipe(Recipes.recipeDank1(this));
-        this.getServer().addRecipe(Recipes.recipeDank2(this));
-        this.getServer().addRecipe(Recipes.recipeDank3(this));
-        this.getServer().addRecipe(Recipes.recipeDank4(this));
-        this.getServer().addRecipe(Recipes.recipeDank5(this));
-        this.getServer().addRecipe(Recipes.recipeDank6(this));
-        this.getServer().addRecipe(Recipes.recipeDank7(this));
-        this.getServer().addRecipe(Recipes.recipeDank8(this));
-        this.getServer().addRecipe(Recipes.recipeDank9(this));
+        this.getServer().addRecipe(Recipes.recipeDank(this));
+//        this.getServer().addRecipe(Recipes.recipeDank2(this));
+//        this.getServer().addRecipe(Recipes.recipeDank3(this));
+//        this.getServer().addRecipe(Recipes.recipeDank4(this));
+//        this.getServer().addRecipe(Recipes.recipeDank5(this));
+//        this.getServer().addRecipe(Recipes.recipeDank6(this));
+//        this.getServer().addRecipe(Recipes.recipeDank7(this));
+//        this.getServer().addRecipe(Recipes.recipeDank8(this));
+//        this.getServer().addRecipe(Recipes.recipeDank9(this));
     }
 
 }

@@ -59,6 +59,7 @@ public final class ItemDetails {
     public static final Integer LIMIT_7 = 65536;
     public static final Integer LIMIT_8 = 524288;
     public static final Integer LIMIT_9 = 2147483547;
+    public static final Integer LIMIT_TRASH = 1;
 
     public static Integer getLimit(int level) {
         switch(level) {
@@ -218,6 +219,7 @@ public final class ItemDetails {
     public static final String GUI_DISPLAY_WITHDRAW_LORE_SHIFT_LEFT = "" + ChatColor.GOLD + "Shift Left Click: " + ChatColor.WHITE + "Dump Inventory";
     public static final String GUI_DISPLAY_WITHDRAW_LORE_SHIFT_RIGHT = "" + ChatColor.GOLD + "Shift Right Click: " + ChatColor.WHITE + "Fill Inventory";
     public static final String GUI_DISPLAY_WITHDRAW_LORE_DROP = "" + ChatColor.GOLD + "Drop (Q): " + ChatColor.WHITE + "Drop a stack";
+    public static final String GUI_DISPLAY_TRASH_LORE_LEFT = "" + ChatColor.GOLD + "Left Click: " + ChatColor.WHITE + "Reset slot";
 
     public static List<String> guiDisplayLoreWithdraw(int amount) {
         List<String> l = new ArrayList<>();
@@ -227,6 +229,19 @@ public final class ItemDetails {
         l.add(GUI_DISPLAY_WITHDRAW_LORE_SHIFT_LEFT);
         l.add(GUI_DISPLAY_WITHDRAW_LORE_SHIFT_RIGHT);
         l.add(GUI_DISPLAY_WITHDRAW_LORE_DROP);
+        l.add("");
+        if (amount > 0) {
+            l.add("" + ChatColor.BLUE + "Amount: " + ChatColor.WHITE + amount);
+        } else {
+            l.add("" + ChatColor.BLUE + "Amount: " + ChatColor.GRAY + "Empty");
+        }
+        return l;
+    }
+
+    public static List<String> guiDisplayLoreTrash(int amount) {
+        List<String> l = new ArrayList<>();
+        l.add("");
+        l.add(GUI_DISPLAY_TRASH_LORE_LEFT);
         l.add("");
         if (amount > 0) {
             l.add("" + ChatColor.BLUE + "Amount: " + ChatColor.WHITE + amount);
