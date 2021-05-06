@@ -255,12 +255,15 @@ public class CraftListener implements Listener {
     }
 
     public boolean allSlotsFilled(ItemStack[] itemStacks) {
-        for (int i = 0; i < 9; i++) {
-            if (itemStacks[i] == null) {
-                return false;
+        if (itemStacks.length > 8) {
+            for (int i = 0; i < 9; i++) {
+                if (itemStacks[i] == null) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
 }
