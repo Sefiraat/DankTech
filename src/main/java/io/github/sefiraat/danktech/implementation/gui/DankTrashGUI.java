@@ -105,7 +105,6 @@ public class DankTrashGUI {
         for (int i = 1; i <= trashLevel; i++) {
             for (Integer r : rows ) {
                 ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashID);
-                plugin.getServer().getLogger().info(""+count);
                 ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + count);
                 if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
                     gui.setItem(r, i, GUIItems.guiTrashAssignedSlot(trashID, count, plugin));
