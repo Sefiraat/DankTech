@@ -1,4 +1,4 @@
-package io.github.sefiraat.danktech.lib.misc;
+package io.github.sefiraat.danktech.misc;
 
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotConfigurable;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;

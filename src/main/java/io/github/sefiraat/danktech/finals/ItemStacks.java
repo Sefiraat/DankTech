@@ -10,8 +10,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 import static io.github.sefiraat.danktech.finals.ItemDetails.*;
 import static io.github.sefiraat.danktech.finals.Materials.*;
+import static io.github.sefiraat.danktech.misc.ContainerStorage.setCellLevel;
 
-public class ItemStacks {
+public final class ItemStacks {
 
     private ItemStacks() {
         throw new IllegalStateException("Utility class");
@@ -24,9 +25,8 @@ public class ItemStacks {
         PersistentDataContainer c = m.getPersistentDataContainer();
         NamespacedKey keyDank = new NamespacedKey(plugin,"dank");
         c.set(keyDank, PersistentDataType.INTEGER, 1);
-        NamespacedKey keyLevel = new NamespacedKey(plugin,"cell-level");
-        c.set(keyLevel, PersistentDataType.INTEGER, level);
         cell.setItemMeta(m);
+        setCellLevel(cell, plugin, level);
         return cell;
     }
 

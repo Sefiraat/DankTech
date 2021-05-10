@@ -1,6 +1,6 @@
 package io.github.sefiraat.danktech.finals;
 
-public class Constants {
+public final class Constants {
 
     private Constants() {
         throw new IllegalStateException("Utility class");

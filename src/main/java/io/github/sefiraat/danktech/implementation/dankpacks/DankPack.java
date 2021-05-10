@@ -2,6 +2,8 @@ package io.github.sefiraat.danktech.implementation.dankpacks;
 
 import dev.dbassett.skullcreator.SkullCreator;
 import io.github.sefiraat.danktech.DankTech;
+import io.github.sefiraat.danktech.misc.Config;
+import io.github.sefiraat.danktech.misc.ContainerStorage;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -12,11 +14,14 @@ import javax.annotation.Nullable;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.Materials.getDankTexture;
-import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class DankPack {
 
-    public static ItemStack DankPack(@Nonnull Integer level, @Nonnull Long packID, @Nonnull DankTech parent, @Nullable Player p) {
+    private DankPack() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static ItemStack getDankPack(@Nonnull Integer level, @Nonnull Long packID, @Nonnull DankTech parent, @Nullable Player p) {
 
         ItemStack dank = SkullCreator.itemFromBase64(getDankTexture(level));
 
@@ -25,12 +30,12 @@ public class DankPack {
             parent.saveDankStorageConfig();
         }
 
-        makeDank(dank, parent);
-        setDankId(dank, parent, packID);
-        setDankLevel(dank, parent, level);
+        ContainerStorage.makeDank(dank, parent);
+        ContainerStorage.setDankId(dank, parent, packID);
+        ContainerStorage.setDankLevel(dank, parent, level);
 
         if (p!= null) {
-            setLastOpenedBy(packID, parent, p);
+            Config.setLastOpenedBy(packID, parent, p);
         }
 
         return dank;

@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 
-public class GUIItems {
+public final class GUIItems {
 
     private GUIItems() {
         throw new IllegalStateException("Utility class");
@@ -86,7 +86,7 @@ public class GUIItems {
         return new GuiItem(i);
     }
 
-    public static GuiItem guiTrashWithdrawItem(int amount) {
+    public static GuiItem guiTrashWithdrawItem() {
         ItemStack i = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
         ItemMeta im = i.getItemMeta();
         im.setDisplayName(ItemDetails.GUI_DISPLAY_TRASH_NAME_WITHDRAW);

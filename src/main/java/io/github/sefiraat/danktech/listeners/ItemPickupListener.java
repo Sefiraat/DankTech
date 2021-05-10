@@ -1,6 +1,7 @@
 package io.github.sefiraat.danktech.listeners;
 
 import io.github.sefiraat.danktech.DankTech;
+import io.github.sefiraat.danktech.misc.ContainerStorage;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.ConfigurationSection;
@@ -17,7 +18,7 @@ import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getLimit;
-import static io.github.sefiraat.danktech.lib.misc.Utils.*;
+import static io.github.sefiraat.danktech.misc.Config.getWorldBlacklistPickup;
 
 public class ItemPickupListener implements Listener {
 
@@ -34,11 +35,15 @@ public class ItemPickupListener implements Listener {
         if(e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
 
+            if (!canPickupBlacklist(p)) {
+                return;
+            }
+
             if(hasTrash(p)) {
                 List<ItemStack> trashes = getTrash(p);
                 for (ItemStack trash : trashes) {
-                    long trashId = getTrashId(trash, parent);
-                    int trashLevel = getTrashLevel(trash, parent);
+                    long trashId = ContainerStorage.getTrashId(trash, parent);
+                    int trashLevel = ContainerStorage.getTrashLevel(trash, parent);
                     ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashId);
                     for (int i = 1; i <= (trashLevel*2); i++) {
                         ItemStack pickedStack = e.getItem().getItemStack();
@@ -59,8 +64,8 @@ public class ItemPickupListener implements Listener {
             if(hasDank(p)) {
                 List<ItemStack> danks = getDanks(p);
                 for (ItemStack dank : danks) {
-                    long dankID = getDankId(dank, parent);
-                    int dankLevel = getDankLevel(dank, parent);
+                    long dankID = ContainerStorage.getDankId(dank, parent);
+                    int dankLevel = ContainerStorage.getDankLevel(dank, parent);
                     ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
                     for (int i = 1; i <= dankLevel; i++) {
                         ItemStack pickedStack = e.getItem().getItemStack();
@@ -88,7 +93,7 @@ public class ItemPickupListener implements Listener {
 
     private boolean hasDank(Player p) {
         for (ItemStack i : p.getInventory().getContents()) {
-            if (i != null && isDank(i, parent.getInstance())) {
+            if (i != null && ContainerStorage.isDank(i, parent.getInstance())) {
                 return true;
             }
         }
@@ -97,7 +102,7 @@ public class ItemPickupListener implements Listener {
 
     private boolean hasTrash(Player p) {
         for (ItemStack i : p.getInventory().getContents()) {
-            if (i != null && isTrash(i, parent.getInstance())) {
+            if (i != null && ContainerStorage.isTrash(i, parent.getInstance())) {
                 return true;
             }
         }
@@ -107,7 +112,7 @@ public class ItemPickupListener implements Listener {
     private List<ItemStack> getDanks(Player p) {
         List<ItemStack> l = new ArrayList<>();
         for (ItemStack i : p.getInventory().getContents()) {
-            if (i != null && isDank(i, parent.getInstance())) {
+            if (i != null && ContainerStorage.isDank(i, parent.getInstance())) {
                 l.add(i);
             }
         }
@@ -117,7 +122,7 @@ public class ItemPickupListener implements Listener {
     private List<ItemStack> getTrash(Player p) {
         List<ItemStack> l = new ArrayList<>();
         for (ItemStack i : p.getInventory().getContents()) {
-            if (i != null && isTrash(i, parent.getInstance())) {
+            if (i != null && ContainerStorage.isTrash(i, parent.getInstance())) {
                 l.add(i);
             }
         }
@@ -141,6 +146,11 @@ public class ItemPickupListener implements Listener {
         World w = i.getLocation().getWorld();
         Location l = i.getLocation();
         w.spawnParticle(Particle.SMOKE_LARGE, l, 32, 0.5, 0.5, 0.5, 0.0D, null,true);
+    }
+
+    private boolean canPickupBlacklist(Player p) {
+        p.getServer().getLogger().info(p.getWorld().getName());
+        return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistPickup(parent).contains(p.getWorld().getName());
     }
 
 }

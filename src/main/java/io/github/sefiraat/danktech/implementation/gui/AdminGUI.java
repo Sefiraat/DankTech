@@ -5,6 +5,8 @@ import io.github.sefiraat.danktech.finals.GUIItems;
 import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.Messages;
 import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
+import io.github.sefiraat.danktech.misc.Config;
+import io.github.sefiraat.danktech.misc.ContainerStorage;
 import me.mattstudios.mfgui.gui.components.ItemBuilder;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
@@ -21,7 +23,6 @@ import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
-import static io.github.sefiraat.danktech.lib.misc.Utils.*;
 
 public class AdminGUI {
 
@@ -42,15 +43,15 @@ public class AdminGUI {
         g.setItem(backSlot, ItemBuilder.from(Material.PAPER).setName("Previous").asGuiItem(event -> g.previous()));
         g.setItem(forwardSlot, ItemBuilder.from(Material.PAPER).setName("Next").asGuiItem(event -> g.next()));
 
-        for (ItemStack i : getAllDanks(parent)) {
+        for (ItemStack i : Config.getAllDanks(parent)) {
             ItemMeta im = i.getItemMeta();
             List<String> lore = im.getLore();
-            Long dankId = getDankId(i, parent);
-            Integer dankLevel = getDankLevel(i, parent);
+            Long dankId = ContainerStorage.getDankId(i, parent);
+            Integer dankLevel = ContainerStorage.getDankLevel(i, parent);
             lore.add("");
-            lore.add(ChatColor.LIGHT_PURPLE + getLastOpenedBy(dankId, parent));
-            lore.add(ChatColor.LIGHT_PURPLE + getLastOpenedByUUID(dankId, parent));
-            lore.add(ChatColor.LIGHT_PURPLE + getLastOpenedOn(dankId, parent));
+            lore.add(ChatColor.LIGHT_PURPLE + Config.getLastOpenedBy(dankId, parent));
+            lore.add(ChatColor.LIGHT_PURPLE + Config.getLastOpenedByUUID(dankId, parent));
+            lore.add(ChatColor.LIGHT_PURPLE + Config.getLastOpenedOn(dankId, parent));
             lore.add("");
             lore.add(ChatColor.GREEN + "Left click to open");
             lore.add(ChatColor.GREEN + "Right click recover");
@@ -73,7 +74,7 @@ public class AdminGUI {
             Gui dankGUI = getDankGUI(dankId, dankLevel, plugin.getInstance());
             dankGUI.open(p);
         } else {
-            ItemStack dank = DankPack.DankPack(dankLevel, dankId, plugin, p.getPlayer());
+            ItemStack dank = DankPack.getDankPack(dankLevel, dankId, plugin, p.getPlayer());
             ItemMeta m = dank.getItemMeta();
             m.setDisplayName(getDankNameBold(dankLevel));
             m.setLore(ItemDetails.getDankLore(dankLevel, dankId, null));

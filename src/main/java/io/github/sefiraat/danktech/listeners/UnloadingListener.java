@@ -12,8 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
-import static io.github.sefiraat.danktech.lib.misc.Utils.getDankId;
-import static io.github.sefiraat.danktech.lib.misc.Utils.isDank;
+import static io.github.sefiraat.danktech.misc.ContainerStorage.getDankId;
+import static io.github.sefiraat.danktech.misc.ContainerStorage.isDank;
 
 public class UnloadingListener implements Listener {
 

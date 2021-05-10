@@ -22,7 +22,7 @@ public final class Messages {
     // Commands
     public static final String MESSAGE_COMMAND_SUBCOMMAND = PREFIX + NOTICE + "Please select a valid sub command";
     public static final String MESSAGE_COMMAND_SELECT_ITEM = PREFIX + NOTICE + "Please select an item type";
-    public static final String MESSAGE_COMMAND_PACK_NO_EXIST = PREFIX + ERROR + "Yeah, bags only go from 1 to 9 dummy :)";
+    public static final String MESSAGE_COMMAND_PACK_NO_EXIST = PREFIX + ERROR + "Yeah, packs only go from 1 to 9 dummy :)";
 
     public static String messageCommandPackGiven(long packID) {
         return (PREFIX + SUCCESS + "Pack created. ID: " + packID);

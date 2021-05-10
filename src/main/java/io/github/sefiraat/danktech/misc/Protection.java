@@ -1,4 +1,4 @@
-package io.github.sefiraat.danktech.lib.misc;
+package io.github.sefiraat.danktech.misc;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.LocalPlayer;

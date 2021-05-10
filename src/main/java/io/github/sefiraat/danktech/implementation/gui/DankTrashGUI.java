@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashName;
-import static io.github.sefiraat.danktech.lib.misc.Utils.getDankId;
+import static io.github.sefiraat.danktech.misc.ContainerStorage.getDankId;
 
 public class DankTrashGUI {
 
@@ -22,9 +22,9 @@ public class DankTrashGUI {
         throw new IllegalStateException("Utility class");
     }
 
-    public static Integer displaySlots[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 27, 28, 29, 30, 31, 32, 33, 34, 35};
-    public static Integer inputSlots[] = {9, 10, 11, 12, 13, 14, 15, 16, 17, 36, 37, 38, 39, 40, 41, 42, 43, 44};
-    public static Integer interactSlots[] = {18, 19, 20, 21, 22, 23, 24, 25, 26, 45, 46, 47, 48, 49, 50, 51, 52, 53};
+    protected static final Integer[] displaySlots = {0, 1, 2, 3, 4, 5, 6, 7, 8, 27, 28, 29, 30, 31, 32, 33, 34, 35};
+    protected static final Integer[] inputSlots = {9, 10, 11, 12, 13, 14, 15, 16, 17, 36, 37, 38, 39, 40, 41, 42, 43, 44};
+    protected static final Integer[] interactSlots = {18, 19, 20, 21, 22, 23, 24, 25, 26, 45, 46, 47, 48, 49, 50, 51, 52, 53};
 
     public static Gui getTrashGUI(long trashID, int trashLevel, DankTech parent) {
 
@@ -121,10 +121,7 @@ public class DankTrashGUI {
         Integer count = 1;
         for (int i = 1; i <= trashLevel; i++) {
             for (Integer r : rows ) {
-                ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashID);
-                ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + count);
-                int amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
-                GuiItem g = GUIItems.guiTrashWithdrawItem(amount);
+                GuiItem g = GUIItems.guiTrashWithdrawItem();
                 Integer finalI = i;
                 Integer finalCount = count;
                 g.setAction(event -> {
@@ -165,7 +162,7 @@ public class DankTrashGUI {
         slotSection.set(CONFIG_GETTER_VAL_VOLUME, 0);
         slotSection.set(CONFIG_GETTER_VAL_STACK, null);
         gui.updateItem(row - 2, slot, GUIItems.guiUnassignedSlot());
-        GuiItem g = GUIItems.guiTrashWithdrawItem(0);
+        GuiItem g = GUIItems.guiTrashWithdrawItem();
         Integer finalSlot = slot;
         g.setAction(event -> {
             withdrawItems(gui, trashID, plugin, finalSlot, row, dankSlot, event);

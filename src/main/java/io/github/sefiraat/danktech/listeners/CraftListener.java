@@ -24,8 +24,8 @@ import javax.annotation.Nonnull;
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashNameBold;
-import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;
-import static io.github.sefiraat.danktech.lib.misc.Utils.getNextTrashID;
+import static io.github.sefiraat.danktech.misc.Config.getNextPackID;
+import static io.github.sefiraat.danktech.misc.Config.getNextTrashID;
 
 public class CraftListener implements Listener {
 
@@ -41,12 +41,7 @@ public class CraftListener implements Listener {
         // TODO Really messy now and CC too high
         if (e.getView().getPlayer() instanceof Player) {
 
-            Player p = (Player) e.getView().getPlayer();
             ItemStack[] contents = e.getInventory().getMatrix();
-            boolean isNew = false;
-            boolean hasDankItems = false;
-            int[] slots = {0, 1, 2, 3, 5, 6, 7, 8};
-            boolean itemsCorrect = true;
 
             if (!allSlotsFilled(contents)) {
                 return;
@@ -103,53 +98,6 @@ public class CraftListener implements Listener {
                     e.getInventory().setResult(r);
                 }
             }
-//            if (res.getType() == Materials.DANK_1) {
-//                isNew = true;
-//                if(contents[4].getType() == Materials.DANK_CORE_MATERIAL) {
-//                    hasDankItems = true;
-//                }
-//            }
-//
-//            for (int i : slots) {
-//                ItemStack item = contents[i];
-//                if (!isDankMaterial(item, parent)) {
-//                    itemsCorrect = false;
-//                    p.sendMessage("Failed isDankMaterials");
-//                } else {
-//                    hasDankItems = true;
-//                }
-//            }
-//
-//            if (!isNew) {
-//
-//                if (contents[4].getItemMeta().getPersistentDataContainer().has(levelKey, PersistentDataType.INTEGER)) {
-//                    dankLevel = contents[4].getItemMeta().getPersistentDataContainer().get(levelKey, PersistentDataType.INTEGER) + 1;
-//                    dankID = contents[4].getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
-//                } else {
-//                    itemsCorrect = false;
-//                    p.sendMessage("Failed hasLevelKey");
-//
-//                }
-//            }
-//
-//            if (itemsCorrect) {
-//                NamespacedKey key = new NamespacedKey(parent.getInstance(), KEY_LEVEL_DANK);
-//                NamespacedKey idKey = new NamespacedKey(parent.getInstance(),KEY_ID_DANK);
-//                ItemStack r = ItemStacks.getShallowDank(dankLevel);
-//                ItemMeta im = r.getItemMeta();
-//                im.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, dankLevel);
-//                im.getPersistentDataContainer().set(idKey, PersistentDataType.LONG, dankID);
-//                r.setItemMeta(im);
-//                e.getInventory().setResult(r);
-//            } else {
-//                p.sendMessage("Items Incorrect");
-//                if (hasDankItems) {
-//                    p.sendMessage("Does have dank items");
-//                    e.getInventory().setResult(new ItemStack(Material.AIR));
-//                }
-//            }
-
-
         }
     }
 
@@ -168,7 +116,7 @@ public class CraftListener implements Listener {
                     int level = res.getItemMeta().getPersistentDataContainer().get(dankKey, PersistentDataType.INTEGER);
                     if (level == 1) {
                         long packID = getNextPackID(parent);
-                        ItemStack dank = DankPack.DankPack(level, packID, parent, p);
+                        ItemStack dank = DankPack.getDankPack(level, packID, parent, p);
                         ItemMeta m = dank.getItemMeta();
                         m.setDisplayName(getDankNameBold(level));
                         m.setLore(ItemDetails.getDankLore(level, packID, null));
@@ -182,7 +130,7 @@ public class CraftListener implements Listener {
                         c.set(CONFIG_GETTER_VAL_LEVEL, level);
                         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_STACK, null);
                         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_VOLUME , 0);
-                        ItemStack dank = DankPack.DankPack(level, packID, parent, p);
+                        ItemStack dank = DankPack.getDankPack(level, packID, parent, p);
                         ItemMeta m = dank.getItemMeta();
                         m.setDisplayName(getDankNameBold(level));
                         m.setLore(ItemDetails.getDankLore(level, packID, null));
@@ -195,7 +143,7 @@ public class CraftListener implements Listener {
                     int level = res.getItemMeta().getPersistentDataContainer().get(trashKey, PersistentDataType.INTEGER);
                     if (level == 1) {
                         long trashID = getNextTrashID(parent);
-                        ItemStack trash = TrashPack.TrashPack(level, trashID, parent, p);
+                        ItemStack trash = TrashPack.getTrashPack(level, trashID, parent, p);
                         ItemMeta m = trash.getItemMeta();
                         m.setDisplayName(getTrashNameBold(level));
                         m.setLore(ItemDetails.getTrashLore(level, trashID));
@@ -212,7 +160,7 @@ public class CraftListener implements Listener {
                         c.set(CONFIG_GETTER_VAL_LEVEL, (level*2));
                         c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_STACK, null);
                         c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
-                        ItemStack trash = TrashPack.TrashPack(level, trashID, parent, p);
+                        ItemStack trash = TrashPack.getTrashPack(level, trashID, parent, p);
                         ItemMeta m = trash.getItemMeta();
                         m.setDisplayName(getTrashNameBold(level));
                         m.setLore(ItemDetails.getTrashLore(level, trashID));
@@ -242,12 +190,10 @@ public class CraftListener implements Listener {
     public boolean cellMatchLevel(Integer level, ItemStack[] itemStacks, DankTech plugin) {
         NamespacedKey keyLevel = new NamespacedKey(plugin,"cell-level");
         for (ItemStack i : itemStacks) {
-            if (i.hasItemMeta()) {
-                if (i.getItemMeta().getPersistentDataContainer().has(keyLevel,PersistentDataType.INTEGER)) {
-                    Integer stackLevel = i.getItemMeta().getPersistentDataContainer().get(keyLevel,PersistentDataType.INTEGER);
-                    if (!stackLevel.equals(level)) {
-                        return false;
-                    }
+            if (i.hasItemMeta() && i.getItemMeta().getPersistentDataContainer().has(keyLevel,PersistentDataType.INTEGER)) {
+                Integer stackLevel = i.getItemMeta().getPersistentDataContainer().get(keyLevel,PersistentDataType.INTEGER);
+                if (!stackLevel.equals(level)) {
+                    return false;
                 }
             }
         }

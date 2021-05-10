@@ -3,12 +3,12 @@ package io.github.sefiraat.danktech;
 import co.aikar.commands.PaperCommandManager;
 import io.github.sefiraat.danktech.commands.Commands;
 import io.github.sefiraat.danktech.finals.Recipes;
-import io.github.sefiraat.danktech.lib.misc.Protection;
-import io.github.sefiraat.danktech.lib.misc.SlimefunDankAddon;
 import io.github.sefiraat.danktech.listeners.CraftListener;
 import io.github.sefiraat.danktech.listeners.ItemPickupListener;
 import io.github.sefiraat.danktech.listeners.ItemRightClickListener;
 import io.github.sefiraat.danktech.listeners.UnloadingListener;
+import io.github.sefiraat.danktech.misc.Protection;
+import io.github.sefiraat.danktech.misc.SlimefunDankAddon;
 import io.github.sefiraat.danktech.timers.TimerSave;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -160,14 +160,6 @@ public class DankTech extends JavaPlugin {
         this.getServer().addRecipe(Recipes.recipeDank(this));
         this.getServer().addRecipe(Recipes.recipeTrash1(this));
         this.getServer().addRecipe(Recipes.recipeTrash(this));
-//        this.getServer().addRecipe(Recipes.recipeDank2(this));
-//        this.getServer().addRecipe(Recipes.recipeDank3(this));
-//        this.getServer().addRecipe(Recipes.recipeDank4(this));
-//        this.getServer().addRecipe(Recipes.recipeDank5(this));
-//        this.getServer().addRecipe(Recipes.recipeDank6(this));
-//        this.getServer().addRecipe(Recipes.recipeDank7(this));
-//        this.getServer().addRecipe(Recipes.recipeDank8(this));
-//        this.getServer().addRecipe(Recipes.recipeDank9(this));
     }
 
 }

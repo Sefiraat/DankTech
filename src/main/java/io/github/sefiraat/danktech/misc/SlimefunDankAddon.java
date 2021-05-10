@@ -1,4 +1,4 @@
-package io.github.sefiraat.danktech.lib.misc;
+package io.github.sefiraat.danktech.misc;
 
 import dev.dbassett.skullcreator.SkullCreator;
 import io.github.sefiraat.danktech.DankTech;

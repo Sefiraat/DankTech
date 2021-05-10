@@ -4,23 +4,13 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import io.github.sefiraat.danktech.DankTech;
-import io.github.sefiraat.danktech.finals.ItemDetails;
-import io.github.sefiraat.danktech.finals.ItemStacks;
 import io.github.sefiraat.danktech.finals.Messages;
-import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
-import io.github.sefiraat.danktech.implementation.dankpacks.TrashPack;
 import io.github.sefiraat.danktech.implementation.gui.AdminGUI;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_DANK_ID;
-import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
-import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashNameBold;
-import static io.github.sefiraat.danktech.lib.misc.Utils.getNextPackID;
-import static io.github.sefiraat.danktech.lib.misc.Utils.getNextTrashID;
+import static io.github.sefiraat.danktech.misc.Utils.*;
 
 @CommandAlias("DankTech|DT")
 @Description("DankTech Main")
@@ -56,18 +46,7 @@ public class Commands extends BaseCommand {
         @CommandCompletion("@players @range:1-9")
         public void onGiveItemDank(CommandSender sender, OnlinePlayer player, int level) {
             if (sender instanceof Player) {
-                if (level <= 9) {
-                    long packID = getNextPackID(parent);
-                    ItemStack dank = DankPack.DankPack(level, packID, parent, player.getPlayer());
-                    ItemMeta m = dank.getItemMeta();
-                    m.setDisplayName(getDankNameBold(level));
-                    m.setLore(ItemDetails.getDankLore(level, packID, null));
-                    dank.setItemMeta(m);
-                    player.getPlayer().getInventory().addItem(dank);
-                    player.getPlayer().sendMessage(Messages.messageCommandPackGiven(packID));
-                } else {
-                    player.getPlayer().sendMessage(Messages.MESSAGE_COMMAND_PACK_NO_EXIST);
-                }
+                givePlayerDank(player.getPlayer(), level, parent);
             }
         }
 
@@ -76,18 +55,7 @@ public class Commands extends BaseCommand {
         @CommandCompletion("@players @range:1-9")
         public void onGiveItemTrash(CommandSender sender, OnlinePlayer player, int level) {
             if (sender instanceof Player) {
-                if (level <= 9) {
-                    long packID = getNextTrashID(parent);
-                    ItemStack trash = TrashPack.TrashPack(level, packID, parent, player.getPlayer());
-                    ItemMeta m = trash.getItemMeta();
-                    m.setDisplayName(getTrashNameBold(level));
-                    m.setLore(ItemDetails.getTrashLore(level, packID));
-                    trash.setItemMeta(m);
-                    player.getPlayer().getInventory().addItem(trash);
-                    player.getPlayer().sendMessage(Messages.messageCommandTrashGiven(packID));
-                } else {
-                    player.getPlayer().sendMessage(Messages.MESSAGE_COMMAND_PACK_NO_EXIST);
-                }
+                givePlayerTrash(player.getPlayer(), level, parent);
             }
         }
 
@@ -96,9 +64,7 @@ public class Commands extends BaseCommand {
         @CommandCompletion("@players @range:1-9 @range:1-64")
         public void onGiveItemCell(CommandSender sender, OnlinePlayer player, int level, int amount) {
             if (sender instanceof Player) {
-                ItemStack i = ItemStacks.getCell(level, parent).clone();
-                i.setAmount(amount);
-                player.getPlayer().getInventory().addItem(i);
+                givePlayerCell(player.getPlayer(), level, amount, parent);
             }
         }
 
@@ -119,17 +85,7 @@ public class Commands extends BaseCommand {
         @CommandPermission("DankTech.Admin")
         public void onRecoverItemDank(CommandSender sender, long id) {
             if (sender instanceof Player) {
-                Player player = (Player) sender;
-
-                int level = parent.getInstance().getDankStorageConfig().getInt(CONFIG_GETTER_SECTION_DANK_ID + "." + id + ".LEVEL");
-
-                ItemStack dank = DankPack.DankPack(level, id, parent, player.getPlayer());
-                ItemMeta m = dank.getItemMeta();
-                m.setDisplayName(getDankNameBold(level));
-                m.setLore(ItemDetails.getDankLore(level, id, null));
-                dank.setItemMeta(m);
-                player.getInventory().addItem(dank);
-                player.sendMessage(Messages.messageCommandPackGiven(id));
+                recoverDankByID((Player) sender, parent, id);
             }
         }
     }

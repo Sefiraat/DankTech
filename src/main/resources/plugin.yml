@@ -1,5 +1,5 @@
 name: DankTech
-version: 1.0
+version: 1.2.1
 main: io.github.sefiraat.danktech.DankTech
 api-version: 1.16
 softdepend:
@@ -7,3 +7,6 @@ softdepend:
   - WorldGuard
   - mcMMO
   - Slimefun
+permissions:
+  danktech.admin:
+    description: Allows access to /danktech and to bypass world restrictions

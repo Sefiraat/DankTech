@@ -5,6 +5,8 @@ import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.Messages;
 import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
+import io.github.sefiraat.danktech.misc.Config;
+import io.github.sefiraat.danktech.misc.ContainerStorage;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -29,7 +31,8 @@ import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.implementation.gui.DankTrashGUI.getTrashGUI;
-import static io.github.sefiraat.danktech.lib.misc.Utils.*;
+import static io.github.sefiraat.danktech.misc.Config.getWorldBlacklistOpen;
+import static io.github.sefiraat.danktech.misc.Config.getWorldBlacklistPlace;
 
 public class ItemRightClickListener implements Listener {
 
@@ -45,14 +48,14 @@ public class ItemRightClickListener implements Listener {
         if (e.getItem() != null && e.getItem().getItemMeta() != null) {
             Player p = e.getPlayer();
             ItemStack i = e.getItem();
-            if (isDankMaterial(i, parent.getInstance()) && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (ContainerStorage.isDankMaterial(i, parent.getInstance()) && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 e.setCancelled(true);
                 return;
             }
-            if (isDank(i, parent.getInstance())) {
+            if (ContainerStorage.isDank(i, parent.getInstance())) {
                 handleDank(e, i, p);
             }
-            if (isTrash(i, parent.getInstance())) {
+            if (ContainerStorage.isTrash(i, parent.getInstance())) {
                 handleTrash(e, i, p);
             }
         }
@@ -64,7 +67,7 @@ public class ItemRightClickListener implements Listener {
             e.setCancelled(true);
             return;
         }
-        if (p.isSneaking()) {
+        if (p.isSneaking() && canPlaceBlacklist(p)) {
             switch (e.getAction()) {
                 case LEFT_CLICK_AIR:
                     e.setCancelled(true);
@@ -82,15 +85,17 @@ public class ItemRightClickListener implements Listener {
                     break;
             }
         } else {
-            if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+            if (((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) && canOpenBlacklist(p)) {
                 e.setCancelled(true);
                 openDankPack(i, p);
+            } else {
+                e.setCancelled(true);
             }
         }
     }
 
     private void handleTrash(PlayerInteractEvent e, ItemStack i, Player p) {
-        if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+        if (((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) && canOpenBlacklist(p)) {
             e.setCancelled(true);
             openTrashPack(i, p);
         }
@@ -98,63 +103,69 @@ public class ItemRightClickListener implements Listener {
 
     private boolean isOldDank(ItemStack i) {
         Material m = i.getType();
-        if (
-                i.getType() == Material.GRAY_STAINED_GLASS ||
-                i.getType() == Material.BLACK_STAINED_GLASS ||
-                i.getType() == Material.LIME_STAINED_GLASS ||
-                i.getType() == Material.GREEN_STAINED_GLASS ||
-                i.getType() == Material.LIGHT_BLUE_STAINED_GLASS ||
-                i.getType() == Material.BLUE_STAINED_GLASS ||
-                i.getType() == Material.PINK_STAINED_GLASS ||
-                i.getType() == Material.PURPLE_STAINED_GLASS ||
-                i.getType() == Material.RED_STAINED_GLASS
-        ) {
-            return true;
-        }
-        return false;
+        return (
+                m == Material.GRAY_STAINED_GLASS ||
+                m == Material.BLACK_STAINED_GLASS ||
+                m == Material.LIME_STAINED_GLASS ||
+                m == Material.GREEN_STAINED_GLASS ||
+                m == Material.LIGHT_BLUE_STAINED_GLASS ||
+                m == Material.BLUE_STAINED_GLASS ||
+                m == Material.PINK_STAINED_GLASS ||
+                m == Material.PURPLE_STAINED_GLASS ||
+                m == Material.RED_STAINED_GLASS
+        );
     }
 
     private void replaceDank(ItemStack i, Player player) {
 
-        getDankLevel(i, parent);
+        ContainerStorage.getDankLevel(i, parent);
 
-        int level = getDankLevel(i, parent);
-        long id = getDankId(i, parent);
+        int level = ContainerStorage.getDankLevel(i, parent);
+        long id = ContainerStorage.getDankId(i, parent);
 
         i.setAmount(0);
 
-        ItemStack dank = DankPack.DankPack(level, id, parent, player.getPlayer());
+        ItemStack dank = DankPack.getDankPack(level, id, parent, player.getPlayer());
         ItemMeta m = dank.getItemMeta();
         m.setDisplayName(getDankNameBold(level));
         m.setLore(ItemDetails.getDankLore(level, id, null));
         dank.setItemMeta(m);
-        // player.getInventory().addItem(dank);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), dank);
         player.sendMessage(Messages.messageCommandPackUpdated(id));
     }
 
     private void openDankPack(ItemStack i, Player p) {
-        int dankLevel = getDankLevel(i, parent.getInstance());
-        long dankId = getDankId(i, parent.getInstance());
+        int dankLevel = ContainerStorage.getDankLevel(i, parent.getInstance());
+        long dankId = ContainerStorage.getDankId(i, parent.getInstance());
         p.sendMessage(Messages.messageEventOpenPack(dankId));
-        setLastOpenedBy(dankId, parent, p);
+        Config.setLastOpenedBy(dankId, parent, p);
         Gui g = getDankGUI(dankId, dankLevel, parent.getInstance());
         g.open(p);
     }
 
     private void openTrashPack(ItemStack i, Player p) {
-        int trashLevel = getTrashLevel(i, parent.getInstance());
-        long trashId = getTrashId(i, parent.getInstance());
+        int trashLevel = ContainerStorage.getTrashLevel(i, parent.getInstance());
+        long trashId = ContainerStorage.getTrashId(i, parent.getInstance());
         p.sendMessage(Messages.messageEventOpenPack(trashId));
-        setLastOpenedBy(trashId, parent, p);
+        Config.setLastOpenedBy(trashId, parent, p);
         Gui g = getTrashGUI(trashId, trashLevel, parent.getInstance());
         g.open(p);
     }
 
+    private boolean canOpenBlacklist(Player p) {
+        p.getServer().getLogger().info(p.getWorld().getName());
+        return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistOpen(parent).contains(p.getWorld().getName());
+    }
+
+    private boolean canPlaceBlacklist(Player p) {
+        p.getServer().getLogger().info(p.getWorld().getName());
+        return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistPlace(parent).contains(p.getWorld().getName());
+    }
+
     private void cycleForward(ItemStack dank, Player p) {
-        Integer slot = getDankNextSlot(dank, parent);
-        Long dankID = getDankId(dank, parent);
-        ItemStack slotItemStack = getSlotItemStack(dankID, slot, parent);
+        Integer slot = ContainerStorage.getDankNextSlot(dank, parent);
+        Long dankID = ContainerStorage.getDankId(dank, parent);
+        ItemStack slotItemStack = Config.getSlotItemStack(dankID, slot, parent);
         String itemName = "EMPTY";
         if (slotItemStack != null) {
             if (slotItemStack.getItemMeta().hasDisplayName()) {
@@ -167,9 +178,9 @@ public class ItemRightClickListener implements Listener {
     }
 
     private void cycleBackward(ItemStack dank, Player p) {
-        Integer slot = getDankPreviousSlot(dank, parent);
-        Long dankID = getDankId(dank, parent);
-        ItemStack slotItemStack = getSlotItemStack(dankID, slot, parent);
+        Integer slot = ContainerStorage.getDankPreviousSlot(dank, parent);
+        Long dankID = ContainerStorage.getDankId(dank, parent);
+        ItemStack slotItemStack = Config.getSlotItemStack(dankID, slot, parent);
         String itemName = "EMPTY";
         if (slotItemStack != null) {
             if (slotItemStack.getItemMeta().hasDisplayName()) {
@@ -182,9 +193,9 @@ public class ItemRightClickListener implements Listener {
     }
 
     private void placeBlock(PlayerInteractEvent e, ItemStack dank, Player p) {
-        Integer slot = getDankCurrentSlot(dank, parent);
-        Long dankID = getDankId(dank, parent);
-        ItemStack slotItemStack = getSlotItemStack(dankID, slot, parent);
+        Integer slot = ContainerStorage.getDankCurrentSlot(dank, parent);
+        Long dankID = ContainerStorage.getDankId(dank, parent);
+        ItemStack slotItemStack = Config.getSlotItemStack(dankID, slot, parent);
         if (slotItemStack != null && !slotItemStack.hasItemMeta() && slotItemStack.getType().isBlock()) {
             Block block = e.getClickedBlock().getRelative(e.getBlockFace());
             if (isSafeToBuild(block, p)) {
@@ -196,7 +207,7 @@ public class ItemRightClickListener implements Listener {
                 if (amount > 1) {
                     amount--;
                     slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
-                    ItemStack i = getSlotItemStack(dankID, slot, parent);
+                    ItemStack i = Config.getSlotItemStack(dankID, slot, parent);
                     block.setType(i.getType());
                     if (parent.isMcMMO()) {
                         mcMMO.getPlaceStore().setTrue(block);

@@ -3,7 +3,7 @@ package io.github.sefiraat.danktech.implementation.gui;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.GUIItems;
 import io.github.sefiraat.danktech.finals.Messages;
-import io.github.sefiraat.danktech.lib.misc.Utils;
+import io.github.sefiraat.danktech.misc.Utils;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import org.bukkit.Material;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankName;
-import static io.github.sefiraat.danktech.lib.misc.Utils.getDankId;
+import static io.github.sefiraat.danktech.misc.ContainerStorage.getDankId;
 
 public class DankGUI {
 
@@ -127,34 +127,27 @@ public class DankGUI {
         ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
         ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + slot);
         if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
+            GUIWithdrawBase base = new GUIWithdrawBase((Player) e.getWhoClicked(), slotSection, gui, dankID);
             Integer firstEmpty = e.getWhoClicked().getInventory().firstEmpty();
             switch (e.getClick()) {
                 case LEFT:
-                    if (firstEmpty != -1) {
-                        withdrawOne(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
-                    } else {
-                        e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_WITHDRAW_NO_SPACE);
-                    }
+                    withdrawOne(base, plugin, slot, firstEmpty);
                     break;
                 case RIGHT:
-                    if (firstEmpty != -1) {
-                        withdrawStack(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot, false);
-                    } else {
-                        e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_WITHDRAW_NO_SPACE);
-                    }
+                    withdrawStack(base, plugin, slot, firstEmpty, false);
                     break;
                 case SHIFT_LEFT:
-                    depositAll(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
+                    depositAll(base, plugin, slot);
                     break;
                 case SHIFT_RIGHT:
                     if (firstEmpty != -1) {
-                        withdrawMax(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot);
+                        withdrawMax(base, plugin, slot, firstEmpty);
                     } else {
                         e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_WITHDRAW_NO_SPACE);
                     }
                     break;
                 case DROP:
-                    withdrawStack(plugin, (Player) e.getWhoClicked(), slotSection, gui, dankID, slot, true);
+                    withdrawStack(base, plugin, slot, 0, true);
                     break;
                 default:
                     break;
@@ -164,50 +157,28 @@ public class DankGUI {
         }
     }
 
-    private static void withdrawOne(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
-        Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
-        ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
-        if (amount == 1) {
-            i.setAmount(amount);
-            slotSection.set(CONFIG_GETTER_VAL_VOLUME, 0);
-            slotSection.set(CONFIG_GETTER_VAL_STACK, null);
-            gui.updateItem(2, slot, GUIItems.guiUnassignedSlot());
-            GuiItem g = GUIItems.guiPackWithdrawItem(0);
-            g.setAction(event -> {
-                withdrawItems(gui, dankID, plugin, slot, event);
-                event.setCancelled(true);
-            });
-            gui.updateItem(4, slot, g);
-        } else {
-            i.setAmount(1);
-            amount = (amount - 1);
-            slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
-            GuiItem g = GUIItems.guiPackWithdrawItem(amount);
-            g.setAction(event -> {
-                withdrawItems(gui, dankID, plugin, slot, event);
-                event.setCancelled(true);
-            });
-            gui.updateItem(4, slot, g);
-        }
-        p.getInventory().addItem(i);
-    }
-
-    private static void withdrawStack(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot, boolean isDrop) {
-        Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
-        ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
-        if (amount > 1) {
-            if (amount <= i.getMaxStackSize()) {
-                i.setAmount(amount - 1);
-                slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
-                GuiItem g = GUIItems.guiPackWithdrawItem(1);
+    private static void withdrawOne(GUIWithdrawBase base, DankTech plugin, Integer slot, int firstEmpty) {
+        if (firstEmpty != -1) {
+            ConfigurationSection slotSection = base.getSlotSection();
+            Gui gui = base.getGui();
+            long dankID = base.getDankID();
+            Player p = base.getPlayer();
+            Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
+            ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
+            if (amount == 1) {
+                i.setAmount(amount);
+                slotSection.set(CONFIG_GETTER_VAL_VOLUME, 0);
+                slotSection.set(CONFIG_GETTER_VAL_STACK, null);
+                gui.updateItem(2, slot, GUIItems.guiUnassignedSlot());
+                GuiItem g = GUIItems.guiPackWithdrawItem(0);
                 g.setAction(event -> {
                     withdrawItems(gui, dankID, plugin, slot, event);
                     event.setCancelled(true);
                 });
                 gui.updateItem(4, slot, g);
             } else {
-                i.setAmount(i.getMaxStackSize());
-                amount = (amount - i.getMaxStackSize());
+                i.setAmount(1);
+                amount = (amount - 1);
                 slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
                 GuiItem g = GUIItems.guiPackWithdrawItem(amount);
                 g.setAction(event -> {
@@ -216,17 +187,55 @@ public class DankGUI {
                 });
                 gui.updateItem(4, slot, g);
             }
-            if (!isDrop) {
-                p.getInventory().addItem(i);
-            } else {
-                Item thrownItem = p.getWorld().dropItem(p.getLocation().clone().add(0,1,0), i);
-                thrownItem.setVelocity(p.getLocation().getDirection().multiply(0.45));
-                thrownItem.setPickupDelay(4 * 20);
+            p.getInventory().addItem(i);
+        }
+    }
+
+    private static void withdrawStack(GUIWithdrawBase base, DankTech plugin, Integer slot, int firstEmpty, boolean isDrop) {
+        if (firstEmpty != -1) {
+            ConfigurationSection slotSection = base.getSlotSection();
+            Gui gui = base.getGui();
+            long dankID = base.getDankID();
+            Player p = base.getPlayer();
+            Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
+            ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
+            if (amount > 1) {
+                if (amount <= i.getMaxStackSize()) {
+                    i.setAmount(amount - 1);
+                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
+                    GuiItem g = GUIItems.guiPackWithdrawItem(1);
+                    g.setAction(event -> {
+                        withdrawItems(gui, dankID, plugin, slot, event);
+                        event.setCancelled(true);
+                    });
+                    gui.updateItem(4, slot, g);
+                } else {
+                    i.setAmount(i.getMaxStackSize());
+                    amount = (amount - i.getMaxStackSize());
+                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
+                    GuiItem g = GUIItems.guiPackWithdrawItem(amount);
+                    g.setAction(event -> {
+                        withdrawItems(gui, dankID, plugin, slot, event);
+                        event.setCancelled(true);
+                    });
+                    gui.updateItem(4, slot, g);
+                }
+                if (!isDrop) {
+                    p.getInventory().addItem(i);
+                } else {
+                    Item thrownItem = p.getWorld().dropItem(p.getLocation().clone().add(0, 1, 0), i);
+                    thrownItem.setVelocity(p.getLocation().getDirection().multiply(0.45));
+                    thrownItem.setPickupDelay(4 * 20);
+                }
             }
         }
     }
 
-    private static void depositAll(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
+    private static void depositAll(GUIWithdrawBase base, DankTech plugin, Integer slot) {
+        ConfigurationSection slotSection = base.getSlotSection();
+        Gui gui = base.getGui();
+        long dankID = base.getDankID();
+        Player p = base.getPlayer();
         Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
         Integer additionalAmount = 0;
         ItemStack stack = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
@@ -249,33 +258,39 @@ public class DankGUI {
         }
     }
 
-    private static void withdrawMax(DankTech plugin, Player p, ConfigurationSection slotSection, Gui gui, Long dankID, Integer slot) {
-        Integer freeSlots = Utils.getEmptySlots(p);
-        Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
-        ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
-        Integer withdrawAmount = (i.getMaxStackSize() * freeSlots);
-        if (amount > 1) {
-            if (amount <= withdrawAmount) {
-                i.setAmount(amount - 1);
-                slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
-                GuiItem g = GUIItems.guiPackWithdrawItem(1);
-                g.setAction(event -> {
-                    withdrawItems(gui, dankID, plugin, slot, event);
-                    event.setCancelled(true);
-                });
-                gui.updateItem(4, slot, g);
-            } else {
-                i.setAmount(withdrawAmount);
-                amount = (amount - withdrawAmount);
-                slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
-                GuiItem g = GUIItems.guiPackWithdrawItem(amount);
-                g.setAction(event -> {
-                    withdrawItems(gui, dankID, plugin, slot, event);
-                    event.setCancelled(true);
-                });
-                gui.updateItem(4, slot, g);
+    private static void withdrawMax(GUIWithdrawBase base, DankTech plugin, Integer slot, int firstEmpty) {
+        if (firstEmpty != -1) {
+            ConfigurationSection slotSection = base.getSlotSection();
+            Gui gui = base.getGui();
+            long dankID = base.getDankID();
+            Player p = base.getPlayer();
+            Integer freeSlots = Utils.getEmptySlots(p);
+            Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
+            ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
+            Integer withdrawAmount = (i.getMaxStackSize() * freeSlots);
+            if (amount > 1) {
+                if (amount <= withdrawAmount) {
+                    i.setAmount(amount - 1);
+                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
+                    GuiItem g = GUIItems.guiPackWithdrawItem(1);
+                    g.setAction(event -> {
+                        withdrawItems(gui, dankID, plugin, slot, event);
+                        event.setCancelled(true);
+                    });
+                    gui.updateItem(4, slot, g);
+                } else {
+                    i.setAmount(withdrawAmount);
+                    amount = (amount - withdrawAmount);
+                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
+                    GuiItem g = GUIItems.guiPackWithdrawItem(amount);
+                    g.setAction(event -> {
+                        withdrawItems(gui, dankID, plugin, slot, event);
+                        event.setCancelled(true);
+                    });
+                    gui.updateItem(4, slot, g);
+                }
+                p.getInventory().addItem(i);
             }
-            p.getInventory().addItem(i);
         }
     }
 }
