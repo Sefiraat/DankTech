@@ -149,7 +149,6 @@ public class ItemPickupListener implements Listener {
     }
 
     private boolean canPickupBlacklist(Player p) {
-        p.getServer().getLogger().info(p.getWorld().getName());
         return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistPickup(parent).contains(p.getWorld().getName());
     }
 

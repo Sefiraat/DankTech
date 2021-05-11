@@ -105,23 +105,14 @@ public class Config {
     }
 
     public static List<String> getWorldBlacklistOpen(DankTech plugin) {
-        for (String s : plugin.getConfig().getStringList("GENERAL.BLACKLISTED_WORLDS_OPEN_PACK")) {
-            plugin.getServer().getLogger().info(s);
-        }
         return plugin.getConfig().getStringList("GENERAL.BLACKLISTED_WORLDS_OPEN_PACK");
     }
 
     public static List<String> getWorldBlacklistPlace(DankTech plugin) {
-        for (String s : plugin.getConfig().getStringList("GENERAL.BLACKLISTED_WORLDS_BLOCK_PLACEMENT")) {
-            plugin.getServer().getLogger().info(s);
-        }
         return plugin.getConfig().getStringList("GENERAL.BLACKLISTED_WORLDS_BLOCK_PLACEMENT");
     }
 
     public static List<String> getWorldBlacklistPickup(DankTech plugin) {
-        for (String s : plugin.getConfig().getStringList("GENERAL.BLACKLISTED_WORLDS_PICKUP_ITEMS")) {
-            plugin.getServer().getLogger().info(s);
-        }
         return plugin.getConfig().getStringList("GENERAL.BLACKLISTED_WORLDS_PICKUP_ITEMS");
     }
 

@@ -45,7 +45,7 @@ public class ItemRightClickListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onRightClick(PlayerInteractEvent e) {
-        if (e.getItem() != null && e.getItem().getItemMeta() != null) {
+        if (e.getItem() != null && e.getItem().getItemMeta() != null && e.getAction() != Action.LEFT_CLICK_AIR && e.getAction() != Action.LEFT_CLICK_BLOCK) {
             Player p = e.getPlayer();
             ItemStack i = e.getItem();
             if (ContainerStorage.isDankMaterial(i, parent.getInstance()) && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -53,9 +53,11 @@ public class ItemRightClickListener implements Listener {
                 return;
             }
             if (ContainerStorage.isDank(i, parent.getInstance())) {
+                e.setCancelled(true);
                 handleDank(e, i, p);
             }
             if (ContainerStorage.isTrash(i, parent.getInstance())) {
+                e.setCancelled(true);
                 handleTrash(e, i, p);
             }
         }
@@ -64,21 +66,17 @@ public class ItemRightClickListener implements Listener {
     private void handleDank(PlayerInteractEvent e, ItemStack i, Player p) {
         if (isOldDank(i)) {
             replaceDank(i, p);
-            e.setCancelled(true);
             return;
         }
         if (p.isSneaking() && canPlaceBlacklist(p)) {
             switch (e.getAction()) {
                 case LEFT_CLICK_AIR:
-                    e.setCancelled(true);
                     cycleBackward(i, p);
                     break;
                 case RIGHT_CLICK_AIR:
-                    e.setCancelled(true);
                     cycleForward(i, p);
                     break;
                 case RIGHT_CLICK_BLOCK:
-                    e.setCancelled(true);
                     placeBlock(e, i, p);
                     break;
                 default:
@@ -86,17 +84,13 @@ public class ItemRightClickListener implements Listener {
             }
         } else {
             if (((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) && canOpenBlacklist(p)) {
-                e.setCancelled(true);
                 openDankPack(i, p);
-            } else {
-                e.setCancelled(true);
             }
         }
     }
 
     private void handleTrash(PlayerInteractEvent e, ItemStack i, Player p) {
         if (((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) && canOpenBlacklist(p)) {
-            e.setCancelled(true);
             openTrashPack(i, p);
         }
     }
@@ -153,12 +147,10 @@ public class ItemRightClickListener implements Listener {
     }
 
     private boolean canOpenBlacklist(Player p) {
-        p.getServer().getLogger().info(p.getWorld().getName());
         return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistOpen(parent).contains(p.getWorld().getName());
     }
 
     private boolean canPlaceBlacklist(Player p) {
-        p.getServer().getLogger().info(p.getWorld().getName());
         return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistPlace(parent).contains(p.getWorld().getName());
     }
 
