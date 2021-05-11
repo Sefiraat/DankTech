@@ -5,6 +5,7 @@ import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.Messages;
 import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
+import io.github.sefiraat.danktech.implementation.dankpacks.TrashPack;
 import io.github.sefiraat.danktech.misc.Config;
 import io.github.sefiraat.danktech.misc.ContainerStorage;
 import me.mattstudios.mfgui.gui.guis.Gui;
@@ -29,10 +30,10 @@ import java.util.Collection;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
+import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashNameBold;
 import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.implementation.gui.DankTrashGUI.getTrashGUI;
-import static io.github.sefiraat.danktech.misc.Config.getWorldBlacklistOpen;
-import static io.github.sefiraat.danktech.misc.Config.getWorldBlacklistPlace;
+import static io.github.sefiraat.danktech.misc.Config.*;
 
 public class ItemRightClickListener implements Listener {
 
@@ -65,7 +66,11 @@ public class ItemRightClickListener implements Listener {
 
     private void handleDank(PlayerInteractEvent e, ItemStack i, Player p) {
         if (isOldDank(i)) {
-            replaceDank(i, p);
+            replaceDank(i, p, false);
+            return;
+        }
+        if (ContainerStorage.getDankId(i, parent) == 0) {
+            replaceDank(i, p, true);
             return;
         }
         if (p.isSneaking() && canPlaceBlacklist(p)) {
@@ -90,6 +95,10 @@ public class ItemRightClickListener implements Listener {
     }
 
     private void handleTrash(PlayerInteractEvent e, ItemStack i, Player p) {
+        if (ContainerStorage.getTrashId(i, parent) == 0) {
+            replaceTrash(i, p,true);
+            return;
+        }
         if (((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) && canOpenBlacklist(p)) {
             openTrashPack(i, p);
         }
@@ -110,12 +119,17 @@ public class ItemRightClickListener implements Listener {
         );
     }
 
-    private void replaceDank(ItemStack i, Player player) {
+    private void replaceDank(ItemStack i, Player player, boolean isNew) {
 
         ContainerStorage.getDankLevel(i, parent);
 
         int level = ContainerStorage.getDankLevel(i, parent);
-        long id = ContainerStorage.getDankId(i, parent);
+        long id = 0;
+        if (isNew) {
+            id = getNextPackID(parent);
+        } else {
+            id = ContainerStorage.getDankId(i, parent);
+        }
 
         i.setAmount(0);
 
@@ -125,6 +139,29 @@ public class ItemRightClickListener implements Listener {
         m.setLore(ItemDetails.getDankLore(level, id, null));
         dank.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), dank);
+        player.sendMessage(Messages.messageCommandPackUpdated(id));
+    }
+
+    private void replaceTrash(ItemStack i, Player player, boolean isNew) {
+
+        ContainerStorage.getTrashLevel(i, parent);
+
+        int level = ContainerStorage.getTrashLevel(i, parent);
+        long id = 0;
+        if (isNew) {
+            id = getNextTrashID(parent);
+        } else {
+            id = ContainerStorage.getTrashId(i, parent);
+        }
+
+        i.setAmount(0);
+
+        ItemStack trash = TrashPack.getTrashPack(level, id, parent, player.getPlayer());
+        ItemMeta m = trash.getItemMeta();
+        m.setDisplayName(getTrashNameBold(level));
+        m.setLore(ItemDetails.getTrashLore(level, id));
+        trash.setItemMeta(m);
+        player.getInventory().setItem(player.getInventory().getHeldItemSlot(), trash);
         player.sendMessage(Messages.messageCommandPackUpdated(id));
     }
 

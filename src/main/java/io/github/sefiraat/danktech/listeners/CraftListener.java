@@ -69,7 +69,7 @@ public class CraftListener implements Listener {
                 }
 
                 if (cellMatchLevel(dankLevel, contents, parent)) {
-                    ItemStack r = ItemStacks.getShallowDank(dankLevel);
+                    ItemStack r = ItemStacks.getShallowDank(dankLevel, parent);
                     ItemMeta im = r.getItemMeta();
                     im.getPersistentDataContainer().set(levelDankKey, PersistentDataType.INTEGER, dankLevel);
                     im.getPersistentDataContainer().set(idDankKey, PersistentDataType.LONG, dankID);
@@ -90,7 +90,7 @@ public class CraftListener implements Listener {
                 }
 
                 if (cellMatchLevel(trashLevel, contents, parent)) {
-                    ItemStack r = ItemStacks.getShallowTrash(trashLevel);
+                    ItemStack r = ItemStacks.getShallowTrash(trashLevel, parent);
                     ItemMeta im = r.getItemMeta();
                     im.getPersistentDataContainer().set(levelTrashKey, PersistentDataType.INTEGER, trashLevel);
                     im.getPersistentDataContainer().set(idTrashKey, PersistentDataType.LONG, trashID);

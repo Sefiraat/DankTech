@@ -33,7 +33,7 @@ public final class Messages {
     }
 
     public static String messageCommandPackUpdated(long packID) {
-        return (PREFIX + WARNING + "This pack is old! Updating to the new format. ID: " + packID);
+        return (PREFIX + WARNING + "This pack is old or incorrectly made! Updating to the correct format. ID: " + packID);
     }
 
     // Events

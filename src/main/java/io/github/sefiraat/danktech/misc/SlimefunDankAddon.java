@@ -54,7 +54,7 @@ public class SlimefunDankAddon implements SlimefunAddon {
 
         List<SlimefunItemStack> danks = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
-            SlimefunItemStack dankPackStack = new SlimefunItemStack( "DANK_PACK_" + i, ItemStacks.getShallowDank(i));
+            SlimefunItemStack dankPackStack = new SlimefunItemStack( "DANK_PACK_" + i, ItemStacks.getShallowDank(i, parent));
             SlimefunItem dankPack;
             if (i == 1) {
                 dankPack = new DankSlimefunItem(dankCategory, dankPackStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunPackRecipe(cells.get(0),null));
@@ -67,7 +67,7 @@ public class SlimefunDankAddon implements SlimefunAddon {
 
         List<SlimefunItemStack> trashes = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
-            SlimefunItemStack dankTrashStack = new SlimefunItemStack( "DANK_TRASH_" + i, ItemStacks.getShallowTrash(i));
+            SlimefunItemStack dankTrashStack = new SlimefunItemStack( "DANK_TRASH_" + i, ItemStacks.getShallowTrash(i, parent));
             SlimefunItem trashPack;
             if (i == 1) {
                 trashPack = new DankSlimefunItem(dankCategory, dankTrashStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunTrashRecipe(cells.get(0),null));

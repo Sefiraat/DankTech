@@ -10,7 +10,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import static io.github.sefiraat.danktech.finals.ItemDetails.*;
 import static io.github.sefiraat.danktech.finals.Materials.*;
-import static io.github.sefiraat.danktech.misc.ContainerStorage.setCellLevel;
+import static io.github.sefiraat.danktech.misc.ContainerStorage.*;
 
 public final class ItemStacks {
 
@@ -30,16 +30,20 @@ public final class ItemStacks {
         return cell;
     }
 
-    public static ItemStack getShallowDank(int level) {
+    public static ItemStack getShallowDank(int level, DankTech plugin) {
         ItemStack dank = createSkull(getDankTexture(level));
+        makeDank(dank, plugin);
+        setDankLevel(dank, plugin, level);
         ItemMeta m = dank.getItemMeta();
         m.setDisplayName(getDankNameBold(level));
         dank.setItemMeta(m);
         return dank;
     }
 
-    public static ItemStack getShallowTrash(int level) {
+    public static ItemStack getShallowTrash(int level, DankTech plugin) {
         ItemStack trash = createSkull(getTrashTexture(level));
+        makeTrash(trash, plugin);
+        setTrashLevel(trash, plugin, level);
         ItemMeta m = trash.getItemMeta();
         m.setDisplayName(getTrashNameBold(level));
         trash.setItemMeta(m);
