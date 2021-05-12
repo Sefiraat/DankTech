@@ -24,7 +24,6 @@ public class DankPack {
     public static ItemStack getDankPack(@Nonnull Integer level, @Nonnull Long packID, @Nonnull DankTech parent, @Nullable Player p) {
 
         ItemStack dank = SkullCreator.itemFromBase64(getDankTexture(level));
-
         if (!parent.getInstance().getDankStorageConfig().contains(CONFIG_GETTER_SECTION_DANK_ID + "." + packID)) {
             setupSection(parent.getInstance().getDankStorageConfig(), packID, level);
             parent.saveDankStorageConfig();

@@ -20,6 +20,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
@@ -48,6 +50,16 @@ public class CraftListener implements Listener {
             }
 
             ItemStack c = contents[4];
+            List<ItemStack> cells = new ArrayList<>();
+
+            cells.add(contents[0]);
+            cells.add(contents[1]);
+            cells.add(contents[2]);
+            cells.add(contents[3]);
+            cells.add(contents[5]);
+            cells.add(contents[6]);
+            cells.add(contents[7]);
+            cells.add(contents[8]);
 
             NamespacedKey levelDankKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_DANK);
             NamespacedKey idDankKey = new NamespacedKey(parent.getInstance(), KEY_ID_DANK);
@@ -59,23 +71,27 @@ public class CraftListener implements Listener {
                 // Core denotes a DANK PACK craft
 
                 int dankLevel = 1;
-                long dankID = -1;
+                long dankID = 0;
 
                 if (c.getType() == Materials.DANK_CORE_MATERIAL) {
-                    dankID = getNextPackID(parent);
+                    // dankID = getNextPackID(parent);
                 } else {
                     dankLevel = c.getItemMeta().getPersistentDataContainer().get(levelDankKey, PersistentDataType.INTEGER) + 1;
                     dankID = c.getItemMeta().getPersistentDataContainer().get(idDankKey, PersistentDataType.LONG);
                 }
 
-                if (cellMatchLevel(dankLevel, contents, parent)) {
+                if (cellMatchLevel(dankLevel, cells, parent)) {
                     ItemStack r = ItemStacks.getShallowDank(dankLevel, parent);
                     ItemMeta im = r.getItemMeta();
                     im.getPersistentDataContainer().set(levelDankKey, PersistentDataType.INTEGER, dankLevel);
                     im.getPersistentDataContainer().set(idDankKey, PersistentDataType.LONG, dankID);
                     r.setItemMeta(im);
                     e.getInventory().setResult(r);
+                } else {
+                    e.getInventory().setResult(new ItemStack(Material.AIR));
                 }
+
+
             } else  if (c.getType() == Materials.TRASH_CORE_MATERIAL || c.getItemMeta().getPersistentDataContainer().has(levelTrashKey, PersistentDataType.INTEGER)) {
                 // Core denotes a DANK TRASH craft
 
@@ -89,7 +105,7 @@ public class CraftListener implements Listener {
                     trashID = c.getItemMeta().getPersistentDataContainer().get(idTrashKey, PersistentDataType.LONG);
                 }
 
-                if (cellMatchLevel(trashLevel, contents, parent)) {
+                if (cellMatchLevel(trashLevel, cells, parent)) {
                     ItemStack r = ItemStacks.getShallowTrash(trashLevel, parent);
                     ItemMeta im = r.getItemMeta();
                     im.getPersistentDataContainer().set(levelTrashKey, PersistentDataType.INTEGER, trashLevel);
@@ -105,7 +121,7 @@ public class CraftListener implements Listener {
     public void onCraft(CraftItemEvent e) {
         if (e.getWhoClicked() instanceof Player) {
             Player p = (Player) e.getWhoClicked();
-            if (e.getInventory().getResult() != null) {
+            if (e.getInventory().getResult() != null && e.getInventory().getResult().getType() != Material.AIR) {
                 ItemStack res = e.getInventory().getResult();
                 NamespacedKey dankKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_DANK);
                 boolean hasDankKey = res.getItemMeta().getPersistentDataContainer().has(dankKey, PersistentDataType.INTEGER);
@@ -169,25 +185,11 @@ public class CraftListener implements Listener {
                         p.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_TRASH);
                     }
                 }
-            } else {
-                p.sendMessage("Result is false?");
             }
         }
     }
 
-    public boolean isResultDank(Material m) {
-        return m == Materials.DANK_1 ||
-                m == Materials.DANK_2 ||
-                m == Materials.DANK_3 ||
-                m == Materials.DANK_4 ||
-                m == Materials.DANK_5 ||
-                m == Materials.DANK_6 ||
-                m == Materials.DANK_7 ||
-                m == Materials.DANK_8 ||
-                m == Materials.DANK_9;
-    }
-
-    public boolean cellMatchLevel(Integer level, ItemStack[] itemStacks, DankTech plugin) {
+    public boolean cellMatchLevel(Integer level, List<ItemStack> itemStacks, DankTech plugin) {
         NamespacedKey keyLevel = new NamespacedKey(plugin,"cell-level");
         for (ItemStack i : itemStacks) {
             if (i.hasItemMeta() && i.getItemMeta().getPersistentDataContainer().has(keyLevel,PersistentDataType.INTEGER)) {
@@ -195,6 +197,8 @@ public class CraftListener implements Listener {
                 if (!stackLevel.equals(level)) {
                     return false;
                 }
+            } else {
+                return false;
             }
         }
         return true;

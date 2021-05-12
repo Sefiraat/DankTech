@@ -25,7 +25,7 @@ public final class Messages {
     public static final String MESSAGE_COMMAND_PACK_NO_EXIST = PREFIX + ERROR + "Yeah, packs only go from 1 to 9 dummy :)";
 
     public static String messageCommandPackGiven(long packID) {
-        return (PREFIX + SUCCESS + "Pack created. ID: " + packID);
+        return (PREFIX + SUCCESS + "Dank Pack created. ID: " + packID);
     }
 
     public static String messageCommandTrashGiven(long trashID) {

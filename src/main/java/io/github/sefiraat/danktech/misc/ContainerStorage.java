@@ -55,6 +55,16 @@ public class ContainerStorage {
         i.setItemMeta(im);
     }
 
+    public static boolean isShallow(ItemStack i, DankTech plugin) {
+        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-shallow");
+        return containerHasData(i, key, PersistentDataType.INTEGER);
+    }
+
+    public static void makeShallow(ItemStack i, DankTech plugin) {
+        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-shallow");
+        setData(i, key, 1);
+    }
+
     public static boolean isDank(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-dank");
         return containerHasData(i, key, PersistentDataType.INTEGER);

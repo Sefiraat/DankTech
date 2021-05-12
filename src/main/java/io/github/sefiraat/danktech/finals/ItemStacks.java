@@ -33,6 +33,7 @@ public final class ItemStacks {
     public static ItemStack getShallowDank(int level, DankTech plugin) {
         ItemStack dank = createSkull(getDankTexture(level));
         makeDank(dank, plugin);
+        makeShallow(dank, plugin);
         setDankLevel(dank, plugin, level);
         ItemMeta m = dank.getItemMeta();
         m.setDisplayName(getDankNameBold(level));
@@ -43,6 +44,7 @@ public final class ItemStacks {
     public static ItemStack getShallowTrash(int level, DankTech plugin) {
         ItemStack trash = createSkull(getTrashTexture(level));
         makeTrash(trash, plugin);
+        makeShallow(trash, plugin);
         setTrashLevel(trash, plugin, level);
         ItemMeta m = trash.getItemMeta();
         m.setDisplayName(getTrashNameBold(level));
