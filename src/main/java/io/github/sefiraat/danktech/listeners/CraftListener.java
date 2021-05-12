@@ -96,7 +96,7 @@ public class CraftListener implements Listener {
                 // Core denotes a DANK TRASH craft
 
                 int trashLevel = 1;
-                long trashID = -1;
+                long trashID = 0;
 
                 if (c.getType() == Materials.TRASH_CORE_MATERIAL) {
                     trashID = getNextTrashID(parent);

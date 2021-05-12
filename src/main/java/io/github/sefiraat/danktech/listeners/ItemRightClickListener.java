@@ -12,6 +12,7 @@ import me.mattstudios.mfgui.gui.guis.Gui;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -24,6 +25,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -103,6 +105,9 @@ public class ItemRightClickListener implements Listener {
     private void handleTrash(PlayerInteractEvent e, ItemStack i, Player p) {
         if (ContainerStorage.getTrashId(i, parent) == 0) {
             replaceTrash(i, p,true);
+            return;
+        } else if (isShallow(i, parent)) {
+            replaceAndUpgradeTrash(i, p, false);
             return;
         }
         if (((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) && canOpenBlacklist(p)) {
@@ -187,6 +192,29 @@ public class ItemRightClickListener implements Listener {
         trash.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), trash);
         player.sendMessage(Messages.messageCommandPackUpdated(id));
+    }
+
+    private void replaceAndUpgradeTrash(ItemStack i, Player player, boolean isNew) {
+
+        int level = ContainerStorage.getTrashLevel(i, parent);
+        long id = ContainerStorage.getTrashId(i, parent);
+
+        i.setAmount(0);
+
+        ConfigurationSection c = parent.getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + id);
+        c.set(CONFIG_GETTER_VAL_LEVEL, ((level*2)-1));
+        c.set(CONFIG_GETTER_VAL_SLOT + ((level*2)-1) + "." + CONFIG_GETTER_VAL_STACK, null);
+        c.set(CONFIG_GETTER_VAL_SLOT + ((level*2)-1) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
+        c.set(CONFIG_GETTER_VAL_LEVEL, (level*2));
+        c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_STACK, null);
+        c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
+        ItemStack trash = TrashPack.getTrashPack(level, id, parent, player);
+        ItemMeta m = trash.getItemMeta();
+        m.setDisplayName(getTrashNameBold(level));
+        m.setLore(ItemDetails.getTrashLore(level, id));
+        trash.setItemMeta(m);
+        player.getInventory().setItem(player.getInventory().getHeldItemSlot(), trash);
+        player.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_TRASH);
     }
 
     private void openDankPack(ItemStack i, Player p) {
