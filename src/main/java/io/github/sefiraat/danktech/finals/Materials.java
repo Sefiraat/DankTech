@@ -5,8 +5,8 @@ import org.bukkit.Material;
 public final class Materials {
 
     public static final Material CELL_CORE_MATERIAL = Material.GLASS_PANE;
-    public static final Material DANK_CORE_MATERIAL = Material.NETHER_STAR;
-    public static final Material TRASH_CORE_MATERIAL = Material.IRON_BLOCK;
+    public static final Material DANK_T1_CORE_MATERIAL = Material.NETHER_STAR;
+    public static final Material TRASH_T1_CORE_MATERIAL = Material.IRON_BLOCK;
 
     private Materials() {
         throw new IllegalStateException("Utility class");

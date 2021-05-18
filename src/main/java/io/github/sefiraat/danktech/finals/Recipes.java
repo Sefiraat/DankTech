@@ -130,7 +130,7 @@ public final class Recipes {
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', Material.PLAYER_HEAD);
-        r.setIngredient('E', Materials.DANK_CORE_MATERIAL);
+        r.setIngredient('E', Materials.DANK_T1_CORE_MATERIAL);
         return r;
     }
 
@@ -150,7 +150,7 @@ public final class Recipes {
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', Material.PLAYER_HEAD);
-        r.setIngredient('E', Materials.TRASH_CORE_MATERIAL);
+        r.setIngredient('E', Materials.TRASH_T1_CORE_MATERIAL);
         return r;
     }
 
@@ -246,7 +246,7 @@ public final class Recipes {
         } else {
             i = new ItemStack[]{
                     stack, stack, stack,
-                    stack, new ItemStack(Materials.DANK_CORE_MATERIAL), stack,
+                    stack, new ItemStack(Materials.DANK_T1_CORE_MATERIAL), stack,
                     stack, stack, stack
             };
         }
@@ -264,7 +264,7 @@ public final class Recipes {
         } else {
             i = new ItemStack[]{
                     stack, stack, stack,
-                    stack, new ItemStack(Materials.TRASH_CORE_MATERIAL), stack,
+                    stack, new ItemStack(Materials.TRASH_T1_CORE_MATERIAL), stack,
                     stack, stack, stack
             };
         }

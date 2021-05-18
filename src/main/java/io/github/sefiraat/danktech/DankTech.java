@@ -27,6 +27,8 @@ public class DankTech extends JavaPlugin {
     private DankTech instance;
     private File dankStorageConfigFile;
     private FileConfiguration dankStorageConfig;
+    private File itemBlacklistConfigFile;
+    private FileConfiguration itemBlacklistConfig;
     private PaperCommandManager commandManager;
     private final Timer repeater = new Timer();
     private Protection protection;
@@ -36,6 +38,12 @@ public class DankTech extends JavaPlugin {
     private boolean slimefun = false;
     private SlimefunDankAddon slimefunAddon;
 
+    public File getItemBlacklistConfigFile() {
+        return itemBlacklistConfigFile;
+    }
+    public FileConfiguration getItemBlacklistConfig() {
+        return itemBlacklistConfig;
+    }
     public File getDankStorageConfigFile() {
         return dankStorageConfigFile;
     }
@@ -87,6 +95,7 @@ public class DankTech extends JavaPlugin {
 
         saveDefaultConfig();
         createDankStorageConfig();
+        createItemBlacklistConfig();
         registerCommands();
 
         protection = new Protection(this);
@@ -143,6 +152,28 @@ public class DankTech extends JavaPlugin {
             dankStorageConfig.save(dankStorageConfigFile);
         } catch (IOException e) {
             this.getLogger().warning("Unable to save " + dankStorageConfigFile.getName());
+        }
+    }
+
+    private void createItemBlacklistConfig() {
+        itemBlacklistConfigFile = new File(getDataFolder(), "BlacklistedItems.yml");
+        if (!itemBlacklistConfigFile.exists()) {
+            itemBlacklistConfigFile.getParentFile().mkdirs();
+            saveResource("BlacklistedItems.yml", false);
+        }
+        itemBlacklistConfig = new YamlConfiguration();
+        try {
+            itemBlacklistConfig.load(itemBlacklistConfigFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveItemBlacklistConfig() {
+        try {
+            itemBlacklistConfig.save(itemBlacklistConfigFile);
+        } catch (IOException e) {
+            this.getLogger().warning("Unable to save " + itemBlacklistConfigFile.getName());
         }
     }
 

@@ -31,64 +31,76 @@ public class ItemPickupListener implements Listener {
 
     @EventHandler
     public void onItemPickup(EntityPickupItemEvent e) {
-        // TODO Reduce CC
         if(e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
-
             if (!canPickupBlacklist(p)) {
                 return;
             }
-
             if(hasTrash(p)) {
-                List<ItemStack> trashes = getTrash(p);
-                for (ItemStack trash : trashes) {
-                    long trashId = ContainerStorage.getTrashId(trash, parent);
-                    int trashLevel = ContainerStorage.getTrashLevel(trash, parent);
-                    ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashId);
-                    for (int i = 1; i <= (trashLevel*2); i++) {
-                        ItemStack pickedStack = e.getItem().getItemStack();
-                        ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + i);
-                        if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
-                            ItemStack expectantStack = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK);
-                            if (expectantStack.isSimilar(pickedStack)) {
-                                spawnTrashParticle(e.getItem());
-                                e.getItem().remove();
-                                e.setCancelled(true);
-                                return;
-                            }
-                        }
-                    }
-                }
+                handlePickupTrash(e, p);
             }
-
             if(hasDank(p)) {
-                List<ItemStack> danks = getDanks(p);
-                for (ItemStack dank : danks) {
-                    long dankID = ContainerStorage.getDankId(dank, parent);
-                    int dankLevel = ContainerStorage.getDankLevel(dank, parent);
-                    ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
-                    for (int i = 1; i <= dankLevel; i++) {
-                        ItemStack pickedStack = e.getItem().getItemStack();
-                        ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + i);
-                        if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
-                            ItemStack expectantStack = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK);
-                            if (expectantStack.isSimilar(pickedStack)) {
-                                int currentVolume = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
-                                if ((currentVolume + pickedStack.getAmount()) >= getLimit(dankLevel)) {
-                                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, getLimit(dankLevel));
-                                } else {
-                                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, currentVolume + pickedStack.getAmount());
-                                }
-                                spawnPickupParticle(e.getItem());
-                                e.getItem().remove();
-                                e.setCancelled(true);
-                                return;
-                            }
-                        }
+                handlePickupDank(e, p);
+            }
+        }
+    }
+
+    private  void handlePickupTrash(EntityPickupItemEvent e, Player p) {
+        List<ItemStack> trashes = getTrash(p);
+        for (ItemStack trash : trashes) {
+            long trashId = ContainerStorage.getTrashId(trash, parent);
+            int trashLevel = ContainerStorage.getTrashLevel(trash, parent);
+            ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashId);
+            for (int i = 1; i <= (trashLevel*2); i++) {
+                ItemStack pickedStack = e.getItem().getItemStack();
+                ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + i);
+                if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
+                    ItemStack expectantStack = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK);
+                    if (expectantStack.isSimilar(pickedStack)) {
+                        pickupItemTrash(e);
+                        return;
                     }
                 }
             }
         }
+    }
+
+    private void handlePickupDank(EntityPickupItemEvent e, Player p) {
+        List<ItemStack> danks = getDanks(p);
+        for (ItemStack dank : danks) {
+            long dankID = ContainerStorage.getDankId(dank, parent);
+            int dankLevel = ContainerStorage.getDankLevel(dank, parent);
+            ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
+            for (int i = 1; i <= dankLevel; i++) {
+                ItemStack pickedStack = e.getItem().getItemStack();
+                ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + i);
+                if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
+                    ItemStack expectantStack = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK);
+                    if (expectantStack.isSimilar(pickedStack)) {
+                        pickupItemDank(slotSection, pickedStack, dankLevel, e);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    private void pickupItemDank(ConfigurationSection slotSection, ItemStack pickedStack, Integer dankLevel, EntityPickupItemEvent e) {
+        int currentVolume = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
+        if ((currentVolume + pickedStack.getAmount()) >= getLimit(dankLevel)) {
+            slotSection.set(CONFIG_GETTER_VAL_VOLUME, getLimit(dankLevel));
+        } else {
+            slotSection.set(CONFIG_GETTER_VAL_VOLUME, currentVolume + pickedStack.getAmount());
+        }
+        spawnPickupParticle(e.getItem());
+        e.getItem().remove();
+        e.setCancelled(true);
+    }
+
+    private void pickupItemTrash(EntityPickupItemEvent e) {
+        spawnTrashParticle(e.getItem());
+        e.getItem().remove();
+        e.setCancelled(true);
     }
 
     private boolean hasDank(Player p) {

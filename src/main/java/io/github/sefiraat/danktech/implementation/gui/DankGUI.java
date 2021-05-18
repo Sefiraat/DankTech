@@ -103,9 +103,16 @@ public class DankGUI {
     public static void inputItemAction(InventoryClickEvent e, Gui gui, int slot, long dankID, DankTech plugin) {
         ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
         ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + slot);
+        ItemStack i = e.getWhoClicked().getItemOnCursor();
         if (e.getWhoClicked().getItemOnCursor().getType() != Material.AIR) {
+            for (String s : plugin.getItemBlacklistConfig().getConfigurationSection("BLACKLISTED_ITEMS").getKeys(false)) {
+                ItemStack blacklistedStack = plugin.getItemBlacklistConfig().getItemStack("BLACKLISTED_ITEMS" + "." + s);
+                if (i.isSimilar(blacklistedStack)) {
+                    e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_INPUT_BLACKLISTED);
+                    return;
+                }
+            }
             if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) == null) {
-                ItemStack i = e.getWhoClicked().getItemOnCursor();
                 if (getDankId(i, plugin) != dankID) {
                     ItemStack i2 = i.clone();
                     i.setAmount(i.getAmount() - 1);

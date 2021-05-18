@@ -6,6 +6,7 @@ import io.github.sefiraat.danktech.finals.ItemStacks;
 import io.github.sefiraat.danktech.finals.Messages;
 import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
 import io.github.sefiraat.danktech.implementation.dankpacks.TrashPack;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -80,6 +81,21 @@ public class Utils {
         ItemStack i = ItemStacks.getCell(level, parent).clone();
         i.setAmount(amount);
         player.getPlayer().getInventory().addItem(i);
+    }
+
+    public static long getNextItemID(DankTech plugin) {
+        ConfigurationSection sec = plugin.getInstance().getItemBlacklistConfig().getConfigurationSection("BLACKLISTED_ITEMS");
+        int nextValue = 1;
+        if (sec != null) {
+            for (String key : sec.getKeys(false)) {
+                int value = Integer.parseInt(key);
+                if (value > nextValue) {
+                    nextValue = value;
+                }
+            }
+            nextValue++;
+        }
+        return nextValue;
     }
 
 }

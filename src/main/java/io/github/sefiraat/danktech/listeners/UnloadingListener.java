@@ -42,20 +42,24 @@ public class UnloadingListener implements Listener {
             }
 
             if (slotSection != null && e.getDestination().firstEmpty() != -1) {
-                Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
-                ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
-                if (amount > 1) {
-                    if (amount <= i.getMaxStackSize()) {
-                        i.setAmount(amount - 1);
-                        slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
-                    } else {
-                        i.setAmount(i.getMaxStackSize());
-                        amount = (amount - i.getMaxStackSize());
-                        slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
-                    }
-                    e.getDestination().addItem(i);
-                }
+                hopItemsFromDank(slotSection, e);
             }
+        }
+    }
+
+    private void hopItemsFromDank(ConfigurationSection slotSection, InventoryMoveItemEvent e) {
+        Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
+        ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
+        if (amount > 1) {
+            if (amount <= i.getMaxStackSize()) {
+                i.setAmount(amount - 1);
+                slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
+            } else {
+                i.setAmount(i.getMaxStackSize());
+                amount = (amount - i.getMaxStackSize());
+                slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
+            }
+            e.getDestination().addItem(i);
         }
     }
 }

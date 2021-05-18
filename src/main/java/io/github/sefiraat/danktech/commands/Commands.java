@@ -6,9 +6,13 @@ import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.Messages;
 import io.github.sefiraat.danktech.implementation.gui.AdminGUI;
+import io.github.sefiraat.danktech.misc.Utils;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import static io.github.sefiraat.danktech.misc.Utils.*;
 
@@ -103,6 +107,31 @@ public class Commands extends BaseCommand {
                 adminGUI.open(p);
             }
         }
+    }
 
+    @Subcommand("AddBlacklist")
+    @CommandPermission("CharmTech.Admin")
+    @Description("Saves the item in hand to the charm library")
+    public class AddBlacklist extends BaseCommand {
+
+        @Default
+        public void onDefault(CommandSender sender) {
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
+                ItemStack i = p.getInventory().getItemInMainHand();
+                if (i.getType() != Material.AIR) {
+                    ItemStack stackToSave = i.clone();
+                    stackToSave.setAmount(1);
+                    long nextItem = Utils.getNextItemID(parent);
+                    FileConfiguration c = parent.getItemBlacklistConfig();
+                    c.createSection("BLACKLISTED_ITEMS" + "." + nextItem);
+                    c.set("BLACKLISTED_ITEMS." + nextItem, stackToSave);
+                    parent.saveItemBlacklistConfig();
+                    p.sendMessage(Messages.MESSAGE_COMMAND_BLACKLIST_ITEM_SAVED);
+                } else {
+                    p.sendMessage(Messages.MESSAGE_COMMAND_BLACKLIST_ITEM_MUST_HOLD);
+                }
+            }
+        }
     }
 }

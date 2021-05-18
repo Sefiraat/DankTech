@@ -23,6 +23,8 @@ public final class Messages {
     public static final String MESSAGE_COMMAND_SUBCOMMAND = PREFIX + NOTICE + "Please select a valid sub command";
     public static final String MESSAGE_COMMAND_SELECT_ITEM = PREFIX + NOTICE + "Please select an item type";
     public static final String MESSAGE_COMMAND_PACK_NO_EXIST = PREFIX + ERROR + "Yeah, packs only go from 1 to 9 dummy :)";
+    public static final String MESSAGE_COMMAND_BLACKLIST_ITEM_SAVED = PREFIX + SUCCESS + "Held item added to Dank Blacklist (existing items will not be removed).";
+    public static final String MESSAGE_COMMAND_BLACKLIST_ITEM_MUST_HOLD = PREFIX + WARNING + "You must be holding the item you want to add to the blacklist.";
 
     public static String messageCommandPackGiven(long packID) {
         return (PREFIX + SUCCESS + "Dank Pack created. ID: " + packID);
@@ -45,6 +47,7 @@ public final class Messages {
     }
     public static final String MESSAGE_EVENT_INPUT_EXISTING = PREFIX + WARNING + "Slot is already assigned.";
     public static final String MESSAGE_EVENT_INPUT_THIS_DANK = PREFIX + WARNING + "You cannot put a Dank inside itself silly!";
+    public static final String MESSAGE_EVENT_INPUT_BLACKLISTED = PREFIX + WARNING + "This item cannot go into a dank as it has been blacklisted.";
     public static final String MESSAGE_EVENT_WITHDRAW_NO_SPACE = PREFIX + WARNING + "You need an empty inventory slot!";
     public static final String MESSAGE_EVENT_SLOT_NOT_ASSIGNED = PREFIX + WARNING + "No item registered";
     public static final String MESSAGE_EVENT_SLOT_CANT_PLACE = PREFIX + ERROR + "The selected item can't be placed via a Dank";

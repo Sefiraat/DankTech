@@ -12,7 +12,6 @@ import me.mattstudios.mfgui.gui.guis.Gui;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -25,7 +24,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -64,7 +62,6 @@ public class ItemRightClickListener implements Listener {
             if (ContainerStorage.isTrash(i, parent.getInstance())) {
                 handleTrash(e, i, p);
                 e.setCancelled(true);
-                return;
             }
         }
     }
@@ -78,7 +75,7 @@ public class ItemRightClickListener implements Listener {
             replaceDank(i, p, true);
             return;
         } else if (isShallow(i, parent)) {
-            replaceAndUpgradeDank(i, p, false);
+            replaceAndUpgradeDank(i, p);
             return;
         }
         if (p.isSneaking() && canPlaceBlacklist(p)) {
@@ -104,10 +101,10 @@ public class ItemRightClickListener implements Listener {
 
     private void handleTrash(PlayerInteractEvent e, ItemStack i, Player p) {
         if (ContainerStorage.getTrashId(i, parent) == 0) {
-            replaceTrash(i, p,true);
+            replaceTrash(i, p);
             return;
         } else if (isShallow(i, parent)) {
-            replaceAndUpgradeTrash(i, p, false);
+            replaceAndUpgradeTrash(i, p);
             return;
         }
         if (((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) && canOpenBlacklist(p)) {
@@ -152,7 +149,7 @@ public class ItemRightClickListener implements Listener {
         player.sendMessage(Messages.messageCommandPackUpdated(id));
     }
 
-    private void replaceAndUpgradeDank(ItemStack i, Player player, boolean isNew) {
+    private void replaceAndUpgradeDank(ItemStack i, Player player) {
 
         int level = ContainerStorage.getDankLevel(i, parent);
         long id = ContainerStorage.getDankId(i, parent);
@@ -171,17 +168,13 @@ public class ItemRightClickListener implements Listener {
         player.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_PACK);
     }
 
-    private void replaceTrash(ItemStack i, Player player, boolean isNew) {
+    private void replaceTrash(ItemStack i, Player player) {
 
         ContainerStorage.getTrashLevel(i, parent);
 
         int level = ContainerStorage.getTrashLevel(i, parent);
         long id = 0;
-        if (isNew) {
-            id = getNextTrashID(parent);
-        } else {
-            id = ContainerStorage.getTrashId(i, parent);
-        }
+        id = getNextTrashID(parent);
 
         i.setAmount(0);
 
@@ -194,7 +187,7 @@ public class ItemRightClickListener implements Listener {
         player.sendMessage(Messages.messageCommandPackUpdated(id));
     }
 
-    private void replaceAndUpgradeTrash(ItemStack i, Player player, boolean isNew) {
+    private void replaceAndUpgradeTrash(ItemStack i, Player player) {
 
         int level = ContainerStorage.getTrashLevel(i, parent);
         long id = ContainerStorage.getTrashId(i, parent);
@@ -221,7 +214,7 @@ public class ItemRightClickListener implements Listener {
         int dankLevel = ContainerStorage.getDankLevel(i, parent.getInstance());
         long dankId = ContainerStorage.getDankId(i, parent.getInstance());
         p.sendMessage(Messages.messageEventOpenPack(dankId));
-        Config.setLastOpenedBy(dankId, parent, p);
+        Config.setDankLastOpenedBy(dankId, parent, p);
         Gui g = getDankGUI(dankId, dankLevel, parent.getInstance());
         g.open(p);
     }
@@ -230,7 +223,7 @@ public class ItemRightClickListener implements Listener {
         int trashLevel = ContainerStorage.getTrashLevel(i, parent.getInstance());
         long trashId = ContainerStorage.getTrashId(i, parent.getInstance());
         p.sendMessage(Messages.messageEventOpenPack(trashId));
-        Config.setLastOpenedBy(trashId, parent, p);
+        Config.setDankLastOpenedBy(trashId, parent, p);
         Gui g = getTrashGUI(trashId, trashLevel, parent.getInstance());
         g.open(p);
     }

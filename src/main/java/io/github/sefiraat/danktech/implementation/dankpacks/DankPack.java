@@ -34,7 +34,7 @@ public class DankPack {
         ContainerStorage.setDankLevel(dank, parent, level);
 
         if (p!= null) {
-            Config.setLastOpenedBy(packID, parent, p);
+            Config.setDankLastOpenedBy(packID, parent, p);
         }
 
         return dank;

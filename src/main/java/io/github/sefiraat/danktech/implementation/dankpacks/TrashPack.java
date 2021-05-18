@@ -35,7 +35,7 @@ public class TrashPack {
         ContainerStorage.setTrashLevel(dank, parent, level);
 
         if (p!= null) {
-            Config.setLastOpenedBy(trashID, parent, p);
+            Config.setTrashLastOpenedBy(trashID, parent, p);
         }
 
         return dank;

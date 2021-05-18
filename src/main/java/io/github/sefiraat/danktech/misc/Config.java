@@ -22,8 +22,16 @@ public class Config {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void setLastOpenedBy(Long dankID, DankTech plugin, Player p) {
+    public static void setDankLastOpenedBy(Long dankID, DankTech plugin, Player p) {
         ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
+        section.set("LAST_OPENED_BY_UUID", p.getUniqueId().toString());
+        section.set("LAST_OPENED_BY", p.getDisplayName());
+        section.set("LAST_OPENED_ON", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        plugin.saveDankStorageConfig();
+    }
+
+    public static void setTrashLastOpenedBy(Long trashID, DankTech plugin, Player p) {
+        ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashID);
         section.set("LAST_OPENED_BY_UUID", p.getUniqueId().toString());
         section.set("LAST_OPENED_BY", p.getDisplayName());
         section.set("LAST_OPENED_ON", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));

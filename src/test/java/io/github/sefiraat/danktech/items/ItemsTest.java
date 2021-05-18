@@ -58,8 +58,8 @@ public class ItemsTest {
     public Integer testCellLevel(Player player) {
         for (ItemStack item : player.getInventory()) {
             if (isDankMaterial(item,plugin)) {
-                server.getLogger().info("Cell Dank");
-                server.getLogger().info("" + getCellLevel(item, plugin));
+                plugin.getInstance().getServer().getLogger().info("Cell Dank");
+                plugin.getInstance().getServer().getLogger().info("" + getCellLevel(item, plugin));
                 return getCellLevel(item, plugin);
             }
         }
@@ -75,7 +75,7 @@ public class ItemsTest {
             playerOp.getInventory().clear();
             givePlayerCell(playerOp.getPlayer(), i, 1, plugin);
             boolean cellValid = testCellLevel(playerOp) == i;
-            server.getLogger().info("Testing cell " + i + ": " + cellValid);
+            plugin.getInstance().getServer().getLogger().info("Testing cell " + i + ": " + cellValid);
             if (!cellValid) { b = false; }
         }
         Assertions.assertTrue(b);
@@ -90,7 +90,7 @@ public class ItemsTest {
             playerOp.getInventory().clear();
             givePlayerDank(playerOp.getPlayer(), i, plugin);
             boolean dankValid = testDankLevel(playerOp) == i;
-            server.getLogger().info("Testing dank pack " + i + ": " + dankValid);
+            plugin.getInstance().getServer().getLogger().info("Testing dank pack " + i + ": " + dankValid);
             if (!dankValid) { b = false; }
         }
         Assertions.assertTrue(b);
@@ -105,7 +105,7 @@ public class ItemsTest {
             playerOp.getInventory().clear();
             recoverDankByID(playerOp.getPlayer(), plugin, i);
             boolean dankValid = testDankLevel(playerOp) == i;
-            server.getLogger().info("Testing recovered dank pack " + i + ": " + dankValid);
+            plugin.getInstance().getServer().getLogger().info("Testing recovered dank pack " + i + ": " + dankValid);
             if (!dankValid) { b = false; }
         }
         Assertions.assertTrue(b);
@@ -121,7 +121,7 @@ public class ItemsTest {
             playerOp.getInventory().clear();
             givePlayerTrash(playerOp.getPlayer(), i, plugin);
             boolean trashValid = testTrashLevel(playerOp) == i;
-            server.getLogger().info("Testing trash pack " + i + ": " + trashValid);
+            plugin.getInstance().getServer().getLogger().info("Testing trash pack " + i + ": " + trashValid);
             if (!trashValid) { b = false; }
         }
         Assertions.assertTrue(b);
