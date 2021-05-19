@@ -105,11 +105,14 @@ public class DankGUI {
         ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + slot);
         ItemStack i = e.getWhoClicked().getItemOnCursor();
         if (e.getWhoClicked().getItemOnCursor().getType() != Material.AIR) {
-            for (String s : plugin.getItemBlacklistConfig().getConfigurationSection("BLACKLISTED_ITEMS").getKeys(false)) {
-                ItemStack blacklistedStack = plugin.getItemBlacklistConfig().getItemStack("BLACKLISTED_ITEMS" + "." + s);
-                if (i.isSimilar(blacklistedStack)) {
-                    e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_INPUT_BLACKLISTED);
-                    return;
+            ConfigurationSection blacklist = plugin.getItemBlacklistConfig().getConfigurationSection("BLACKLISTED_ITEMS");
+            if (blacklist != null) {
+                for (String s : blacklist.getKeys(false)) {
+                    ItemStack blacklistedStack = plugin.getItemBlacklistConfig().getItemStack("BLACKLISTED_ITEMS" + "." + s);
+                    if (i.isSimilar(blacklistedStack)) {
+                        e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_INPUT_BLACKLISTED);
+                        return;
+                    }
                 }
             }
             if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) == null) {
