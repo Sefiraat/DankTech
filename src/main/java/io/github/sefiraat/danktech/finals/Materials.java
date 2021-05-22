@@ -46,6 +46,10 @@ public final class Materials {
 
     public static final String DANK_SLIMEFUN_CATEGORY = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzRmZWM1Y2RjMmUyMjQwMWE0YjViYTM3NmZmZTY0NzI3OWVkM2Y5NGZkNzVmODA1NmQ5ODZmMzNjOTMxYWM1NSJ9fX0=";
 
+    public static final String DANK_GUI_INFO = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTY0MzlkMmUzMDZiMjI1NTE2YWE5YTZkMDA3YTdlNzVlZGQyZDUwMTVkMTEzYjQyZjQ0YmU2MmE1MTdlNTc0ZiJ9fX0=";
+    public static final String DANK_GUI_EMPTY = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2VkMWFiYTczZjYzOWY0YmM0MmJkNDgxOTZjNzE1MTk3YmUyNzEyYzNiOTYyYzk3ZWJmOWU5ZWQ4ZWZhMDI1In19fQ==";
+    public static final String DANK_GUI_INTERACTION = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWYxMzE5N2M2YTdjZjUyNTcwZmU1NjRhYWI5OTQ0YTkwNDNiZGY3ZDk1NzQ3OTMxMWVjZTAyMjVlMWQzOGRmNCJ9fX0=";
+
     public static String getDankTexture(int dankLevel) {
         switch (dankLevel) {
             case 1: return DANK_1_TEXTURE;

@@ -1,7 +1,6 @@
 package io.github.sefiraat.danktech.listeners;
 
 import io.github.sefiraat.danktech.DankTech;
-import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.ItemStacks;
 import io.github.sefiraat.danktech.finals.Materials;
 import io.github.sefiraat.danktech.finals.Messages;
@@ -24,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
-import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
-import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashNameBold;
 import static io.github.sefiraat.danktech.misc.Config.getNextPackID;
 import static io.github.sefiraat.danktech.misc.Config.getNextTrashID;
 
@@ -155,10 +152,10 @@ public class CraftListener implements Listener {
     private void craftDank(CraftItemEvent e, Player p) {
         long packID = getNextPackID(parent);
         ItemStack dank = DankPack.getDankPack(1, packID, parent, p);
-        ItemMeta m = dank.getItemMeta();
-        m.setDisplayName(getDankNameBold(1));
-        m.setLore(ItemDetails.getDankLore(1, packID, null));
-        dank.setItemMeta(m);
+//        ItemMeta m = dank.getItemMeta();
+//        m.setDisplayName(getDankNameBold(1));
+//        m.setLore(ItemDetails.getDankLore(1, packID, null));
+//        dank.setItemMeta(m);
         e.setCurrentItem(dank);
         p.sendMessage(Messages.MESSAGE_CRAFT_NEW_PACK);
     }
@@ -171,10 +168,10 @@ public class CraftListener implements Listener {
         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_STACK, null);
         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_VOLUME , 0);
         ItemStack dank = DankPack.getDankPack(level, packID, parent, p);
-        ItemMeta m = dank.getItemMeta();
-        m.setDisplayName(getDankNameBold(level));
-        m.setLore(ItemDetails.getDankLore(level, packID, null));
-        dank.setItemMeta(m);
+//        ItemMeta m = dank.getItemMeta();
+//        m.setDisplayName(getDankNameBold(level));
+//        m.setLore(ItemDetails.getDankLore(level, packID, null));
+//        dank.setItemMeta(m);
         e.setCurrentItem(dank);
         p.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_PACK);
     }
@@ -182,10 +179,10 @@ public class CraftListener implements Listener {
     private void craftTrash(CraftItemEvent e, Player p) {
         long trashID = getNextTrashID(parent);
         ItemStack trash = TrashPack.getTrashPack(1, trashID, parent, p);
-        ItemMeta m = trash.getItemMeta();
-        m.setDisplayName(getTrashNameBold(1));
-        m.setLore(ItemDetails.getTrashLore(1, trashID));
-        trash.setItemMeta(m);
+//        ItemMeta m = trash.getItemMeta();
+//        m.setDisplayName(getTrashNameBold(1));
+//        m.setLore(ItemDetails.getTrashLore(1, trashID));
+//        trash.setItemMeta(m);
         e.setCurrentItem(trash);
         p.sendMessage(Messages.MESSAGE_CRAFT_NEW_TRASH);
     }
@@ -201,10 +198,10 @@ public class CraftListener implements Listener {
         c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_STACK, null);
         c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
         ItemStack trash = TrashPack.getTrashPack(level, trashID, parent, p);
-        ItemMeta m = trash.getItemMeta();
-        m.setDisplayName(getTrashNameBold(level));
-        m.setLore(ItemDetails.getTrashLore(level, trashID));
-        trash.setItemMeta(m);
+//        ItemMeta m = trash.getItemMeta();
+//        m.setDisplayName(getTrashNameBold(level));
+//        m.setLore(ItemDetails.getTrashLore(level, trashID));
+//        trash.setItemMeta(m);
         e.setCurrentItem(trash);
         p.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_TRASH);
     }

@@ -1,5 +1,6 @@
 package io.github.sefiraat.danktech.finals;
 
+import dev.dbassett.skullcreator.SkullCreator;
 import io.github.sefiraat.danktech.DankTech;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import org.bukkit.Material;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nonnull;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
+import static io.github.sefiraat.danktech.finals.Materials.*;
 
 public final class GUIItems {
 
@@ -29,7 +31,8 @@ public final class GUIItems {
         return g;
     }
     public static GuiItem guiPackInfo(long packID, int packLevel) {
-        GuiItem g = new GuiItem(Material.BLUE_STAINED_GLASS_PANE);
+        ItemStack guiSkull = SkullCreator.itemFromBase64(DANK_GUI_INFO);
+        GuiItem g = new GuiItem(guiSkull);
         ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
         im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_INFO);
@@ -52,7 +55,8 @@ public final class GUIItems {
         return g;
     }
     public static GuiItem guiUnassignedSlot() {
-        GuiItem g = new GuiItem(Material.BARRIER);
+        ItemStack guiSkull = SkullCreator.itemFromBase64(DANK_GUI_EMPTY);
+        GuiItem g = new GuiItem(guiSkull);
         ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
         im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_UNASSIGNED);
@@ -78,20 +82,26 @@ public final class GUIItems {
     }
 
     public static GuiItem guiPackWithdrawItem(int amount) {
-        ItemStack i = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        ItemStack guiSkull = SkullCreator.itemFromBase64(DANK_GUI_INTERACTION);
+        GuiItem g = new GuiItem(guiSkull);
+        ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
         im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_WITHDRAW);
         im.setLore(ItemDetails.guiDisplayLoreWithdraw(amount));
         i.setItemMeta(im);
-        return new GuiItem(i);
+        g.setItemStack(i);
+        return g;
     }
 
     public static GuiItem guiTrashWithdrawItem() {
-        ItemStack i = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        ItemStack guiSkull = SkullCreator.itemFromBase64(DANK_GUI_INTERACTION);
+        GuiItem g = new GuiItem(guiSkull);
+        ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
         im.setDisplayName(ItemDetails.GUI_DISPLAY_TRASH_NAME_WITHDRAW);
         im.setLore(ItemDetails.guiDisplayLoreTrash());
         i.setItemMeta(im);
-        return new GuiItem(i);
+        g.setItemStack(i);
+        return g;
     }
 }

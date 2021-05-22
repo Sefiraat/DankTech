@@ -8,24 +8,32 @@ GENERAL:
 TEXTS_NOT_YET_IMPLEMENTED:
   MESSAGES:
     COMMANDS:
-      MESSAGE_COMMAND_SUBCOMMAND: "Please select a valid sub command"
-      MESSAGE_COMMAND_SELECT_ITEM: "Please select an item type"
-      MESSAGE_COMMAND_PACK_NO_EXIST: "Yeah, packs only go from 1 to 9 dummy :)"
-      MESSAGE_COMMAND_DANK_PACK_GIVEN:
-      MESSAGE_COMMAND_TRASH_PACK_GIVEN:
-      MESSAGE_COMMAND_PACK_UPDATED:
+      COMMAND_SUBCOMMAND: "Please select a valid sub command"
+      COMMAND_SELECT_ITEM: "Please select an item type"
+      COMMAND_PACK_NO_EXIST: "Yeah, packs only go from 1 to 9 dummy :)"
+      COMMAND_DANK_PACK_GIVEN: "Dank Pack created."
+      COMMAND_TRASH_PACK_GIVEN: "Trash Pack created."
+      COMMAND_PACK_UPDATED: "This pack is old or incorrectly made! Updating to the correct format."
+      COMMAND_BLACKLIST_ITEM_SAVED: "Held item added to Dank Blacklist (existing items will not be removed)."
+      COMMAND_BLACKLIST_ITEM_MUST_HOLD: "You must be holding the item you want to add to the blacklist."
     EVENTS:
-      MESSAGE_EVENT_OPEN_DANK_PACK:
-      MESSAGE_EVENT_OPEN_TRASH_PACK:
-      MESSAGE_EVENT_INPUT_EXISTING:
-      MESSAGE_EVENT_INPUT_THIS_DANK:
-      MESSAGE_EVENT_WITHDRAW_NO_SPACE:
-      MESSAGE_EVENT_SLOT_NOT_ASSIGNED:
-      MESSAGE_EVENT_SLOT_CANT_PLACE:
-      MESSAGE_EVENT_SLOT_NO_MORE_ITEMS:
-      MESSAGE_EVENT_SLOT_CHANGED:
+      EVENT_OPEN_DANK_PACK: "Opening Dank Pack."
+      EVENT_OPEN_TRASH_PACK: "Opening Dank Trash."
+      EVENT_INPUT_EXISTING: "Slot is already assigned."
+      EVENT_INPUT_THIS_DANK: "You cannot put a Dank inside itself silly!"
+      EVENT_INPUT_BLACKLISTED: "This item cannot go into a dank as it has been blacklisted."
+      EVENT_WITHDRAW_NO_SPACE: "You need an empty inventory slot."
+      EVENT_SLOT_NOT_ASSIGNED: "No item registered"
+      EVENT_SLOT_CANT_PLACE: "The selected item can't be placed via a Dank"
+      EVENT_SLOT_NO_MORE_ITEMS: "The selected item has run out!"
+      EVENT_SLOT_CHANGED: "Selected Slot"
     CRAFTING:
-      MESSAGE_CRAFT_NEW_PACK:
-      MESSAGE_CRAFT_UPGRADE_PACK:
-      MESSAGE_CRAFT_NEW_TRASH:
-      MESSAGE_CRAFT_UPGRADE_TRASH:
+      CRAFT_NEW_PACK: "You have crafted a new Dank Pack"
+      CRAFT_UPGRADE_PACK: "You have upgraded a Dank Pack"
+      CRAFT_NEW_TRASH: "You have crafted a new Dank Trash Can"
+      CRAFT_UPGRADE_TRASH: "You have upgraded a Dank Trash Can"
+  GUI:
+    PANE_FILLER: "Get dank!"
+    PANE_INFO_NAME: "Pack Info"
+    PANE_INFO_LORE_ID: "Dank ID"
+    PANE_INFO_LORE_LEVEL: "Dank Level"

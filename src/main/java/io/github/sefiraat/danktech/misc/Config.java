@@ -124,4 +124,17 @@ public class Config {
         return plugin.getConfig().getStringList("GENERAL.BLACKLISTED_WORLDS_PICKUP_ITEMS");
     }
 
+    public static boolean isBlacklisted(DankTech plugin, ItemStack i) {
+        ConfigurationSection blacklist = plugin.getItemBlacklistConfig().getConfigurationSection("BLACKLISTED_ITEMS");
+        if (blacklist != null) {
+            for (String s : blacklist.getKeys(false)) {
+                ItemStack blacklistedStack = plugin.getItemBlacklistConfig().getItemStack("BLACKLISTED_ITEMS" + "." + s);
+                if (i.isSimilar(blacklistedStack)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

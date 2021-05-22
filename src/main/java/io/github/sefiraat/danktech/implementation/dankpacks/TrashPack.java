@@ -2,17 +2,20 @@ package io.github.sefiraat.danktech.implementation.dankpacks;
 
 import dev.dbassett.skullcreator.SkullCreator;
 import io.github.sefiraat.danktech.DankTech;
+import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.misc.Config;
 import io.github.sefiraat.danktech.misc.ContainerStorage;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
+import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashNameBold;
 import static io.github.sefiraat.danktech.finals.Materials.getTrashTexture;
 
 public class TrashPack {
@@ -23,22 +26,27 @@ public class TrashPack {
 
     public static ItemStack getTrashPack(@Nonnull Integer level, @Nonnull Long trashID, @Nonnull DankTech parent, @Nullable Player p) {
 
-        ItemStack dank = SkullCreator.itemFromBase64(getTrashTexture(level));
+        ItemStack trash = SkullCreator.itemFromBase64(getTrashTexture(level));
 
         if (!parent.getInstance().getDankStorageConfig().contains(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashID)) {
             setupSection(parent.getInstance().getDankStorageConfig(), trashID, level);
             parent.saveDankStorageConfig();
         }
 
-        ContainerStorage.makeTrash(dank, parent);
-        ContainerStorage.setTrashId(dank, parent, trashID);
-        ContainerStorage.setTrashLevel(dank, parent, level);
+        ItemMeta m = trash.getItemMeta();
+        m.setDisplayName(getTrashNameBold(level));
+        m.setLore(ItemDetails.getTrashLore(level, trashID));
+        trash.setItemMeta(m);
+
+        ContainerStorage.makeTrash(trash, parent);
+        ContainerStorage.setTrashId(trash, parent, trashID);
+        ContainerStorage.setTrashLevel(trash, parent, level);
 
         if (p!= null) {
             Config.setTrashLastOpenedBy(trashID, parent, p);
         }
 
-        return dank;
+        return trash;
 
     }
 

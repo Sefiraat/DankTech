@@ -18,6 +18,7 @@ import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankName;
+import static io.github.sefiraat.danktech.misc.Config.isBlacklisted;
 import static io.github.sefiraat.danktech.misc.ContainerStorage.getDankId;
 
 public class DankGUI {
@@ -105,16 +106,12 @@ public class DankGUI {
         ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + slot);
         ItemStack i = e.getWhoClicked().getItemOnCursor();
         if (e.getWhoClicked().getItemOnCursor().getType() != Material.AIR) {
-            ConfigurationSection blacklist = plugin.getItemBlacklistConfig().getConfigurationSection("BLACKLISTED_ITEMS");
-            if (blacklist != null) {
-                for (String s : blacklist.getKeys(false)) {
-                    ItemStack blacklistedStack = plugin.getItemBlacklistConfig().getItemStack("BLACKLISTED_ITEMS" + "." + s);
-                    if (i.isSimilar(blacklistedStack)) {
-                        e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_INPUT_BLACKLISTED);
-                        return;
-                    }
-                }
+
+            if (isBlacklisted(plugin, i)) {
+                e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_INPUT_BLACKLISTED);
+                return;
             }
+
             if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) == null) {
                 if (getDankId(i, plugin) != dankID) {
                     ItemStack i2 = i.clone();
@@ -132,6 +129,8 @@ public class DankGUI {
             }
         }
     }
+
+
 
     public static void withdrawItems(Gui gui, long dankID, DankTech plugin, int slot, InventoryClickEvent e) {
         ConfigurationSection section = plugin.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);

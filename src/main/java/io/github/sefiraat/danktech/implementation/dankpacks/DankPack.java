@@ -2,17 +2,20 @@ package io.github.sefiraat.danktech.implementation.dankpacks;
 
 import dev.dbassett.skullcreator.SkullCreator;
 import io.github.sefiraat.danktech.DankTech;
+import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.misc.Config;
 import io.github.sefiraat.danktech.misc.ContainerStorage;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
+import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.finals.Materials.getDankTexture;
 
 public class DankPack {
@@ -28,6 +31,11 @@ public class DankPack {
             setupSection(parent.getInstance().getDankStorageConfig(), packID, level);
             parent.saveDankStorageConfig();
         }
+
+        ItemMeta m = dank.getItemMeta();
+        m.setDisplayName(getDankNameBold(level));
+        m.setLore(ItemDetails.getDankLore(level, packID, null));
+        dank.setItemMeta(m);
 
         ContainerStorage.makeDank(dank, parent);
         ContainerStorage.setDankId(dank, parent, packID);

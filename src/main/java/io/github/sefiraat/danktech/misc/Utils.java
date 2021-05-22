@@ -54,10 +54,7 @@ public class Utils {
     public static void recoverDankByID(Player p, DankTech parent, long id) {
         int level = parent.getInstance().getDankStorageConfig().getInt(CONFIG_GETTER_SECTION_DANK_ID + "." + id + ".LEVEL");
         ItemStack dank = DankPack.getDankPack(level, id, parent, p.getPlayer());
-        ItemMeta m = dank.getItemMeta();
-        m.setDisplayName(getDankNameBold(level));
-        m.setLore(ItemDetails.getDankLore(level, id, null));
-        dank.setItemMeta(m);
+
         p.getInventory().addItem(dank);
         p.sendMessage(Messages.messageCommandPackGiven(id));
     }
