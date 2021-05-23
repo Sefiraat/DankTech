@@ -276,29 +276,36 @@ public class DankGUI {
             Integer freeSlots = Utils.getEmptySlots(p);
             Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
             ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
-            Integer withdrawAmount = (i.getMaxStackSize() * freeSlots);
+
             if (amount > 1) {
+
+                Integer withdrawAmount = (i.getMaxStackSize() * freeSlots);
+
                 if (amount <= withdrawAmount) {
-                    i.setAmount(amount - 1);
-                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
-                    GuiItem g = GUIItems.guiPackWithdrawItem(1);
-                    g.setAction(event -> {
-                        withdrawItems(gui, dankID, plugin, slot, event);
-                        event.setCancelled(true);
-                    });
-                    gui.updateItem(4, slot, g);
-                } else {
-                    i.setAmount(withdrawAmount);
-                    amount = (amount - withdrawAmount);
-                    slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
-                    GuiItem g = GUIItems.guiPackWithdrawItem(amount);
-                    g.setAction(event -> {
-                        withdrawItems(gui, dankID, plugin, slot, event);
-                        event.setCancelled(true);
-                    });
-                    gui.updateItem(4, slot, g);
+                    withdrawAmount = amount - 1;
                 }
-                p.getInventory().addItem(i);
+
+                i.setAmount(withdrawAmount);
+                amount = (amount - withdrawAmount);
+                slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
+                GuiItem g = GUIItems.guiPackWithdrawItem(amount);
+                g.setAction(event -> {
+                    withdrawItems(gui, dankID, plugin, slot, event);
+                    event.setCancelled(true);
+                });
+                gui.updateItem(4, slot, g);
+
+                do {
+                    ItemStack giveItem = i.clone();
+                    if (i.getAmount() > i.getMaxStackSize()) {
+                        giveItem.setAmount(i.getMaxStackSize());
+                    } else {
+                        giveItem.setAmount(i.getAmount());
+                    }
+                    i.setAmount(i.getAmount() - giveItem.getAmount());
+                    p.getInventory().addItem(giveItem);
+                } while (i.getAmount() > 0);
+
             }
         }
     }

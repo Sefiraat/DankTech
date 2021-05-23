@@ -6,7 +6,7 @@
 
     <groupId>io.github.sefiraat</groupId>
     <artifactId>DankTech</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
 
     <build>
         <plugins>
@@ -129,6 +129,10 @@
             <id>minecraft-repo</id>
             <url>https://libraries.minecraft.net/</url>
         </repository>
+        <repository>
+            <id>FactionsUUID-repo</id>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -227,6 +231,18 @@
             <artifactId>skullcreator</artifactId>
             <version>3.0.1</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.LlmDl</groupId>
+            <artifactId>Towny</artifactId>
+            <version>1b86d017c5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>Factions</artifactId>
+            <version>1.6.9.5-U0.5.20</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
