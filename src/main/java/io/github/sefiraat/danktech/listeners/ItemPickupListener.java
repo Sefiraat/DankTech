@@ -87,8 +87,8 @@ public class ItemPickupListener implements Listener {
 
     private void pickupItemDank(ConfigurationSection slotSection, ItemStack pickedStack, Integer dankLevel, EntityPickupItemEvent e) {
         int currentVolume = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
-        if ((currentVolume + pickedStack.getAmount()) >= getLimit(dankLevel)) {
-            slotSection.set(CONFIG_GETTER_VAL_VOLUME, getLimit(dankLevel));
+        if ((currentVolume + pickedStack.getAmount()) >= getLimit(parent, dankLevel)) {
+            slotSection.set(CONFIG_GETTER_VAL_VOLUME, getLimit(parent, dankLevel));
         } else {
             slotSection.set(CONFIG_GETTER_VAL_VOLUME, currentVolume + pickedStack.getAmount());
         }

@@ -205,37 +205,54 @@ public final class ItemDetails {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 18";
     }
 
-    public static final Integer LIMIT_1 = 256;
-    public static final Integer LIMIT_2 = 1024;
-    public static final Integer LIMIT_3 = 2048;
-    public static final Integer LIMIT_4 = 4096;
-    public static final Integer LIMIT_5 = 8192;
-    public static final Integer LIMIT_6 = 16384;
-    public static final Integer LIMIT_7 = 65536;
-    public static final Integer LIMIT_8 = 524288;
-    public static final Integer LIMIT_9 = 2147483547;
-    public static final Integer LIMIT_TRASH = 1;
+    public static Integer LIMIT_1(DankTech plugin) {
+        return plugin.getConfigClass().getVals().getValuePerSlotT1();
+    }
+    public static Integer LIMIT_2(DankTech plugin) {
+        return plugin.getConfigClass().getVals().getValuePerSlotT2();
+    }
+    public static Integer LIMIT_3(DankTech plugin) {
+        return plugin.getConfigClass().getVals().getValuePerSlotT3();
+    }
+    public static Integer LIMIT_4(DankTech plugin) {
+        return plugin.getConfigClass().getVals().getValuePerSlotT4();
+    }
+    public static Integer LIMIT_5(DankTech plugin) {
+        return plugin.getConfigClass().getVals().getValuePerSlotT5();
+    }
+    public static Integer LIMIT_6(DankTech plugin) {
+        return plugin.getConfigClass().getVals().getValuePerSlotT6();
+    }
+    public static Integer LIMIT_7(DankTech plugin) {
+        return plugin.getConfigClass().getVals().getValuePerSlotT7();
+    }
+    public static Integer LIMIT_8(DankTech plugin) {
+        return plugin.getConfigClass().getVals().getValuePerSlotT8();
+    }
+    public static Integer LIMIT_9(DankTech plugin) {
+        return plugin.getConfigClass().getVals().getValuePerSlotT9();
+    }
 
-    public static Integer getLimit(int level) {
+    public static Integer getLimit(DankTech plugin, int level) {
         switch (level) {
             case 1:
-                return LIMIT_1;
+                return LIMIT_1(plugin);
             case 2:
-                return LIMIT_2;
+                return LIMIT_2(plugin);
             case 3:
-                return LIMIT_3;
+                return LIMIT_3(plugin);
             case 4:
-                return LIMIT_4;
+                return LIMIT_4(plugin);
             case 5:
-                return LIMIT_5;
+                return LIMIT_5(plugin);
             case 6:
-                return LIMIT_6;
+                return LIMIT_6(plugin);
             case 7:
-                return LIMIT_7;
+                return LIMIT_7(plugin);
             case 8:
-                return LIMIT_8;
+                return LIMIT_8(plugin);
             default:
-                return LIMIT_9;
+                return LIMIT_9(plugin);
         }
     }
 
@@ -245,31 +262,31 @@ public final class ItemDetails {
 
 
     public static String dank1Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_1;
+        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_1(plugin);
     }
     public static String dank2Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_2;
+        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_2(plugin);
     }
     public static String dank3Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_3;
+        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_3(plugin);
     }
     public static String dank4Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_4;
+        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_4(plugin);
     }
     public static String dank5Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_5;
+        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_5(plugin);
     }
     public static String dank6Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_6;
+        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_6(plugin);
     }
     public static String dank7Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_7;
+        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_7(plugin);
     }
     public static String dank8Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_8;
+        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_8(plugin);
     }
     public static String dank9Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_9;
+        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_9(plugin);
     }
 
     public static String dankLoreVoid(DankTech plugin) {
