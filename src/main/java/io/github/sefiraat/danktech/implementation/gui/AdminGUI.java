@@ -39,7 +39,7 @@ public class AdminGUI {
 
         PaginatedGui g = new PaginatedGui(6, "Admin Dank GUI");
 
-        g.setItem(listFillerSlots, GUIItems.guiPackFiller());
+        g.setItem(listFillerSlots, GUIItems.guiPackFiller(parent));
         g.setItem(backSlot, ItemBuilder.from(Material.PAPER).setName("Previous").asGuiItem(event -> g.previous()));
         g.setItem(forwardSlot, ItemBuilder.from(Material.PAPER).setName("Next").asGuiItem(event -> g.next()));
 
@@ -70,17 +70,17 @@ public class AdminGUI {
     public static void adminClickDank(InventoryClickEvent event, Long dankId, Integer dankLevel, DankTech plugin) {
         Player p = (Player) event.getWhoClicked();
         if (event.isLeftClick()) {
-            p.sendMessage(Messages.messageEventOpenPack(dankId));
+            p.sendMessage(Messages.messageEventOpenPack(plugin, dankId));
             Gui dankGUI = getDankGUI(dankId, dankLevel, plugin.getInstance());
             dankGUI.open(p);
         } else {
             ItemStack dank = DankPack.getDankPack(dankLevel, dankId, plugin, p.getPlayer());
             ItemMeta m = dank.getItemMeta();
-            m.setDisplayName(getDankNameBold(dankLevel));
-            m.setLore(ItemDetails.getDankLore(dankLevel, dankId, null));
+            m.setDisplayName(getDankNameBold(plugin, dankLevel));
+            m.setLore(ItemDetails.getDankLore(plugin, dankLevel, dankId, null));
             dank.setItemMeta(m);
             p.getInventory().addItem(dank);
-            p.sendMessage(Messages.messageCommandPackGiven(dankId));
+            p.sendMessage(Messages.messageCommandPackGiven(plugin, dankId));
         }
     }
 

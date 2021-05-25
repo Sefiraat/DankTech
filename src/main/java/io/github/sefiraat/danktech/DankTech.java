@@ -2,6 +2,8 @@ package io.github.sefiraat.danktech;
 
 import co.aikar.commands.PaperCommandManager;
 import io.github.sefiraat.danktech.commands.Commands;
+import io.github.sefiraat.danktech.configuration.Config;
+import io.github.sefiraat.danktech.configuration.ConfigStrings;
 import io.github.sefiraat.danktech.finals.Recipes;
 import io.github.sefiraat.danktech.listeners.CraftListener;
 import io.github.sefiraat.danktech.listeners.ItemPickupListener;
@@ -32,6 +34,8 @@ public class DankTech extends JavaPlugin {
     private PaperCommandManager commandManager;
     private final Timer repeater = new Timer();
     private Protection protection;
+    private Config configClass;
+
     private boolean isUnitTest = false;
 
     private boolean mcMMO = false;
@@ -58,6 +62,9 @@ public class DankTech extends JavaPlugin {
     }
     public Protection getProtection() {
         return protection;
+    }
+    public Config getConfigClass() {
+        return configClass;
     }
 
     public boolean isMcMMO() {
@@ -93,12 +100,11 @@ public class DankTech extends JavaPlugin {
 
         instance = this;
 
-        saveDefaultConfig();
-        createDankStorageConfig();
-        createItemBlacklistConfig();
+        sortConfigs();
         registerCommands();
 
         protection = new Protection(this);
+        configClass = new Config(this);
 
         new ItemPickupListener(this.getInstance());
         new ItemRightClickListener(this.getInstance());
@@ -131,6 +137,13 @@ public class DankTech extends JavaPlugin {
     private void registerCommands() {
         commandManager = new PaperCommandManager(this.getInstance());
         commandManager.registerCommand(new Commands(this.getInstance()));
+    }
+
+    private void sortConfigs() {
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+        createDankStorageConfig();
+        createItemBlacklistConfig();
     }
 
     private void createDankStorageConfig() {

@@ -99,8 +99,8 @@ public class Config {
                 int level = plugin.getInstance().getDankStorageConfig().getInt(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID + "." + CONFIG_GETTER_VAL_LEVEL);
                 ItemStack dank = DankPack.getDankPack(level, dankID, plugin, null);
                 ItemMeta m = dank.getItemMeta();
-                m.setDisplayName(getDankNameBold(level));
-                m.setLore(ItemDetails.getDankLore(level, dankID, null));
+                m.setDisplayName(getDankNameBold(plugin, level));
+                m.setLore(ItemDetails.getDankLore(plugin, level, dankID, null));
                 dank.setItemMeta(m);
                 l.add(dank);
             }

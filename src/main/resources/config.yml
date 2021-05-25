@@ -5,7 +5,47 @@ GENERAL:
     - "ExampleWorld"
   BLACKLISTED_WORLDS_PICKUP_ITEMS:
     - "ExampleWorld"
-TEXTS_NOT_YET_IMPLEMENTED:
+TEXTS:
+  GUI:
+    FILLER: "Get dank!"
+    INFO_NAME: "Pack Info"
+    INFO_LORE_ID: "Dank ID"
+    INFO_LORE_LEVEL: "Dank Level"
+    LOCKED_SLOT: "Locked Slot"
+    UNASSIGNED_SLOT: "Unassigned Slot"
+    UNASSIGNED_SLOT_LORE:
+      - "Slot unassigned, place an item below"
+      - "to assign that type to this slot."
+    INTERACT_DANK_PACK_BUTTON_NAME: "Withdraw / Add Items"
+    INTERACT_TRASH_PACK_BUTTON_NAME: "Remove Item"
+    INTERACT_LEFT_CLICK_NAME: "Left Click"
+    INTERACT_LEFT_CLICK_PACK_ACTION: "Withdraw 1"
+    INTERACT_LEFT_CLICK_TRASH_ACTION: "Reset Slot"
+    INTERACT_RIGHT_CLICK_NAME: "Right Click"
+    INTERACT_RIGHT_CLICK_ACTION: "Withdraw Stack"
+    INTERACT_SHIFT_LEFT_CLICK_NAME: "Shift Left Click"
+    INTERACT_SHIFT_LEFT_CLICK_ACTION: "Input Whole Inventory"
+    INTERACT_SHIFT_RIGHT_CLICK_NAME: "Shift Right Click"
+    INTERACT_SHIFT_RIGHT_CLICK_ACTION: "Fill Inventory"
+    INTERACT_DROP_CLICK_NAME: "Drop (Q)"
+    INTERACT_DROP_CLICK_ACTION: "Drop a stack"
+  ITEM_DETAILS:
+    ITEM_DANK_PACK: "Dank Storage Pack"
+    ITEM_DANK_TRASH: "Dank Trash Pack"
+    ITEM_STORAGE_CELL: "Storage Cell"
+    ITEM_DANK_PACK_LORE:
+      - "A dimension folded into a single point of"
+      - "space and time. All this just to hold"
+      - "your trash!"
+    ITEM_TRASH_PACK_LORE:
+      - "A dimension folded into a single point of"
+      - "space and time. All this just to hold"
+      - "your trash!"
+    ITEM_SLOT_NUMBER: "Slots"
+    ITEM_SLOT_AMOUNT_PER: "Amount per slot"
+    ITEM_DANK_PACK_VOID_INFO: "Items over limit are voided"
+    ITEM_DANK_TRASH_VOID_INFO: "All matching items will be voided"
+    ITEM_RIGHT_CLICK: "Right click to open pack"
   MESSAGES:
     COMMANDS:
       COMMAND_SUBCOMMAND: "Please select a valid sub command"
@@ -13,12 +53,17 @@ TEXTS_NOT_YET_IMPLEMENTED:
       COMMAND_PACK_NO_EXIST: "Yeah, packs only go from 1 to 9 dummy :)"
       COMMAND_DANK_PACK_GIVEN: "Dank Pack created."
       COMMAND_TRASH_PACK_GIVEN: "Trash Pack created."
-      COMMAND_PACK_UPDATED: "This pack is old or incorrectly made! Updating to the correct format."
-      COMMAND_BLACKLIST_ITEM_SAVED: "Held item added to Dank Blacklist (existing items will not be removed)."
-      COMMAND_BLACKLIST_ITEM_MUST_HOLD: "You must be holding the item you want to add to the blacklist."
+      COMMAND_PACK_UPDATED: "This pack is old or incorrectly made, updating to newest format."
+      COMMAND_BLACKLIST_ITEM_SAVED: "Held item added to Dank Blacklist, existing items will not be removed."
+      COMMAND_BLACKLIST_ITEM_MUST_HOLD: "You must be holding the item you want added to the blacklist."
+    CRAFTING:
+      CRAFT_NEW_PACK: "You have crafted a new Dank Pack"
+      CRAFT_UPGRADE_PACK: "You have upgraded a Dank Pack"
+      CRAFT_NEW_TRASH: "You have crafted a new Dank Trash Can"
+      CRAFT_UPGRADE_TRASH: "You have upgraded a Dank Trash Can"
     EVENTS:
-      EVENT_OPEN_DANK_PACK: "Opening Dank Pack."
-      EVENT_OPEN_TRASH_PACK: "Opening Dank Trash."
+      EVENT_OPEN_DANK_PACK: "Opening Dank Pack"
+      EVENT_OPEN_TRASH_PACK: "Opening Dank Trash"
       EVENT_INPUT_EXISTING: "Slot is already assigned."
       EVENT_INPUT_THIS_DANK: "You cannot put a Dank inside itself silly!"
       EVENT_INPUT_BLACKLISTED: "This item cannot go into a dank as it has been blacklisted."
@@ -27,13 +72,3 @@ TEXTS_NOT_YET_IMPLEMENTED:
       EVENT_SLOT_CANT_PLACE: "The selected item can't be placed via a Dank"
       EVENT_SLOT_NO_MORE_ITEMS: "The selected item has run out!"
       EVENT_SLOT_CHANGED: "Selected Slot"
-    CRAFTING:
-      CRAFT_NEW_PACK: "You have crafted a new Dank Pack"
-      CRAFT_UPGRADE_PACK: "You have upgraded a Dank Pack"
-      CRAFT_NEW_TRASH: "You have crafted a new Dank Trash Can"
-      CRAFT_UPGRADE_TRASH: "You have upgraded a Dank Trash Can"
-  GUI:
-    PANE_FILLER: "Get dank!"
-    PANE_INFO_NAME: "Pack Info"
-    PANE_INFO_LORE_ID: "Dank ID"
-    PANE_INFO_LORE_LEVEL: "Dank Level"

@@ -21,7 +21,7 @@ public final class ItemStacks {
     public static ItemStack getCell(int level, DankTech plugin) {
         ItemStack cell = SkullCreator.itemFromBase64(getDankCellTexture(level));
         ItemMeta m = cell.getItemMeta();
-        m.setDisplayName(getDankCellName(level));
+        m.setDisplayName(getDankCellName(plugin, level));
         PersistentDataContainer c = m.getPersistentDataContainer();
         NamespacedKey keyDank = new NamespacedKey(plugin,"dank");
         c.set(keyDank, PersistentDataType.INTEGER, 1);
@@ -36,7 +36,7 @@ public final class ItemStacks {
         makeShallow(dank, plugin);
         setDankLevel(dank, plugin, level);
         ItemMeta m = dank.getItemMeta();
-        m.setDisplayName(getDankNameBold(level));
+        m.setDisplayName(getDankNameBold(plugin, level));
         dank.setItemMeta(m);
         return dank;
     }
@@ -47,7 +47,7 @@ public final class ItemStacks {
         makeShallow(trash, plugin);
         setTrashLevel(trash, plugin, level);
         ItemMeta m = trash.getItemMeta();
-        m.setDisplayName(getTrashNameBold(level));
+        m.setDisplayName(getTrashNameBold(plugin, level));
         trash.setItemMeta(m);
         return trash;
     }

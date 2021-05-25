@@ -34,8 +34,8 @@ public class TrashPack {
         }
 
         ItemMeta m = trash.getItemMeta();
-        m.setDisplayName(getTrashNameBold(level));
-        m.setLore(ItemDetails.getTrashLore(level, trashID));
+        m.setDisplayName(getTrashNameBold(parent, level));
+        m.setLore(ItemDetails.getTrashLore(parent, level, trashID));
         trash.setItemMeta(m);
 
         ContainerStorage.makeTrash(trash, parent);

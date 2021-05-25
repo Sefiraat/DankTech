@@ -33,8 +33,8 @@ public class DankPack {
         }
 
         ItemMeta m = dank.getItemMeta();
-        m.setDisplayName(getDankNameBold(level));
-        m.setLore(ItemDetails.getDankLore(level, packID, null));
+        m.setDisplayName(getDankNameBold(parent, level));
+        m.setLore(ItemDetails.getDankLore(parent, level, packID, null));
         dank.setItemMeta(m);
 
         ContainerStorage.makeDank(dank, parent);

@@ -28,10 +28,10 @@ public class DankTrashGUI {
 
     public static Gui getTrashGUI(long trashID, int trashLevel, DankTech parent) {
 
-        Gui g = new Gui(6, getTrashName(trashLevel));
+        Gui g = new Gui(6, getTrashName(parent, trashLevel));
 
         if (trashLevel < 9) {
-            setBlankColumns(g, trashLevel);
+            setBlankColumns(parent, g, trashLevel);
         }
 
         setItemDisplays(g, trashLevel, trashID, parent);
@@ -49,14 +49,14 @@ public class DankTrashGUI {
         return g;
     }
 
-    public static void setBlankColumns(Gui gui, int trashLevel) {
+    public static void setBlankColumns(DankTech plugin, Gui gui, int trashLevel) {
         for (int i = (trashLevel + 1); i <= 9; i++) {
-            gui.setItem(1, i, GUIItems.guiPackLockedSlot());
-            gui.setItem(2, i, GUIItems.guiPackLockedSlot());
-            gui.setItem(3, i, GUIItems.guiPackLockedSlot());
-            gui.setItem(4, i, GUIItems.guiPackLockedSlot());
-            gui.setItem(5, i, GUIItems.guiPackLockedSlot());
-            gui.setItem(6, i, GUIItems.guiPackLockedSlot());
+            gui.setItem(1, i, GUIItems.guiPackLockedSlot(plugin));
+            gui.setItem(2, i, GUIItems.guiPackLockedSlot(plugin));
+            gui.setItem(3, i, GUIItems.guiPackLockedSlot(plugin));
+            gui.setItem(4, i, GUIItems.guiPackLockedSlot(plugin));
+            gui.setItem(5, i, GUIItems.guiPackLockedSlot(plugin));
+            gui.setItem(6, i, GUIItems.guiPackLockedSlot(plugin));
         }
     }
 
@@ -91,10 +91,10 @@ public class DankTrashGUI {
                     slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
                     gui.updateItem(slotR - 1, slotC, GUIItems.guiTrashAssignedSlot(trashID, dankSlot, plugin));
                 } else {
-                    e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_INPUT_THIS_DANK);
+                    e.getWhoClicked().sendMessage(Messages.messageEventInputThisDank(plugin));
                 }
             } else {
-                e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_INPUT_EXISTING);
+                e.getWhoClicked().sendMessage(Messages.messageEventInputExisting(plugin));
             }
         }
     }
@@ -109,7 +109,7 @@ public class DankTrashGUI {
                 if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
                     gui.setItem(r, i, GUIItems.guiTrashAssignedSlot(trashID, count, plugin));
                 } else {
-                    gui.setItem(r, i, GUIItems.guiUnassignedSlot());
+                    gui.setItem(r, i, GUIItems.guiUnassignedSlot(plugin));
                 }
                 count++;
             }
@@ -143,11 +143,11 @@ public class DankTrashGUI {
                 if (firstEmpty != -1) {
                     withdrawOne(plugin, (Player) e.getWhoClicked(), slotSection, gui, trashID, slot, dankSlot, row);
                 } else {
-                    e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_WITHDRAW_NO_SPACE);
+                    e.getWhoClicked().sendMessage(Messages.messageEventWithdrawNoSpace(plugin));
                 }
             }
         } else {
-            e.getWhoClicked().sendMessage(Messages.MESSAGE_EVENT_SLOT_NOT_ASSIGNED);
+            e.getWhoClicked().sendMessage(Messages.messageEventSlotNotAssigned(plugin));
         }
     }
 
@@ -161,7 +161,7 @@ public class DankTrashGUI {
 
         slotSection.set(CONFIG_GETTER_VAL_VOLUME, 0);
         slotSection.set(CONFIG_GETTER_VAL_STACK, null);
-        gui.updateItem(row - 2, slot, GUIItems.guiUnassignedSlot());
+        gui.updateItem(row - 2, slot, GUIItems.guiUnassignedSlot(plugin));
         GuiItem g = GUIItems.guiTrashWithdrawItem();
         Integer finalSlot = slot;
         g.setAction(event -> {

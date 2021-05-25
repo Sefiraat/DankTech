@@ -29,7 +29,7 @@ public class Commands extends BaseCommand {
     @Default
     public void onDefault(CommandSender sender) {
         if (sender instanceof Player) {
-            sender.sendMessage(Messages.MESSAGE_COMMAND_SUBCOMMAND);
+            sender.sendMessage(Messages.messageCommandSubcommand(parent));
         }
     }
 
@@ -41,7 +41,7 @@ public class Commands extends BaseCommand {
         @Default
         public void onDefault(CommandSender sender) {
             if (sender instanceof Player) {
-                sender.sendMessage(Messages.MESSAGE_COMMAND_SELECT_ITEM);
+                sender.sendMessage(Messages.messageCommandSelectItem(parent));
             }
         }
 
@@ -81,7 +81,7 @@ public class Commands extends BaseCommand {
         @Default
         public void onDefault(CommandSender sender) {
             if (sender instanceof Player) {
-                sender.sendMessage(Messages.MESSAGE_COMMAND_SELECT_ITEM);
+                sender.sendMessage(Messages.messageCommandSelectItem(parent));
             }
         }
 
@@ -127,9 +127,9 @@ public class Commands extends BaseCommand {
                     c.createSection("BLACKLISTED_ITEMS" + "." + nextItem);
                     c.set("BLACKLISTED_ITEMS." + nextItem, stackToSave);
                     parent.saveItemBlacklistConfig();
-                    p.sendMessage(Messages.MESSAGE_COMMAND_BLACKLIST_ITEM_SAVED);
+                    p.sendMessage(Messages.messageCommandBlacklistItemSaved(parent));
                 } else {
-                    p.sendMessage(Messages.MESSAGE_COMMAND_BLACKLIST_ITEM_MUST_HOLD);
+                    p.sendMessage(Messages.messageCommandBlacklistMustHold(parent));
                 }
             }
         }

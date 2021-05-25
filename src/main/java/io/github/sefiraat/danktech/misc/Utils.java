@@ -41,13 +41,13 @@ public class Utils {
             long packID = getNextPackID(parent);
             ItemStack dank = DankPack.getDankPack(level, packID, parent, player.getPlayer());
             ItemMeta m = dank.getItemMeta();
-            m.setDisplayName(getDankNameBold(level));
-            m.setLore(ItemDetails.getDankLore(level, packID, null));
+            m.setDisplayName(getDankNameBold(parent, level));
+            m.setLore(ItemDetails.getDankLore(parent, level, packID, null));
             dank.setItemMeta(m);
             player.getPlayer().getInventory().addItem(dank);
-            player.getPlayer().sendMessage(Messages.messageCommandPackGiven(packID));
+            player.getPlayer().sendMessage(Messages.messageCommandPackGiven(parent, packID));
         } else {
-            player.getPlayer().sendMessage(Messages.MESSAGE_COMMAND_PACK_NO_EXIST);
+            player.getPlayer().sendMessage(Messages.messageCommandPackDoesNotExist(parent));
         }
     }
 
@@ -56,7 +56,7 @@ public class Utils {
         ItemStack dank = DankPack.getDankPack(level, id, parent, p.getPlayer());
 
         p.getInventory().addItem(dank);
-        p.sendMessage(Messages.messageCommandPackGiven(id));
+        p.sendMessage(Messages.messageCommandPackGiven(parent, id));
     }
 
     public static void givePlayerTrash(Player player, int level, DankTech parent) {
@@ -64,13 +64,13 @@ public class Utils {
             long packID = getNextTrashID(parent);
             ItemStack trash = TrashPack.getTrashPack(level, packID, parent, player.getPlayer());
             ItemMeta m = trash.getItemMeta();
-            m.setDisplayName(getTrashNameBold(level));
-            m.setLore(ItemDetails.getTrashLore(level, packID));
+            m.setDisplayName(getTrashNameBold(parent, level));
+            m.setLore(ItemDetails.getTrashLore(parent, level, packID));
             trash.setItemMeta(m);
             player.getPlayer().getInventory().addItem(trash);
-            player.getPlayer().sendMessage(Messages.messageCommandTrashGiven(packID));
+            player.getPlayer().sendMessage(Messages.messageCommandTrashGiven(parent, packID));
         } else {
-            player.getPlayer().sendMessage(Messages.MESSAGE_COMMAND_PACK_NO_EXIST);
+            player.getPlayer().sendMessage(Messages.messageCommandPackDoesNotExist(parent));
         }
     }
 

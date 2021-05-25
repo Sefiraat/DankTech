@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nonnull;
 
 import static io.github.sefiraat.danktech.finals.Constants.*;
+import static io.github.sefiraat.danktech.finals.ItemDetails.guiDisplayNameFiller;
 import static io.github.sefiraat.danktech.finals.Materials.*;
 
 public final class GUIItems {
@@ -19,48 +20,48 @@ public final class GUIItems {
         throw new IllegalStateException("Utility class");
     }
 
-    public static GuiItem guiPackFiller() {
+    public static GuiItem guiPackFiller(DankTech plugin) {
         GuiItem g = new GuiItem(Material.GRAY_STAINED_GLASS_PANE);
         ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
-        im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_FILLER);
+        im.setDisplayName(guiDisplayNameFiller(plugin));
         im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         i.setItemMeta(im);
         g.setItemStack(i);
         g.setAction(event -> event.setCancelled(true));
         return g;
     }
-    public static GuiItem guiPackInfo(long packID, int packLevel) {
+    public static GuiItem guiPackInfo(DankTech plugin, long packID, int packLevel) {
         ItemStack guiSkull = SkullCreator.itemFromBase64(DANK_GUI_INFO);
         GuiItem g = new GuiItem(guiSkull);
         ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
-        im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_INFO);
-        im.setLore(ItemDetails.guiDisplayLoreInfo(packID, packLevel));
+        im.setDisplayName(ItemDetails.guiDisplayNameInfo(plugin));
+        im.setLore(ItemDetails.guiDisplayLoreInfo(plugin, packID, packLevel));
         im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         i.setItemMeta(im);
         g.setItemStack(i);
         g.setAction(event -> event.setCancelled(true));
         return g;
     }
-    public static GuiItem guiPackLockedSlot() {
+    public static GuiItem guiPackLockedSlot(DankTech plugin) {
         GuiItem g = new GuiItem(Material.RED_STAINED_GLASS_PANE);
         ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
-        im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_LOCKED);
+        im.setDisplayName(ItemDetails.guiDisplayNameLocked(plugin));
         im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         i.setItemMeta(im);
         g.setItemStack(i);
         g.setAction(event -> event.setCancelled(true));
         return g;
     }
-    public static GuiItem guiUnassignedSlot() {
+    public static GuiItem guiUnassignedSlot(DankTech plugin) {
         ItemStack guiSkull = SkullCreator.itemFromBase64(DANK_GUI_EMPTY);
         GuiItem g = new GuiItem(guiSkull);
         ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
-        im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_UNASSIGNED);
-        im.setLore(ItemDetails.guiDisplayLoreUnassigned());
+        im.setDisplayName(ItemDetails.guiDisplayNameUnassigned(plugin));
+        im.setLore(ItemDetails.guiDisplayLoreUnassigned(plugin));
         im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         i.setItemMeta(im);
         g.setItemStack(i);
@@ -81,13 +82,13 @@ public final class GUIItems {
         return g;
     }
 
-    public static GuiItem guiPackWithdrawItem(int amount) {
+    public static GuiItem guiPackWithdrawItem(DankTech plugin, int amount) {
         ItemStack guiSkull = SkullCreator.itemFromBase64(DANK_GUI_INTERACTION);
         GuiItem g = new GuiItem(guiSkull);
         ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
-        im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_WITHDRAW);
-        im.setLore(ItemDetails.guiDisplayLoreWithdraw(amount));
+        im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_WITHDRAW(plugin));
+        im.setLore(ItemDetails.guiDisplayLoreWithdraw(plugin, amount));
         i.setItemMeta(im);
         g.setItemStack(i);
         return g;

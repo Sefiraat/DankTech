@@ -1,5 +1,6 @@
 package io.github.sefiraat.danktech.finals;
 
+import io.github.sefiraat.danktech.DankTech;
 import net.md_5.bungee.api.ChatColor;
 
 public final class Messages {
@@ -20,46 +21,74 @@ public final class Messages {
 
 
     // Commands
-    public static final String MESSAGE_COMMAND_SUBCOMMAND = PREFIX + NOTICE + "Please select a valid sub command";
-    public static final String MESSAGE_COMMAND_SELECT_ITEM = PREFIX + NOTICE + "Please select an item type";
-    public static final String MESSAGE_COMMAND_PACK_NO_EXIST = PREFIX + ERROR + "Yeah, packs only go from 1 to 9 dummy :)";
-    public static final String MESSAGE_COMMAND_BLACKLIST_ITEM_SAVED = PREFIX + SUCCESS + "Held item added to Dank Blacklist (existing items will not be removed).";
-    public static final String MESSAGE_COMMAND_BLACKLIST_ITEM_MUST_HOLD = PREFIX + WARNING + "You must be holding the item you want to add to the blacklist.";
-
-    public static String messageCommandPackGiven(long packID) {
-        return (PREFIX + SUCCESS + "Dank Pack created. ID: " + packID);
+    public static String messageCommandSubcommand(DankTech plugin) {
+        return PREFIX + NOTICE + plugin.getConfigClass().getStrings().getCommandSubcommand();
     }
-
-    public static String messageCommandTrashGiven(long trashID) {
-        return (PREFIX + SUCCESS + "Trash Pack created. ID: " + trashID);
+    public static String messageCommandSelectItem(DankTech plugin) {
+        return PREFIX + NOTICE + plugin.getConfigClass().getStrings().getCommandSelectItem();
     }
-
-    public static String messageCommandPackUpdated(long packID) {
-        return (PREFIX + WARNING + "This pack is old or incorrectly made! Updating to the correct format. ID: " + packID);
+    public static String messageCommandPackDoesNotExist(DankTech plugin) {
+        return PREFIX + ERROR + plugin.getConfigClass().getStrings().getCommandPackDoesNotExist();
+    }
+    public static String messageCommandBlacklistItemSaved(DankTech plugin) {
+        return PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandBlacklistItemAdded();
+    }
+    public static String messageCommandBlacklistMustHold(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCommandBlacklistMustHold();
+    }
+    public static String messageCommandPackGiven(DankTech plugin, long packID) {
+        return (PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandDankPackGiven() + " - ID: " + packID);
+    }
+    public static String messageCommandTrashGiven(DankTech plugin, long trashID) {
+        return (PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandTrashPackGiven() + " - ID: " + trashID);
+    }
+    public static String messageCommandPackUpdated(DankTech plugin, long packID) {
+        return (PREFIX + WARNING + plugin.getConfigClass().getStrings().getCommandPackUpdated() + " - ID: " + packID);
     }
 
     // Events
-    public static String messageEventOpenPack(long packID) {
-        return (PREFIX + PASSIVE + "Opening Dank Pack. ID: " + packID);
+    public static String messageEventOpenPack(DankTech plugin, long packID) {
+        return (PREFIX + PASSIVE + plugin.getConfigClass().getStrings().getEventOpenDank() + " - ID: " + packID);
     }
-    public static String messageEventOpenTrash(long trashID) {
-        return (PREFIX + PASSIVE + "Opening Dank Trash. ID: " + trashID);
+    public static String messageEventOpenTrash(DankTech plugin, long trashID) {
+        return (PREFIX + PASSIVE + plugin.getConfigClass().getStrings().getEventOpenTrash() + " - ID: " + trashID);
     }
-    public static final String MESSAGE_EVENT_INPUT_EXISTING = PREFIX + WARNING + "Slot is already assigned.";
-    public static final String MESSAGE_EVENT_INPUT_THIS_DANK = PREFIX + WARNING + "You cannot put a Dank inside itself silly!";
-    public static final String MESSAGE_EVENT_INPUT_BLACKLISTED = PREFIX + WARNING + "This item cannot go into a dank as it has been blacklisted.";
-    public static final String MESSAGE_EVENT_WITHDRAW_NO_SPACE = PREFIX + WARNING + "You need an empty inventory slot!";
-    public static final String MESSAGE_EVENT_SLOT_NOT_ASSIGNED = PREFIX + WARNING + "No item registered";
-    public static final String MESSAGE_EVENT_SLOT_CANT_PLACE = PREFIX + ERROR + "The selected item can't be placed via a Dank";
-    public static final String MESSAGE_EVENT_SLOT_NO_MORE_ITEMS = PREFIX + WARNING + "The selected item has run out!";
-
-    public static final String messageEventSlotChanged(String s, Integer slot) {
-         return PREFIX + SUCCESS + "Selected Slot [" + slot + "] : " + ChatColor.GOLD + s;
+    public static String messageEventInputExisting(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventInputExisting();
+    }
+    public static String messageEventInputThisDank(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventInputThisDank();
+    }
+    public static String messageEventInputBlacklisted(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventInputBlacklisted();
+    }
+    public static String messageEventWithdrawNoSpace(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventWithdrawNoSpace();
+    }
+    public static String messageEventSlotNotAssigned(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventSlotNotAssigned();
+    }
+    public static String messageEventSlotCantPlace(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventSlotCantPlace();
+    }
+    public static String messageEventSlotNoMoreItems(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventSlotNoMoreItems();
+    }
+    public static String messageEventSlotChanged(DankTech plugin, String s, Integer slot) {
+         return PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getEventSlotChanged() + " [" + slot + "] : " + ChatColor.GOLD + s;
     }
 
     // Crafting
-    public static final String MESSAGE_CRAFT_NEW_PACK = PREFIX + SUCCESS + "You have crafted a new Dank Pack";
-    public static final String MESSAGE_CRAFT_UPGRADE_PACK = PREFIX + SUCCESS + "You have upgraded a Dank Pack";
-    public static final String MESSAGE_CRAFT_NEW_TRASH = PREFIX + SUCCESS + "You have crafted a new Dank Trash Can";
-    public static final String MESSAGE_CRAFT_UPGRADE_TRASH = PREFIX + SUCCESS + "You have upgraded a Dank Trash Can";
+    public static String messageCraftNewPack(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCraftNewPack();
+    }
+    public static String messageCraftUpgradePack(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCraftUpgradePack();
+    }
+    public static String messageCraftNewTrash(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCraftNewTrash();
+    }
+    public static String messageCraftUpgradeTrash(DankTech plugin) {
+        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCraftUpgradeTrash();
+    }
 }

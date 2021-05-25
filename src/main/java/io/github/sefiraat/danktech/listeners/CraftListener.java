@@ -161,7 +161,7 @@ public class CraftListener implements Listener {
 //        m.setLore(ItemDetails.getDankLore(1, packID, null));
 //        dank.setItemMeta(m);
         e.setCurrentItem(dank);
-        p.sendMessage(Messages.MESSAGE_CRAFT_NEW_PACK);
+        p.sendMessage(Messages.messageCraftNewPack(parent));
     }
 
     private void craftDank(CraftItemEvent e, Player p, ItemStack res, Integer level) {
@@ -177,7 +177,7 @@ public class CraftListener implements Listener {
 //        m.setLore(ItemDetails.getDankLore(level, packID, null));
 //        dank.setItemMeta(m);
         e.setCurrentItem(dank);
-        p.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_PACK);
+        p.sendMessage(Messages.messageCraftUpgradePack(parent));
     }
 
     private void craftTrash(CraftItemEvent e, Player p) {
@@ -188,7 +188,7 @@ public class CraftListener implements Listener {
 //        m.setLore(ItemDetails.getTrashLore(1, trashID));
 //        trash.setItemMeta(m);
         e.setCurrentItem(trash);
-        p.sendMessage(Messages.MESSAGE_CRAFT_NEW_TRASH);
+        p.sendMessage(Messages.messageCraftNewTrash(parent));
     }
 
     private void craftTrash(CraftItemEvent e, Player p, ItemStack res, Integer level) {
@@ -207,7 +207,7 @@ public class CraftListener implements Listener {
 //        m.setLore(ItemDetails.getTrashLore(level, trashID));
 //        trash.setItemMeta(m);
         e.setCurrentItem(trash);
-        p.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_TRASH);
+        p.sendMessage(Messages.messageCraftUpgradeTrash(parent));
     }
 
     private List<ItemStack> fillCellList(ItemStack[] contents) {

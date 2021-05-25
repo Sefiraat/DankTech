@@ -142,11 +142,11 @@ public class ItemRightClickListener implements Listener {
 
         ItemStack dank = DankPack.getDankPack(level, id, parent, player.getPlayer());
         ItemMeta m = dank.getItemMeta();
-        m.setDisplayName(getDankNameBold(level));
-        m.setLore(ItemDetails.getDankLore(level, id, null));
+        m.setDisplayName(getDankNameBold(parent, level));
+        m.setLore(ItemDetails.getDankLore(parent, level, id, null));
         dank.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), dank);
-        player.sendMessage(Messages.messageCommandPackUpdated(id));
+        player.sendMessage(Messages.messageCommandPackUpdated(parent, id));
     }
 
     private void replaceAndUpgradeDank(ItemStack i, Player player) {
@@ -161,11 +161,11 @@ public class ItemRightClickListener implements Listener {
         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_VOLUME , 0);
         ItemStack dank = DankPack.getDankPack(level, id, parent, player);
         ItemMeta m = dank.getItemMeta();
-        m.setDisplayName(getDankNameBold(level));
-        m.setLore(ItemDetails.getDankLore(level, id, null));
+        m.setDisplayName(getDankNameBold(parent, level));
+        m.setLore(ItemDetails.getDankLore(parent, level, id, null));
         dank.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), dank);
-        player.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_PACK);
+        player.sendMessage(Messages.messageCraftUpgradePack(parent));
     }
 
     private void replaceTrash(ItemStack i, Player player) {
@@ -180,11 +180,11 @@ public class ItemRightClickListener implements Listener {
 
         ItemStack trash = TrashPack.getTrashPack(level, id, parent, player.getPlayer());
         ItemMeta m = trash.getItemMeta();
-        m.setDisplayName(getTrashNameBold(level));
-        m.setLore(ItemDetails.getTrashLore(level, id));
+        m.setDisplayName(getTrashNameBold(parent, level));
+        m.setLore(ItemDetails.getTrashLore(parent, level, id));
         trash.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), trash);
-        player.sendMessage(Messages.messageCommandPackUpdated(id));
+        player.sendMessage(Messages.messageCommandPackUpdated(parent, id));
     }
 
     private void replaceAndUpgradeTrash(ItemStack i, Player player) {
@@ -203,17 +203,17 @@ public class ItemRightClickListener implements Listener {
         c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
         ItemStack trash = TrashPack.getTrashPack(level, id, parent, player);
         ItemMeta m = trash.getItemMeta();
-        m.setDisplayName(getTrashNameBold(level));
-        m.setLore(ItemDetails.getTrashLore(level, id));
+        m.setDisplayName(getTrashNameBold(parent, level));
+        m.setLore(ItemDetails.getTrashLore(parent, level, id));
         trash.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), trash);
-        player.sendMessage(Messages.MESSAGE_CRAFT_UPGRADE_TRASH);
+        player.sendMessage(Messages.messageCraftUpgradeTrash(parent));
     }
 
     private void openDankPack(ItemStack i, Player p) {
         int dankLevel = ContainerStorage.getDankLevel(i, parent.getInstance());
         long dankId = ContainerStorage.getDankId(i, parent.getInstance());
-        p.sendMessage(Messages.messageEventOpenPack(dankId));
+        p.sendMessage(Messages.messageEventOpenPack(parent, dankId));
         Config.setDankLastOpenedBy(dankId, parent, p);
         Gui g = getDankGUI(dankId, dankLevel, parent.getInstance());
         g.open(p);
@@ -222,7 +222,7 @@ public class ItemRightClickListener implements Listener {
     private void openTrashPack(ItemStack i, Player p) {
         int trashLevel = ContainerStorage.getTrashLevel(i, parent.getInstance());
         long trashId = ContainerStorage.getTrashId(i, parent.getInstance());
-        p.sendMessage(Messages.messageEventOpenPack(trashId));
+        p.sendMessage(Messages.messageEventOpenTrash(parent, trashId));
         Config.setDankLastOpenedBy(trashId, parent, p);
         Gui g = getTrashGUI(trashId, trashLevel, parent.getInstance());
         g.open(p);
@@ -248,7 +248,7 @@ public class ItemRightClickListener implements Listener {
                 itemName = slotItemStack.getType().name().replace("_"," ");
             }
         }
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(itemName, slot)));
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(parent, itemName, slot)));
     }
 
     private void cycleBackward(ItemStack dank, Player p) {
@@ -263,7 +263,7 @@ public class ItemRightClickListener implements Listener {
                 itemName = slotItemStack.getType().name().replace("_"," ");
             }
         }
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(itemName, slot)));
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(parent, itemName, slot)));
     }
 
     private void placeBlock(PlayerInteractEvent e, ItemStack dank, Player p) {
@@ -287,11 +287,11 @@ public class ItemRightClickListener implements Listener {
                         mcMMO.getPlaceStore().setTrue(block);
                     }
                 } else {
-                    p.sendMessage(Messages.MESSAGE_EVENT_SLOT_NO_MORE_ITEMS);
+                    p.sendMessage(Messages.messageEventSlotNoMoreItems(parent));
                 }
             }
         } else {
-            p.sendMessage(Messages.MESSAGE_EVENT_SLOT_CANT_PLACE);
+            p.sendMessage(Messages.messageEventSlotCantPlace(parent));
         }
     }
 
