@@ -62,10 +62,12 @@ public class CraftListener implements Listener {
 
             int dankLevel = 1;
             long dankID = 0;
+            boolean beaconBypass = false;
 
             if (coreItem.getType() != Materials.DANK_T1_CORE_MATERIAL) {
                 dankLevel = coreItem.getItemMeta().getPersistentDataContainer().get(levelDankKey, PersistentDataType.INTEGER) + 1;
                 dankID = coreItem.getItemMeta().getPersistentDataContainer().get(idDankKey, PersistentDataType.LONG);
+                beaconBypass = true;
             }
 
             if (cellMatchLevel(dankLevel, cells, parent)) {
@@ -76,7 +78,9 @@ public class CraftListener implements Listener {
                 r.setItemMeta(im);
                 e.getInventory().setResult(r);
             } else {
-                e.getInventory().setResult(new ItemStack(Material.AIR));
+                if (beaconBypass) {
+                    e.getInventory().setResult(new ItemStack(Material.AIR));
+                }
             }
         }
     }

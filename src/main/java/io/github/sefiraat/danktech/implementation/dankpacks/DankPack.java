@@ -46,7 +46,6 @@ public class DankPack {
         }
 
         return dank;
-
     }
 
     private static void setupSection(Configuration config, long packID, Integer level) {
@@ -61,9 +60,5 @@ public class DankPack {
                 c.set(CONFIG_GETTER_VAL_VOLUME, 0);
             }
         }
-
     }
-
-
-
 }
