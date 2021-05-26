@@ -17,293 +17,281 @@ public final class ItemDetails {
 
     // Dank Stuff
 
-    public static String nameDank1(DankTech plugin) {
-        return "" + ChatColor.GRAY + plugin.getConfigClass().getStrings().getItemDankPack() + " [T1]";
+    private static ChatColor getRarity(int level) {
+        switch (level) {
+            case 1: return ChatColor.GRAY;
+            case 2: return ChatColor.DARK_GRAY;
+            case 3: return ChatColor.GREEN;
+            case 4: return ChatColor.DARK_GREEN;
+            case 5: return ChatColor.BLUE;
+            case 6: return ChatColor.DARK_BLUE;
+            case 7: return ChatColor.LIGHT_PURPLE;
+            case 8: return ChatColor.DARK_PURPLE;
+            default: return ChatColor.RED;
+        }
     }
 
-    public static String nameDank2(DankTech plugin) {
-        return "" + ChatColor.DARK_GRAY + plugin.getConfigClass().getStrings().getItemDankPack() + " [T2]";
+    private static String getNameDank(DankTech plugin, int level) {
+        if (level == 9) {
+            return getRarity(level) + plugin.getConfigClass().getStrings().getItemDankPack() + " [★]";
+        } else {
+            return getRarity(level) + plugin.getConfigClass().getStrings().getItemDankPack() + " [T" + level + "]";
+        }
     }
 
-    public static String nameDank3(DankTech plugin) {
-        return "" + ChatColor.GREEN + plugin.getConfigClass().getStrings().getItemDankPack() + " [T3]";
+    private static String getNameTrash(DankTech plugin, int level) {
+        if (level == 9) {
+            return getRarity(level) + plugin.getConfigClass().getStrings().getItemTrashPack() + " [★]";
+        } else {
+            return getRarity(level) + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T" + level + "]";
+        }
     }
 
-    public static String nameDank4(DankTech plugin) {
-        return "" + ChatColor.DARK_GREEN + plugin.getConfigClass().getStrings().getItemDankPack() + " [T4]";
+    private static String getNameCell(DankTech plugin, int level) {
+        if (level == 9) {
+            return getRarity(level) + plugin.getConfigClass().getStrings().getItemStorageCell() + " [★]";
+        } else {
+            return getRarity(level) + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T" + level + "]";
+        }
     }
 
-    public static String nameDank5(DankTech plugin) {
-        return "" + ChatColor.BLUE + plugin.getConfigClass().getStrings().getItemDankPack() + " [T5]";
+    public static String getDankName(DankTech plugin, int dankLevel) {
+        switch (dankLevel) {
+            case 1: return getNameDank(plugin, 1);
+            case 2: return getNameDank(plugin, 2);
+            case 3: return getNameDank(plugin, 3);
+            case 4: return getNameDank(plugin, 4);
+            case 5: return getNameDank(plugin, 5);
+            case 6: return getNameDank(plugin, 6);
+            case 7: return getNameDank(plugin, 7);
+            case 8: return getNameDank(plugin, 8);
+            case 9: return getNameDank(plugin, 9);
+            default: return DANK_ERROR_STRING;
+        }
     }
 
-    public static String nameDank6(DankTech plugin) {
-        return "" + ChatColor.DARK_BLUE + plugin.getConfigClass().getStrings().getItemDankPack() + " [T6]";
+    public static String getTrashName(DankTech plugin, int trashLevel) {
+        switch (trashLevel) {
+            case 1: return getNameTrash(plugin,1);
+            case 2: return getNameTrash(plugin,2);
+            case 3: return getNameTrash(plugin,3);
+            case 4: return getNameTrash(plugin,4);
+            case 5: return getNameTrash(plugin,5);
+            case 6: return getNameTrash(plugin,6);
+            case 7: return getNameTrash(plugin,7);
+            case 8: return getNameTrash(plugin,8);
+            case 9: return getNameTrash(plugin,9);
+            default: return DANK_ERROR_STRING;
+        }
     }
 
-    public static String nameDank7(DankTech plugin) {
-        return "" + ChatColor.LIGHT_PURPLE + plugin.getConfigClass().getStrings().getItemDankPack() + " [T7]";
+    public static String getDankNameBold(DankTech plugin, int dankLevel) {
+        switch (dankLevel) {
+            case 1: return ChatColor.BOLD + getNameDank(plugin, 1);
+            case 2: return ChatColor.BOLD + getNameDank(plugin, 2);
+            case 3: return ChatColor.BOLD + getNameDank(plugin, 3);
+            case 4: return ChatColor.BOLD + getNameDank(plugin, 4);
+            case 5: return ChatColor.BOLD + getNameDank(plugin, 5);
+            case 6: return ChatColor.BOLD + getNameDank(plugin, 6);
+            case 7: return ChatColor.BOLD + getNameDank(plugin, 7);
+            case 8: return ChatColor.BOLD + getNameDank(plugin, 8);
+            case 9: return ChatColor.BOLD + getNameDank(plugin, 9);
+            default: return DANK_ERROR_STRING;
+        }
     }
 
-    public static String nameDank8(DankTech plugin) {
-        return "" + ChatColor.DARK_PURPLE + plugin.getConfigClass().getStrings().getItemDankPack() + " [T8]";
+    public static String getTrashNameBold(DankTech plugin, int trashLevel) {
+        switch (trashLevel) {
+            case 1: return ChatColor.BOLD + getNameTrash(plugin,1);
+            case 2: return ChatColor.BOLD + getNameTrash(plugin,2);
+            case 3: return ChatColor.BOLD + getNameTrash(plugin,3);
+            case 4: return ChatColor.BOLD + getNameTrash(plugin,4);
+            case 5: return ChatColor.BOLD + getNameTrash(plugin,5);
+            case 6: return ChatColor.BOLD + getNameTrash(plugin,6);
+            case 7: return ChatColor.BOLD + getNameTrash(plugin,7);
+            case 8: return ChatColor.BOLD + getNameTrash(plugin,8);
+            case 9: return ChatColor.BOLD + getNameTrash(plugin,9);
+            default: return DANK_ERROR_STRING;
+        }
     }
 
-    public static String nameDank9(DankTech plugin) {
-        return "" + ChatColor.RED + plugin.getConfigClass().getStrings().getItemDankPack() + " [★]";
+    public static String getDankCellName(DankTech plugin, int dankLevel) {
+        switch (dankLevel) {
+            case 1: return getNameCell(plugin,1);
+            case 2: return getNameCell(plugin,2);
+            case 3: return getNameCell(plugin,3);
+            case 4: return getNameCell(plugin,4);
+            case 5: return getNameCell(plugin,5);
+            case 6: return getNameCell(plugin,6);
+            case 7: return getNameCell(plugin,7);
+            case 8: return getNameCell(plugin,8);
+            case 9: return getNameCell(plugin,9);
+            default: return DANK_ERROR_STRING;
+        }
     }
 
-    public static String nameTrash1(DankTech plugin) {
-        return "" + ChatColor.GRAY + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T1]";
-    }
-
-    public static String nameTrash2(DankTech plugin) {
-        return "" + ChatColor.DARK_GRAY + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T2]";
-    }
-
-    public static String nameTrash3(DankTech plugin) {
-        return "" + ChatColor.GREEN + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T3]";
-    }
-
-    public static String nameTrash4(DankTech plugin) {
-        return "" + ChatColor.DARK_GREEN + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T4]";
-    }
-
-    public static String nameTrash5(DankTech plugin) {
-        return "" + ChatColor.BLUE + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T5]";
-    }
-
-    public static String nameTrash6(DankTech plugin) {
-        return "" + ChatColor.DARK_BLUE + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T6]";
-    }
-
-    public static String nameTrash7(DankTech plugin) {
-        return "" + ChatColor.LIGHT_PURPLE + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T7]";
-    }
-
-    public static String nameTrash8(DankTech plugin) {
-        return "" + ChatColor.DARK_PURPLE + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T8]";
-    }
-
-    public static String nameTrash9(DankTech plugin) {
-        return "" + ChatColor.RED + plugin.getConfigClass().getStrings().getItemTrashPack() + " [★]";
-    }
-
-    public static String nameCell1(DankTech plugin) {
-        return "" + ChatColor.GRAY + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T1]";
-    }
-
-    public static String nameCell2(DankTech plugin) {
-        return "" + ChatColor.DARK_GRAY + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T2]";
-    }
-
-    public static String nameCell3(DankTech plugin) {
-        return "" + ChatColor.GREEN + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T3]";
-    }
-
-    public static String nameCell4(DankTech plugin) {
-        return "" + ChatColor.DARK_GREEN + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T4]";
-    }
-
-    public static String nameCell5(DankTech plugin) {
-        return "" + ChatColor.BLUE + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T5]";
-    }
-
-    public static String nameCell6(DankTech plugin) {
-        return "" + ChatColor.DARK_BLUE + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T6]";
-    }
-
-    public static String nameCell7(DankTech plugin) {
-        return "" + ChatColor.LIGHT_PURPLE + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T7]";
-    }
-
-    public static String nameCell8(DankTech plugin) {
-        return "" + ChatColor.DARK_PURPLE + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T8]";
-    }
-
-    public static String nameCell9(DankTech plugin) {
-        return "" + ChatColor.RED + plugin.getConfigClass().getStrings().getItemStorageCell() + " [★]";
-    }
-
-    public static List<String> dankLore(DankTech plugin) {
+    private static List<String> dankLore(DankTech plugin) {
         return plugin.getConfigClass().getStrings().getItemDankPackLore();
     }
 
-    public static List<String> trashLore(DankTech plugin) {
+    private static List<String> trashLore(DankTech plugin) {
         return plugin.getConfigClass().getStrings().getItemTrashPackLore();
     }
 
-    public static String dank1Slots(DankTech plugin) {
+    private static String dank1Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 1";
     }
-
-    public static String dank2Slots(DankTech plugin) {
+    private static String dank2Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 2";
     }
-
-    public static String dank3Slots(DankTech plugin) {
+    private static String dank3Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 3";
     }
-
-    public static String dank4Slots(DankTech plugin) {
+    private static String dank4Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 4";
     }
-
-    public static String dank5Slots(DankTech plugin) {
+    private static String dank5Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 5";
     }
-
-    public static String dank6Slots(DankTech plugin) {
+    private static String dank6Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 6";
     }
-
-    public static String dank7Slots(DankTech plugin) {
+    private static String dank7Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 7";
     }
-
-    public static String dank8Slots(DankTech plugin) {
+    private static String dank8Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 8";
     }
-
-    public static String dank9Slots(DankTech plugin) {
+    private static String dank9Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 9";
     }
 
-    public static String trash1Slots(DankTech plugin) {
+    private static String trash1Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 2";
     }
-
-    public static String trash2Slots(DankTech plugin) {
+    private static String trash2Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 4";
     }
-
-    public static String trash3Slots(DankTech plugin) {
+    private static String trash3Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 6";
     }
-
-    public static String trash4Slots(DankTech plugin) {
+    private static String trash4Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 8";
     }
-
-    public static String trash5Slots(DankTech plugin) {
+    private static String trash5Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 10";
     }
-
-    public static String trash6Slots(DankTech plugin) {
+    private static String trash6Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 12";
     }
-
-    public static String trash7Slots(DankTech plugin) {
+    private static String trash7Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 14";
     }
-
-    public static String trash8Slots(DankTech plugin) {
+    private static String trash8Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 16";
     }
-
-    public static String trash9Slots(DankTech plugin) {
+    private static String trash9Slots(DankTech plugin) {
         return "" + ChatColor.WHITE + plugin.getConfigClass().getStrings().getSlots() + ": 18";
     }
 
-    public static Integer LIMIT_1(DankTech plugin) {
+    private static Integer limit1(DankTech plugin) {
         return plugin.getConfigClass().getVals().getValuePerSlotT1();
     }
-    public static Integer LIMIT_2(DankTech plugin) {
+    private static Integer limit2(DankTech plugin) {
         return plugin.getConfigClass().getVals().getValuePerSlotT2();
     }
-    public static Integer LIMIT_3(DankTech plugin) {
+    private static Integer limit3(DankTech plugin) {
         return plugin.getConfigClass().getVals().getValuePerSlotT3();
     }
-    public static Integer LIMIT_4(DankTech plugin) {
+    private static Integer limit4(DankTech plugin) {
         return plugin.getConfigClass().getVals().getValuePerSlotT4();
     }
-    public static Integer LIMIT_5(DankTech plugin) {
+    private static Integer limit5(DankTech plugin) {
         return plugin.getConfigClass().getVals().getValuePerSlotT5();
     }
-    public static Integer LIMIT_6(DankTech plugin) {
+    private static Integer limit6(DankTech plugin) {
         return plugin.getConfigClass().getVals().getValuePerSlotT6();
     }
-    public static Integer LIMIT_7(DankTech plugin) {
+    private static Integer limit7(DankTech plugin) {
         return plugin.getConfigClass().getVals().getValuePerSlotT7();
     }
-    public static Integer LIMIT_8(DankTech plugin) {
+    private static Integer limit8(DankTech plugin) {
         return plugin.getConfigClass().getVals().getValuePerSlotT8();
     }
-    public static Integer LIMIT_9(DankTech plugin) {
+    private static Integer limit9(DankTech plugin) {
         return plugin.getConfigClass().getVals().getValuePerSlotT9();
     }
 
     public static Integer getLimit(DankTech plugin, int level) {
         switch (level) {
             case 1:
-                return LIMIT_1(plugin);
+                return limit1(plugin);
             case 2:
-                return LIMIT_2(plugin);
+                return limit2(plugin);
             case 3:
-                return LIMIT_3(plugin);
+                return limit3(plugin);
             case 4:
-                return LIMIT_4(plugin);
+                return limit4(plugin);
             case 5:
-                return LIMIT_5(plugin);
+                return limit5(plugin);
             case 6:
-                return LIMIT_6(plugin);
+                return limit6(plugin);
             case 7:
-                return LIMIT_7(plugin);
+                return limit7(plugin);
             case 8:
-                return LIMIT_8(plugin);
+                return limit8(plugin);
             default:
-                return LIMIT_9(plugin);
+                return limit9(plugin);
         }
     }
 
-    public static String DANK_VOLUME_PER_SLOT(DankTech plugin) {
+    private static String dankVolumePerSlot(DankTech plugin) {
         return plugin.getConfigClass().getStrings().getAmountPerSlot();
     }
 
+    private static String dank1Volume(DankTech plugin) {
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit1(plugin);
+    }
+    private static String dank2Volume(DankTech plugin) {
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit2(plugin);
+    }
+    private static String dank3Volume(DankTech plugin) {
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit3(plugin);
+    }
+    private static String dank4Volume(DankTech plugin) {
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit4(plugin);
+    }
+    private static String dank5Volume(DankTech plugin) {
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit5(plugin);
+    }
+    private static String dank6Volume(DankTech plugin) {
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit6(plugin);
+    }
+    private static String dank7Volume(DankTech plugin) {
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit7(plugin);
+    }
+    private static String dank8Volume(DankTech plugin) {
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit8(plugin);
+    }
+    private static String dank9Volume(DankTech plugin) {
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit9(plugin);
+    }
 
-    public static String dank1Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_1(plugin);
-    }
-    public static String dank2Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_2(plugin);
-    }
-    public static String dank3Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_3(plugin);
-    }
-    public static String dank4Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_4(plugin);
-    }
-    public static String dank5Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_5(plugin);
-    }
-    public static String dank6Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_6(plugin);
-    }
-    public static String dank7Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_7(plugin);
-    }
-    public static String dank8Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_8(plugin);
-    }
-    public static String dank9Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + DANK_VOLUME_PER_SLOT(plugin) + LIMIT_9(plugin);
-    }
-
-    public static String dankLoreVoid(DankTech plugin) {
+    private static String dankLoreVoid(DankTech plugin) {
         return "" + ChatColor.RED + plugin.getConfigClass().getStrings().getVoidInfoDankPack();
     }
 
-    public static String dankTrashVoid(DankTech plugin) {
+    private static String dankTrashVoid(DankTech plugin) {
         return "" + ChatColor.RED + plugin.getConfigClass().getStrings().getVoidInfoTrashPack();
     }
 
-    public static String dankLoreRightClick(DankTech plugin) {
+    private static String dankLoreRightClick(DankTech plugin) {
         return "" + ChatColor.GOLD + plugin.getConfigClass().getStrings().getRightClick();
     }
 
-    public static final String DANK_ERROR_STRING = "DANK_ERR";
+    private static final String DANK_ERROR_STRING = "DANK_ERR";
 
-    public static String dankLoreSelectedStack(@Nullable String stringOptional) {
+    private static String dankLoreSelectedStack(@Nullable String stringOptional) {
         String itemType = "" + ChatColor.GRAY + "Empty";
         if (stringOptional != null) {
             itemType = "" + ChatColor.GREEN + stringOptional;
@@ -311,13 +299,13 @@ public final class ItemDetails {
         return "" + ChatColor.GOLD + "Selected Item: " + itemType;
     }
 
-    public static  final String DANK_BUGGY_WARN_USERS_1 = "" + ChatColor.RED + ChatColor.BOLD + "WARNING! While every care has been made";
-    public static  final String DANK_BUGGY_WARN_USERS_2 = "" + ChatColor.RED + ChatColor.BOLD + "to make this release stable, it may well";
-    public static  final String DANK_BUGGY_WARN_USERS_3 = "" + ChatColor.RED + ChatColor.BOLD + "still have bugs. Please ensure you only";
-    public static  final String DANK_BUGGY_WARN_USERS_4 = "" + ChatColor.RED + ChatColor.BOLD + "use this for items you wouldn't cry over";
-    public static  final String DANK_BUGGY_WARN_USERS_5 = "" + ChatColor.RED + ChatColor.BOLD + "if lost!";
+    private static final String DANK_BUGGY_WARN_USERS_1 = "" + ChatColor.RED + ChatColor.BOLD + "WARNING! While every care has been made";
+    private static final String DANK_BUGGY_WARN_USERS_2 = "" + ChatColor.RED + ChatColor.BOLD + "to make this release stable, it may well";
+    private static final String DANK_BUGGY_WARN_USERS_3 = "" + ChatColor.RED + ChatColor.BOLD + "still have bugs. Please ensure you only";
+    private static final String DANK_BUGGY_WARN_USERS_4 = "" + ChatColor.RED + ChatColor.BOLD + "use this for items you wouldn't cry over";
+    private static final String DANK_BUGGY_WARN_USERS_5 = "" + ChatColor.RED + ChatColor.BOLD + "if lost!";
 
-    public static List<String> dankLoreBuilder(DankTech parent, String slots, String volume, long dankID, @Nullable String selectedStack) {
+    private static List<String> dankLoreBuilder(DankTech parent, String slots, String volume, long dankID, @Nullable String selectedStack) {
         List<String> l = new ArrayList<>();
         for (String s : dankLore(parent)) {
             l.add(ChatColor.GRAY + s);
@@ -331,7 +319,7 @@ public final class ItemDetails {
         l.add(dankLoreRightClick(parent));
         l.add("");
         l.add(dankLoreSelectedStack(selectedStack));
-        l.add(ChatColor.GRAY + "Pack ID: " + dankID);
+        l.add(ChatColor.GRAY + parent.getConfigClass().getStrings().getGuiInfoLoreId() + ": " + dankID);
         if (BUGS_WARN_USERS) {
             l.add("");
             l.add(DANK_BUGGY_WARN_USERS_1);
@@ -343,7 +331,7 @@ public final class ItemDetails {
         return l;
     }
 
-    public static List<String> trashLoreBuilder(DankTech parent, String slots, long dankID) {
+    private static List<String> trashLoreBuilder(DankTech parent, String slots, long dankID) {
         List<String> l = new ArrayList<>();
         for (String s : trashLore(parent)) {
             l.add(ChatColor.GRAY + s);
@@ -396,82 +384,6 @@ public final class ItemDetails {
         }
     }
 
-    public static String getDankName(DankTech plugin, int dankLevel) {
-        switch (dankLevel) {
-            case 1: return nameDank1(plugin);
-            case 2: return nameDank2(plugin);
-            case 3: return nameDank3(plugin);
-            case 4: return nameDank4(plugin);
-            case 5: return nameDank5(plugin);
-            case 6: return nameDank6(plugin);
-            case 7: return nameDank7(plugin);
-            case 8: return nameDank8(plugin);
-            case 9: return nameDank9(plugin);
-            default: return DANK_ERROR_STRING;
-        }
-    }
-
-    public static String getTrashName(DankTech plugin, int trashLevel) {
-        switch (trashLevel) {
-            case 1: return nameTrash1(plugin);
-            case 2: return nameTrash2(plugin);
-            case 3: return nameTrash3(plugin);
-            case 4: return nameTrash4(plugin);
-            case 5: return nameTrash5(plugin);
-            case 6: return nameTrash6(plugin);
-            case 7: return nameTrash7(plugin);
-            case 8: return nameTrash8(plugin);
-            case 9: return nameTrash9(plugin);
-            default: return DANK_ERROR_STRING;
-        }
-    }
-
-    public static String getDankNameBold(DankTech plugin, int dankLevel) {
-        switch (dankLevel) {
-            case 1: return ChatColor.BOLD + nameDank1(plugin);
-            case 2: return ChatColor.BOLD + nameDank2(plugin);
-            case 3: return ChatColor.BOLD + nameDank3(plugin);
-            case 4: return ChatColor.BOLD + nameDank4(plugin);
-            case 5: return ChatColor.BOLD + nameDank5(plugin);
-            case 6: return ChatColor.BOLD + nameDank6(plugin);
-            case 7: return ChatColor.BOLD + nameDank7(plugin);
-            case 8: return ChatColor.BOLD + nameDank8(plugin);
-            case 9: return ChatColor.BOLD + nameDank9(plugin);
-            default: return DANK_ERROR_STRING;
-        }
-    }
-
-    public static String getTrashNameBold(DankTech plugin, int trashLevel) {
-        switch (trashLevel) {
-            case 1: return ChatColor.BOLD + nameTrash1(plugin);
-            case 2: return ChatColor.BOLD + nameTrash2(plugin);
-            case 3: return ChatColor.BOLD + nameTrash3(plugin);
-            case 4: return ChatColor.BOLD + nameTrash4(plugin);
-            case 5: return ChatColor.BOLD + nameTrash5(plugin);
-            case 6: return ChatColor.BOLD + nameTrash6(plugin);
-            case 7: return ChatColor.BOLD + nameTrash7(plugin);
-            case 8: return ChatColor.BOLD + nameTrash8(plugin);
-            case 9: return ChatColor.BOLD + nameTrash9(plugin);
-            default: return DANK_ERROR_STRING;
-        }
-    }
-
-    public static String getDankCellName(DankTech plugin, int dankLevel) {
-        switch (dankLevel) {
-            case 1: return nameCell1(plugin);
-            case 2: return nameCell2(plugin);
-            case 3: return nameCell3(plugin);
-            case 4: return nameCell4(plugin);
-            case 5: return nameCell5(plugin);
-            case 6: return nameCell6(plugin);
-            case 7: return nameCell7(plugin);
-            case 8: return nameCell8(plugin);
-            case 9: return nameCell9(plugin);
-            default: return DANK_ERROR_STRING;
-        }
-    }
-
-
     // GUI Stuff
 
     public static String guiDisplayNameFiller(DankTech plugin) {
@@ -496,7 +408,7 @@ public final class ItemDetails {
         return plugin.getConfigClass().getStrings().getGuiUnassignedSlotLore();
     }
 
-    public static String GUI_DISPLAY_NAME_WITHDRAW(DankTech plugin) {
+    public static String guiDisplayNameWithdraw(DankTech plugin) {
         return ChatColor.RED + plugin.getConfigClass().getStrings().getGuiInteractDankPackButtonName();
     }
     public static String guiDisplayWithdrawLoreLeft(DankTech plugin) {

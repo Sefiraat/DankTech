@@ -19,6 +19,7 @@ public final class Messages {
     public static final String PASSIVE = "" + ChatColor.GRAY;
     public static final String SUCCESS = "" + ChatColor.GREEN;
 
+    public static final String ID = " - ID: ";
 
     // Commands
     public static String messageCommandSubcommand(DankTech plugin) {
@@ -37,21 +38,21 @@ public final class Messages {
         return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCommandBlacklistMustHold();
     }
     public static String messageCommandPackGiven(DankTech plugin, long packID) {
-        return (PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandDankPackGiven() + " - ID: " + packID);
+        return (PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandDankPackGiven() + ID + packID);
     }
     public static String messageCommandTrashGiven(DankTech plugin, long trashID) {
-        return (PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandTrashPackGiven() + " - ID: " + trashID);
+        return (PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandTrashPackGiven() + ID + trashID);
     }
     public static String messageCommandPackUpdated(DankTech plugin, long packID) {
-        return (PREFIX + WARNING + plugin.getConfigClass().getStrings().getCommandPackUpdated() + " - ID: " + packID);
+        return (PREFIX + WARNING + plugin.getConfigClass().getStrings().getCommandPackUpdated() + ID + packID);
     }
 
     // Events
     public static String messageEventOpenPack(DankTech plugin, long packID) {
-        return (PREFIX + PASSIVE + plugin.getConfigClass().getStrings().getEventOpenDank() + " - ID: " + packID);
+        return (PREFIX + PASSIVE + plugin.getConfigClass().getStrings().getEventOpenDank() + ID + packID);
     }
     public static String messageEventOpenTrash(DankTech plugin, long trashID) {
-        return (PREFIX + PASSIVE + plugin.getConfigClass().getStrings().getEventOpenTrash() + " - ID: " + trashID);
+        return (PREFIX + PASSIVE + plugin.getConfigClass().getStrings().getEventOpenTrash() + ID + trashID);
     }
     public static String messageEventInputExisting(DankTech plugin) {
         return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventInputExisting();

@@ -3,7 +3,6 @@ package io.github.sefiraat.danktech;
 import co.aikar.commands.PaperCommandManager;
 import io.github.sefiraat.danktech.commands.Commands;
 import io.github.sefiraat.danktech.configuration.Config;
-import io.github.sefiraat.danktech.configuration.ConfigStrings;
 import io.github.sefiraat.danktech.finals.Recipes;
 import io.github.sefiraat.danktech.listeners.CraftListener;
 import io.github.sefiraat.danktech.listeners.ItemPickupListener;

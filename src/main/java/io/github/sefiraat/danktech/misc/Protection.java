@@ -78,13 +78,9 @@ public class Protection {
     public boolean canBuild(Block block, Player p) {
         ArrayList<Boolean> canBuildChecks = new ArrayList<>();
 
-        //p.sendMessage("Griefprotection :" + canBuildGriefPrevention(block, p));
         canBuildChecks.add(canBuildGriefPrevention(block, p));
-        //p.sendMessage("Worldguard :" + canBuildWorldGuard(block, p));
         canBuildChecks.add(canBuildWorldGuard(block, p));
-        //p.sendMessage("Towny :" + canBuildTowny(block, p));
         canBuildChecks.add(canBuildTowny(block, p));
-        //p.sendMessage("Factions :" + canBuildFactions(block, p));
         canBuildChecks.add(canBuildFactions(block, p));
 
         return !canBuildChecks.contains(false);

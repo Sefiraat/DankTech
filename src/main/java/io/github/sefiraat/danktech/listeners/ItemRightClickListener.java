@@ -46,7 +46,7 @@ public class ItemRightClickListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onRightClick(PlayerInteractEvent e) {
+    public void onClick(PlayerInteractEvent e) {
         if (e.getItem() != null && e.getItem().getItemMeta() != null && e.getAction() != Action.LEFT_CLICK_AIR && e.getAction() != Action.LEFT_CLICK_BLOCK) {
             Player p = e.getPlayer();
             ItemStack i = e.getItem();

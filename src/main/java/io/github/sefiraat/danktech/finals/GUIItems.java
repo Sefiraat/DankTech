@@ -87,7 +87,7 @@ public final class GUIItems {
         GuiItem g = new GuiItem(guiSkull);
         ItemStack i = g.getItemStack();
         ItemMeta im = i.getItemMeta();
-        im.setDisplayName(ItemDetails.GUI_DISPLAY_NAME_WITHDRAW(plugin));
+        im.setDisplayName(ItemDetails.guiDisplayNameWithdraw(plugin));
         im.setLore(ItemDetails.guiDisplayLoreWithdraw(plugin, amount));
         i.setItemMeta(im);
         g.setItemStack(i);
