@@ -26,7 +26,7 @@ public class UnloadingListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onHop(InventoryMoveItemEvent e) {
-        if (e.getSource().getType() == InventoryType.HOPPER && isDank(e.getItem(), parent)) {
+        if (e.getSource().getType().equals(InventoryType.HOPPER) && isDank(e.getItem(), parent)) {
             ItemStack dank = e.getItem();
             Long dankID = getDankId(dank, parent.getInstance());
             ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);

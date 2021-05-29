@@ -6,7 +6,7 @@
 
     <groupId>io.github.sefiraat</groupId>
     <artifactId>DankTech</artifactId>
-    <version>1.2.6-SNAPSHOT</version>
+    <version>1.2.6</version>
 
     <build>
         <plugins>
@@ -133,6 +133,10 @@
             <id>FactionsUUID-repo</id>
             <url>https://ci.ender.zone/plugin/repository/everything/</url>
         </repository>
+        <repository>
+            <id>bg-repo</id>
+            <url>https://repo.bg-software.com/repository/api/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -243,6 +247,11 @@
             <artifactId>Factions</artifactId>
             <version>1.6.9.5-U0.5.20</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.bgsoftware</groupId>
+            <artifactId>WildStackerAPI</artifactId>
+            <version>latest</version>
         </dependency>
     </dependencies>
 

@@ -1,5 +1,6 @@
 package io.github.sefiraat.danktech.listeners;
 
+import com.bgsoftware.wildstacker.api.WildStackerAPI;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.misc.ContainerStorage;
 import org.bukkit.*;
@@ -86,11 +87,15 @@ public class ItemPickupListener implements Listener {
     }
 
     private void pickupItemDank(ConfigurationSection slotSection, ItemStack pickedStack, Integer dankLevel, EntityPickupItemEvent e) {
+        int amount = pickedStack.getAmount();
+        if (parent.getSupportedPlugins().isWildStacker()) {
+            amount = WildStackerAPI.getItemAmount(e.getItem());
+        }
         int currentVolume = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
-        if ((currentVolume + pickedStack.getAmount()) >= getLimit(parent, dankLevel)) {
+        if ((currentVolume + amount) >= getLimit(parent, dankLevel)) {
             slotSection.set(CONFIG_GETTER_VAL_VOLUME, getLimit(parent, dankLevel));
         } else {
-            slotSection.set(CONFIG_GETTER_VAL_VOLUME, currentVolume + pickedStack.getAmount());
+            slotSection.set(CONFIG_GETTER_VAL_VOLUME, currentVolume + amount);
         }
         spawnPickupParticle(e.getItem());
         e.getItem().remove();

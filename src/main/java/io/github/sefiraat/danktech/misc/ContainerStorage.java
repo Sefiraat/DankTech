@@ -7,6 +7,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Objects;
+
 import static io.github.sefiraat.danktech.finals.Constants.KEY_SELECTED_SLOT;
 
 public class ContainerStorage {
@@ -15,44 +17,75 @@ public class ContainerStorage {
         throw new IllegalStateException("Utility class");
     }
 
-    public static boolean containerHasData(ItemStack i, NamespacedKey key, PersistentDataType type) {
-        return i.getItemMeta().getPersistentDataContainer().has(key, type);
+    public static boolean containerHasData(ItemStack i, NamespacedKey key, PersistentDataType<?, ?> type) {
+        if (i.hasItemMeta()) {
+            ItemMeta im = i.getItemMeta();
+            assert im != null;
+            return im.getPersistentDataContainer().has(key, type);
+        }
+        return false;
     }
 
-    public static Object getData(ItemStack i, NamespacedKey key, PersistentDataType type) {
-        if(i.getItemMeta().getPersistentDataContainer().has(key , type)) {
-            return i.getItemMeta().getPersistentDataContainer().get(key, type);
-        } else {
-            return null;
+    public static Integer getDataInteger(ItemStack i, NamespacedKey key) {
+        if (i.hasItemMeta()) {
+            ItemMeta im = i.getItemMeta();
+            assert im != null;
+            if(im.getPersistentDataContainer().has(key , PersistentDataType.INTEGER)) {
+                return Objects.requireNonNull(i.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.INTEGER));
+            }
         }
+        return 0;
+    }
+
+    public static Long getDataLong(ItemStack i, NamespacedKey key) {
+        if (i.hasItemMeta()) {
+            ItemMeta im = i.getItemMeta();
+            assert im != null;
+            if(im.getPersistentDataContainer().has(key , PersistentDataType.LONG)) {
+                return Objects.requireNonNull(i.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.LONG));
+            }
+        }
+        return 0L;
     }
 
     public static void setData(ItemStack i, NamespacedKey key, int value) {
-        ItemMeta im = i.getItemMeta();
-        PersistentDataContainer c = im.getPersistentDataContainer();
-        c.set(key, PersistentDataType.INTEGER, value);
-        i.setItemMeta(im);
+        if (i.hasItemMeta()) {
+            ItemMeta im = i.getItemMeta();
+            assert im != null;
+            PersistentDataContainer c = im.getPersistentDataContainer();
+            c.set(key, PersistentDataType.INTEGER, value);
+            i.setItemMeta(im);
+        }
     }
 
     public static void setData(ItemStack i, NamespacedKey key, String value) {
-        ItemMeta im = i.getItemMeta();
-        PersistentDataContainer c = im.getPersistentDataContainer();
-        c.set(key, PersistentDataType.STRING, value);
-        i.setItemMeta(im);
+        if (i.hasItemMeta()) {
+            ItemMeta im = i.getItemMeta();
+            assert im != null;
+            PersistentDataContainer c = im.getPersistentDataContainer();
+            c.set(key, PersistentDataType.STRING, value);
+            i.setItemMeta(im);
+        }
     }
 
     public static void setData(ItemStack i, NamespacedKey key, long value) {
-        ItemMeta im = i.getItemMeta();
-        PersistentDataContainer c = im.getPersistentDataContainer();
-        c.set(key, PersistentDataType.LONG, value);
-        i.setItemMeta(im);
+        if (i.hasItemMeta()) {
+            ItemMeta im = i.getItemMeta();
+            assert im != null;
+            PersistentDataContainer c = im.getPersistentDataContainer();
+            c.set(key, PersistentDataType.LONG, value);
+            i.setItemMeta(im);
+        }
     }
 
     public static void removeData(ItemStack i, NamespacedKey key) {
-        ItemMeta im = i.getItemMeta();
-        PersistentDataContainer c = im.getPersistentDataContainer();
-        c.remove(key);
-        i.setItemMeta(im);
+        if (i.hasItemMeta()) {
+            ItemMeta im = i.getItemMeta();
+            assert im != null;
+            PersistentDataContainer c = im.getPersistentDataContainer();
+            c.remove(key);
+            i.setItemMeta(im);
+        }
     }
 
     public static boolean isShallow(ItemStack i, DankTech plugin) {
@@ -90,10 +123,10 @@ public class ContainerStorage {
         return containerHasData(i, key, PersistentDataType.INTEGER);
     }
 
-    public static int getDankLevel(ItemStack i, DankTech plugin) {
+    public static Integer getDankLevel(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"dank-level");
         if (containerHasData(i, key, PersistentDataType.INTEGER)) {
-            return (int) getData(i, key, PersistentDataType.INTEGER);
+            return getDataInteger(i, key);
         }
         return 0;
     }
@@ -103,10 +136,10 @@ public class ContainerStorage {
         setData(i, key, value);
     }
 
-    public static int getTrashLevel(ItemStack i, DankTech plugin) {
+    public static Integer getTrashLevel(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-level");
         if (containerHasData(i, key, PersistentDataType.INTEGER)) {
-            return (int) getData(i, key, PersistentDataType.INTEGER);
+            return getDataInteger(i, key);
         }
         return 0;
     }
@@ -116,10 +149,10 @@ public class ContainerStorage {
         setData(i, key, value);
     }
 
-    public static int getCellLevel(ItemStack i, DankTech plugin) {
+    public static Integer getCellLevel(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"cell-level");
         if (containerHasData(i, key, PersistentDataType.INTEGER)) {
-            return (int) getData(i, key, PersistentDataType.INTEGER);
+            return getDataInteger(i, key);
         }
         return 0;
     }
@@ -130,12 +163,12 @@ public class ContainerStorage {
     }
 
 
-    public static long getDankId(ItemStack i, DankTech plugin) {
+    public static Long getDankId(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"dank-id");
         if (containerHasData(i, key, PersistentDataType.LONG)) {
-            return (long) getData(i, key, PersistentDataType.LONG);
+            return getDataLong(i, key);
         }
-        return 0;
+        return 0L;
     }
 
     public static void setDankId(ItemStack i, DankTech plugin, long value) {
@@ -143,12 +176,12 @@ public class ContainerStorage {
         setData(i, key, value);
     }
 
-    public static long getTrashId(ItemStack i, DankTech plugin) {
+    public static Long getTrashId(ItemStack i, DankTech plugin) {
         NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-id");
         if (containerHasData(i, key, PersistentDataType.LONG)) {
-            return (long) getData(i, key, PersistentDataType.LONG);
+            return getDataLong(i, key);
         }
-        return 0;
+        return 0L;
     }
 
     public static void setTrashId(ItemStack i, DankTech plugin, long value) {
@@ -162,7 +195,7 @@ public class ContainerStorage {
         if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
             setData(i, ssKey, 0);
         }
-        Integer nextSlot = ((Integer) getData(i, ssKey, PersistentDataType.INTEGER)) + 1;
+        Integer nextSlot = getDataInteger(i, ssKey) + 1;
         if (nextSlot > dankLevel) {
             nextSlot = 1;
         }
@@ -176,8 +209,8 @@ public class ContainerStorage {
         if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
             setData(i, ssKey, 0);
         }
-        Integer nextSlot = ((Integer) getData(i, ssKey, PersistentDataType.INTEGER)) - 1;
-        if (nextSlot == 0) {
+        Integer nextSlot = getDataInteger(i, ssKey) - 1;
+        if (nextSlot.equals(0)) {
             nextSlot = dankLevel;
         }
         setData(i, ssKey, nextSlot);
@@ -189,6 +222,6 @@ public class ContainerStorage {
         if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
             setData(i, ssKey, 1);
         }
-        return ((Integer) getData(i, ssKey, PersistentDataType.INTEGER));
+        return getDataInteger(i, ssKey);
     }
 }

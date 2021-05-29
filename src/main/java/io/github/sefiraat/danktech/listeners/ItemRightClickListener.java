@@ -50,7 +50,7 @@ public class ItemRightClickListener implements Listener {
         if (e.getItem() != null && e.getItem().getItemMeta() != null && e.getAction() != Action.LEFT_CLICK_AIR && e.getAction() != Action.LEFT_CLICK_BLOCK) {
             Player p = e.getPlayer();
             ItemStack i = e.getItem();
-            if (ContainerStorage.isDankMaterial(i, parent.getInstance()) && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (ContainerStorage.isDankMaterial(i, parent.getInstance()) && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 e.setCancelled(true);
                 return;
             }
@@ -71,7 +71,7 @@ public class ItemRightClickListener implements Listener {
             replaceDank(i, p, false);
             return;
         }
-        if (ContainerStorage.getDankId(i, parent) == 0) {
+        if (ContainerStorage.getDankId(i, parent).equals(0L)) {
             replaceDank(i, p, true);
             return;
         } else if (isShallow(i, parent)) {
@@ -93,21 +93,21 @@ public class ItemRightClickListener implements Listener {
                     break;
             }
         } else {
-            if (((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) && canOpenBlacklist(p)) {
+            if (((e.getAction().equals(Action.RIGHT_CLICK_AIR)) || (e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) && canOpenBlacklist(p)) {
                 openDankPack(i, p);
             }
         }
     }
 
     private void handleTrash(PlayerInteractEvent e, ItemStack i, Player p) {
-        if (ContainerStorage.getTrashId(i, parent) == 0) {
+        if (ContainerStorage.getTrashId(i, parent).equals(0L)) {
             replaceTrash(i, p);
             return;
         } else if (isShallow(i, parent)) {
             replaceAndUpgradeTrash(i, p);
             return;
         }
-        if (((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) && canOpenBlacklist(p)) {
+        if (((e.getAction().equals(Action.RIGHT_CLICK_AIR)) || (e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) && canOpenBlacklist(p)) {
             openTrashPack(i, p);
         }
     }
@@ -115,15 +115,15 @@ public class ItemRightClickListener implements Listener {
     private boolean isOldDank(ItemStack i) {
         Material m = i.getType();
         return (
-                m == Material.GRAY_STAINED_GLASS ||
-                m == Material.BLACK_STAINED_GLASS ||
-                m == Material.LIME_STAINED_GLASS ||
-                m == Material.GREEN_STAINED_GLASS ||
-                m == Material.LIGHT_BLUE_STAINED_GLASS ||
-                m == Material.BLUE_STAINED_GLASS ||
-                m == Material.PINK_STAINED_GLASS ||
-                m == Material.PURPLE_STAINED_GLASS ||
-                m == Material.RED_STAINED_GLASS
+                m.equals(Material.GRAY_STAINED_GLASS) ||
+                m.equals(Material.BLACK_STAINED_GLASS) ||
+                m.equals(Material.LIME_STAINED_GLASS) ||
+                m.equals(Material.GREEN_STAINED_GLASS) ||
+                m.equals(Material.LIGHT_BLUE_STAINED_GLASS) ||
+                m.equals(Material.BLUE_STAINED_GLASS) ||
+                m.equals(Material.PINK_STAINED_GLASS) ||
+                m.equals(Material.PURPLE_STAINED_GLASS) ||
+                m.equals(Material.RED_STAINED_GLASS)
         );
     }
 
@@ -283,7 +283,7 @@ public class ItemRightClickListener implements Listener {
                     slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
                     ItemStack i = Config.getSlotItemStack(dankID, slot, parent);
                     block.setType(i.getType());
-                    if (parent.isMcMMO()) {
+                    if (parent.getSupportedPlugins().isMcMMO()) {
                         mcMMO.getPlaceStore().setTrue(block);
                     }
                 } else {
@@ -296,7 +296,7 @@ public class ItemRightClickListener implements Listener {
     }
 
     private boolean isSafeToBuild(Block block, Player p) {
-        if (block.getBlockData().getMaterial() == Material.AIR && parent.getProtection().canBuild(block, p)) {
+        if (block.getBlockData().getMaterial().equals(Material.AIR) && parent.getProtection().canBuild(block, p)) {
             Collection<Entity> entities = block.getWorld().getNearbyEntities(block.getLocation(), 0.5, 0.5, 0.5);
             if (!entities.isEmpty()) {
                 for (Entity e : entities) {

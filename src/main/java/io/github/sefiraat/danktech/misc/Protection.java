@@ -25,54 +25,30 @@ import java.util.ArrayList;
 
 public class Protection {
 
-    private DankTech parent;
+    private final DankTech plugin;
+    private final SupportedPlugins supportedPlugins;
 
-    private boolean griefPreventionExists;
     private GriefPrevention griefPrevention;
-
-    private boolean worldGuardExists;
     private WorldGuardPlugin worldGuard;
-
-    private boolean townyExists;
-
-    private boolean factionsExists;
     private FPlayers factions;
 
-    public DankTech getParent() {
-        return parent;
-    }
-
-    public boolean isGriefPreventionExists() {
-        return griefPreventionExists;
-    }
-    public GriefPrevention getGriefPrevention() {
-        return griefPrevention;
-    }
-    public boolean isWorldGuardExists() {
-        return worldGuardExists;
-    }
-    public WorldGuardPlugin getWorldGuard() {
-        return worldGuard;
-    }
-    public boolean isTownyExists() {
-        return townyExists;
-    }
-
     public Protection(DankTech parent) {
-        this.parent = parent;
-        griefPreventionExists = parent.getServer().getPluginManager().isPluginEnabled("GriefPrevention");
-        if (griefPreventionExists) {
+
+        this.plugin = parent;
+        supportedPlugins = plugin.getSupportedPlugins();
+
+        if (supportedPlugins.isGriefPrevention()) {
             griefPrevention = (GriefPrevention) parent.getServer().getPluginManager().getPlugin("GriefPrevention");
         }
-        worldGuardExists = parent.getServer().getPluginManager().isPluginEnabled("WorldGuard");
-        if (worldGuardExists) {
+
+        if (supportedPlugins.isWorldGuard()) {
             worldGuard = (WorldGuardPlugin) parent.getServer().getPluginManager().getPlugin("WorldGuard");
         }
-        townyExists = parent.getServer().getPluginManager().isPluginEnabled("Towny");
-        factionsExists = parent.getServer().getPluginManager().isPluginEnabled("Factions");
-        if (factionsExists) {
+
+        if (supportedPlugins.isFactions()) {
             factions = FPlayers.getInstance();
         }
+
     }
 
     public boolean canBuild(Block block, Player p) {
@@ -87,7 +63,7 @@ public class Protection {
     }
 
     public boolean canBuildGriefPrevention(Block block, Player p) {
-        if (griefPreventionExists) {
+        if (supportedPlugins.isGriefPrevention()) {
             DataStore d = griefPrevention.dataStore;
             Claim c = d.getClaimAt(block.getLocation(), true, null);
             if (c != null) {
@@ -98,7 +74,7 @@ public class Protection {
     }
 
     public boolean canBuildWorldGuard(Block block, Player p) {
-        if (worldGuardExists) {
+        if (supportedPlugins.isWorldGuard()) {
             WorldGuardPlatform platform = WorldGuard.getInstance().getPlatform();
             com.sk89q.worldedit.util.Location loc = BukkitAdapter.adapt(block.getLocation());
             LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
@@ -110,14 +86,14 @@ public class Protection {
     }
 
     public boolean canBuildTowny(Block block, Player p) {
-        if (townyExists) {
+        if (supportedPlugins.isTowny()) {
             return PlayerCacheUtil.getCachePermission(p, block.getLocation(), block.getType(), TownyPermission.ActionType.BUILD);
         }
         return true;
     }
 
     public boolean canBuildFactions(Block block, Player p) {
-        if (factionsExists) {
+        if (supportedPlugins.isFactions()) {
             Faction faction = Board.getInstance().getFactionAt(new FLocation(block.getLocation()));
 
             if (faction != null && !faction.getId().equals("0")) {

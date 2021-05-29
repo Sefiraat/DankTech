@@ -271,4 +271,14 @@ public final class Recipes {
         return i;
     }
 
+    public static Recipe recipeUpgradeRange(DankTech plugin) {
+        ItemStack i = ItemStacks.getCell(1, plugin).clone();
+        NamespacedKey key = new NamespacedKey(plugin, "Cell_1");
+        ShapedRecipe r = new ShapedRecipe(key, i);
+        r.shape("NNN","NSN","NNN");
+        r.setIngredient('N', getCellCraftingMaterial(1));
+        r.setIngredient('S', Material.NETHER_STAR);
+        return r;
+    }
+
 }

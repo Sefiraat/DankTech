@@ -74,7 +74,7 @@ public class ItemsTest {
         for (int i = 1; i < 10; i++) {
             playerOp.getInventory().clear();
             givePlayerCell(playerOp.getPlayer(), i, 1, plugin);
-            boolean cellValid = testCellLevel(playerOp) == i;
+            boolean cellValid = testCellLevel(playerOp).equals(i);
             plugin.getInstance().getServer().getLogger().info("Testing cell " + i + ": " + cellValid);
             if (!cellValid) { b = false; }
         }
@@ -89,7 +89,7 @@ public class ItemsTest {
         for (int i = 1; i < 10; i++) {
             playerOp.getInventory().clear();
             givePlayerDank(playerOp.getPlayer(), i, plugin);
-            boolean dankValid = testDankLevel(playerOp) == i;
+            boolean dankValid = testDankLevel(playerOp).equals(i);
             plugin.getInstance().getServer().getLogger().info("Testing dank pack " + i + ": " + dankValid);
             if (!dankValid) { b = false; }
         }
@@ -104,7 +104,7 @@ public class ItemsTest {
         for (int i = 1; i < 10; i++) {
             playerOp.getInventory().clear();
             recoverDankByID(playerOp.getPlayer(), plugin, i);
-            boolean dankValid = testDankLevel(playerOp) == i;
+            boolean dankValid = testDankLevel(playerOp).equals(i);
             plugin.getInstance().getServer().getLogger().info("Testing recovered dank pack " + i + ": " + dankValid);
             if (!dankValid) { b = false; }
         }
@@ -120,7 +120,7 @@ public class ItemsTest {
         for (int i = 1; i < 10; i++) {
             playerOp.getInventory().clear();
             givePlayerTrash(playerOp.getPlayer(), i, plugin);
-            boolean trashValid = testTrashLevel(playerOp) == i;
+            boolean trashValid = testTrashLevel(playerOp).equals(i);
             plugin.getInstance().getServer().getLogger().info("Testing trash pack " + i + ": " + trashValid);
             if (!trashValid) { b = false; }
         }

@@ -30,6 +30,17 @@ public final class ItemStacks {
         return cell;
     }
 
+    public static ItemStack getRangeUpgrade(int level, DankTech plugin) {
+        ItemStack cell = SkullCreator.itemFromBase64(UPGRADE_RANGE_TEXTURE);
+        ItemMeta m = cell.getItemMeta();
+        m.setDisplayName(getDankCellName(plugin, level));
+        PersistentDataContainer c = m.getPersistentDataContainer();
+        NamespacedKey keyDank = new NamespacedKey(plugin,"dank-upgrade");
+        c.set(keyDank, PersistentDataType.INTEGER, 1);
+        cell.setItemMeta(m);
+        return cell;
+    }
+
     public static ItemStack getShallowDank(int level, DankTech plugin) {
         ItemStack dank = createSkull(getDankTexture(level));
         makeDank(dank, plugin);

@@ -10,6 +10,7 @@ import io.github.sefiraat.danktech.listeners.ItemRightClickListener;
 import io.github.sefiraat.danktech.listeners.UnloadingListener;
 import io.github.sefiraat.danktech.misc.Protection;
 import io.github.sefiraat.danktech.misc.SlimefunDankAddon;
+import io.github.sefiraat.danktech.misc.SupportedPlugins;
 import io.github.sefiraat.danktech.timers.TimerSave;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -34,12 +35,10 @@ public class DankTech extends JavaPlugin {
     private final Timer repeater = new Timer();
     private Protection protection;
     private Config configClass;
+    private SupportedPlugins supportedPlugins;
+    private SlimefunDankAddon slimefunAddon;
 
     private boolean isUnitTest = false;
-
-    private boolean mcMMO = false;
-    private boolean slimefun = false;
-    private SlimefunDankAddon slimefunAddon;
 
     public File getItemBlacklistConfigFile() {
         return itemBlacklistConfigFile;
@@ -65,12 +64,8 @@ public class DankTech extends JavaPlugin {
     public Config getConfigClass() {
         return configClass;
     }
-
-    public boolean isMcMMO() {
-        return mcMMO;
-    }
-    public boolean isSlimefun() {
-        return slimefun;
+    public SupportedPlugins getSupportedPlugins() {
+        return supportedPlugins;
     }
     public SlimefunDankAddon getSlimefunAddon() {
         return slimefunAddon;
@@ -102,6 +97,7 @@ public class DankTech extends JavaPlugin {
         sortConfigs();
         registerCommands();
 
+        supportedPlugins = new SupportedPlugins(this);
         protection = new Protection(this);
         configClass = new Config(this);
 
@@ -112,10 +108,7 @@ public class DankTech extends JavaPlugin {
 
         addRecipes();
 
-        mcMMO = getServer().getPluginManager().isPluginEnabled("mcMMO");
-        slimefun = getServer().getPluginManager().isPluginEnabled("Slimefun");
-
-        if (isSlimefun()) {
+        if (supportedPlugins.isSlimefun()) {
             slimefunAddon = new SlimefunDankAddon(this.getInstance());
         }
 

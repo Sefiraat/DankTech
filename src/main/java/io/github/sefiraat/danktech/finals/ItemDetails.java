@@ -31,24 +31,24 @@ public final class ItemDetails {
         }
     }
 
-    private static String getNameDank(DankTech plugin, int level) {
-        if (level == 9) {
+    private static String getNameDank(DankTech plugin, Integer level) {
+        if (level.equals(9)) {
             return getRarity(level) + plugin.getConfigClass().getStrings().getItemDankPack() + " [★]";
         } else {
             return getRarity(level) + plugin.getConfigClass().getStrings().getItemDankPack() + " [T" + level + "]";
         }
     }
 
-    private static String getNameTrash(DankTech plugin, int level) {
-        if (level == 9) {
+    private static String getNameTrash(DankTech plugin, Integer level) {
+        if (level.equals(9)) {
             return getRarity(level) + plugin.getConfigClass().getStrings().getItemTrashPack() + " [★]";
         } else {
             return getRarity(level) + plugin.getConfigClass().getStrings().getItemTrashPack() + " [T" + level + "]";
         }
     }
 
-    private static String getNameCell(DankTech plugin, int level) {
-        if (level == 9) {
+    private static String getNameCell(DankTech plugin, Integer level) {
+        if (level.equals(9)) {
             return getRarity(level) + plugin.getConfigClass().getStrings().getItemStorageCell() + " [★]";
         } else {
             return getRarity(level) + plugin.getConfigClass().getStrings().getItemStorageCell() + " [T" + level + "]";

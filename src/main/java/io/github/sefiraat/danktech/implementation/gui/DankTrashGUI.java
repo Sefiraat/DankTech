@@ -139,7 +139,7 @@ public class DankTrashGUI {
         ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + dankSlot);
         if (slotSection.getItemStack(CONFIG_GETTER_VAL_STACK) != null) {
             int firstEmpty = e.getWhoClicked().getInventory().firstEmpty();
-            if (e.getClick() == ClickType.LEFT) {
+            if (e.getClick().equals(ClickType.LEFT)) {
                 if (firstEmpty != -1) {
                     withdrawOne(plugin, (Player) e.getWhoClicked(), slotSection, gui, trashID, slot, dankSlot, row);
                 } else {

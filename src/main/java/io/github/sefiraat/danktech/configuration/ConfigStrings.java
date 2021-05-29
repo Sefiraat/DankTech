@@ -239,10 +239,10 @@ public class ConfigStrings {
 
         FileConfiguration c = parent.getConfig();
 
-        guiFiller = c.getString("TEXTS.GUI.PANE_FILLER");
-        guiInfoName = c.getString("TEXTS.GUI.PANE_INFO_NAME");
-        guiInfoLoreId = c.getString("TEXTS.GUI.PANE_INFO_LORE_ID");
-        guiInfoLoreLevel = c.getString("TEXTS.GUI.PANE_INFO_LORE_LEVEL");
+        guiFiller = c.getString("TEXTS.GUI.FILLER");
+        guiInfoName = c.getString("TEXTS.GUI.INFO_NAME");
+        guiInfoLoreId = c.getString("TEXTS.GUI.INFO_LORE_ID");
+        guiInfoLoreLevel = c.getString("TEXTS.GUI.INFO_LORE_LEVEL");
         guiLockedSlot = c.getString("TEXTS.GUI.LOCKED_SLOT");
         guiUnassignedSlot = c.getString("TEXTS.GUI.UNASSIGNED_SLOT");
         guiUnassignedSlotLore = c.getStringList("TEXTS.GUI.UNASSIGNED_SLOT_LORE");

@@ -5,6 +5,10 @@ GENERAL:
     - "ExampleWorld"
   BLACKLISTED_WORLDS_PICKUP_ITEMS:
     - "ExampleWorld"
+  TOGGLES:
+    ENABLE_RANGE_UPGRADE: true
+    ENABLE_SMELTING_UPGRADE: true
+    ENABLE_AUTO_SELL_UPGRADE: true # Also requires a supported shop plugin
 VALUES:
   AMOUNT_PER_SLOT_T1: 256
   AMOUNT_PER_SLOT_T2: 1024
@@ -14,8 +18,7 @@ VALUES:
   AMOUNT_PER_SLOT_T6: 16384
   AMOUNT_PER_SLOT_T7: 65536
   AMOUNT_PER_SLOT_T8: 524288
-  # DO NOT GO ABOVE 2147483547
-  AMOUNT_PER_SLOT_T9: 2147483547
+  AMOUNT_PER_SLOT_T9: 2147483547 # DO NOT GO ABOVE 2147483547
 TEXTS:
   GUI:
     FILLER: "Get dank!"
@@ -42,21 +45,25 @@ TEXTS:
     INTERACT_DROP_CLICK_ACTION: "Drop a stack"
   ITEM_DETAILS:
     ITEM_DANK_PACK: "Dank Storage Pack"
-    ITEM_DANK_TRASH: "Dank Trash Pack"
-    ITEM_STORAGE_CELL: "Storage Cell"
     ITEM_DANK_PACK_LORE:
       - "A dimension folded into a single point of"
       - "space and time. All this just to hold"
       - "your trash!"
+    ITEM_DANK_PACK_VOID_INFO: "Items over limit are voided"
+    ITEM_DANK_TRASH: "Dank Trash Pack"
     ITEM_TRASH_PACK_LORE:
       - "A dimension folded into a single point of"
       - "space and time. All this just to hold"
       - "your trash!"
+    ITEM_DANK_TRASH_VOID_INFO: "All matching items will be voided"
     ITEM_SLOT_NUMBER: "Slots"
     ITEM_SLOT_AMOUNT_PER: "Amount per slot"
-    ITEM_DANK_PACK_VOID_INFO: "Items over limit are voided"
-    ITEM_DANK_TRASH_VOID_INFO: "All matching items will be voided"
     ITEM_RIGHT_CLICK: "Right click to open pack"
+    ITEM_STORAGE_CELL: "Storage Cell"
+    ITEM_UPGRADE_RANGE: "Dank Vacuum Upgrade"
+    ITEM_UPGRADE_SMELTING: "Dank Smelting Upgrade"
+    ITEM_UPGRADE_AUTO_SELL: "Dank Merchant Upgrade"
+    ITEM_UPGRADE_STACKING_INFO: "Stacks up to"
   MESSAGES:
     COMMANDS:
       COMMAND_SUBCOMMAND: "Please select a valid sub command"

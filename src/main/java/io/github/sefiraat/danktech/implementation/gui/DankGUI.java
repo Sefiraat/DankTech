@@ -32,7 +32,7 @@ public class DankGUI {
         Integer[] arrayFillerSlots = new Integer[]{0, 1, 2, 3, 5, 6, 7, 8, 36, 37, 38, 39, 40, 41, 42, 43, 44};
         List<Integer> listFillerSlots = Arrays.asList(arrayFillerSlots);
 
-        Gui g = new Gui(5, getDankName(parent, dankLevel));
+        Gui g = new Gui(6, getDankName(parent, dankLevel));
 
         g.setItem(listFillerSlots, GUIItems.guiPackFiller(parent));
         g.setItem(4, GUIItems.guiPackInfo(parent, dankID, dankLevel));
@@ -174,7 +174,7 @@ public class DankGUI {
             Player p = base.getPlayer();
             Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
             ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
-            if (amount == 1) {
+            if (amount.equals(1)) {
                 i.setAmount(amount);
                 slotSection.set(CONFIG_GETTER_VAL_VOLUME, 0);
                 slotSection.set(CONFIG_GETTER_VAL_STACK, null);

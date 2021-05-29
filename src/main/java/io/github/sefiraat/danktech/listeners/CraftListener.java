@@ -99,7 +99,7 @@ public class CraftListener implements Listener {
             int trashLevel = 1;
             long trashID = 0;
 
-            if (coreItem.getType() == Materials.TRASH_T1_CORE_MATERIAL) {
+            if (coreItem.getType().equals(Materials.TRASH_T1_CORE_MATERIAL)) {
                 trashID = getNextTrashID(parent);
             } else {
                 trashLevel = coreItem.getItemMeta().getPersistentDataContainer().get(levelTrashKey, PersistentDataType.INTEGER) + 1;
@@ -135,8 +135,8 @@ public class CraftListener implements Listener {
         boolean hasTrashKey = res.getItemMeta().getPersistentDataContainer().has(trashKey, PersistentDataType.INTEGER);
 
         if (hasDankKey) {
-            int level = res.getItemMeta().getPersistentDataContainer().get(dankKey, PersistentDataType.INTEGER);
-            if (level == 1) {
+            Integer level = res.getItemMeta().getPersistentDataContainer().get(dankKey, PersistentDataType.INTEGER);
+            if (level.equals(1)) {
                 craftDank(e, p);
             } else {
                 craftDank(e, p, res, level);
@@ -144,8 +144,8 @@ public class CraftListener implements Listener {
         }
 
         if (hasTrashKey) {
-            int level = res.getItemMeta().getPersistentDataContainer().get(trashKey, PersistentDataType.INTEGER);
-            if (level == 1) {
+            Integer level = res.getItemMeta().getPersistentDataContainer().get(trashKey, PersistentDataType.INTEGER);
+            if (level.equals(1)) {
                 craftTrash(e, p);
             } else {
                 craftTrash(e, p, res, level);
@@ -208,11 +208,11 @@ public class CraftListener implements Listener {
     }
 
     private boolean isDankCraft(ItemStack coreItem, NamespacedKey levelDankKey) {
-        return (coreItem.getType() == Materials.DANK_T1_CORE_MATERIAL || coreItem.getItemMeta().getPersistentDataContainer().has(levelDankKey, PersistentDataType.INTEGER));
+        return (coreItem.getType().equals(Materials.DANK_T1_CORE_MATERIAL) || coreItem.getItemMeta().getPersistentDataContainer().has(levelDankKey, PersistentDataType.INTEGER));
     }
 
     private boolean isTrashCraft(ItemStack coreItem, NamespacedKey levelTrashKey) {
-        return (coreItem.getType() == Materials.TRASH_T1_CORE_MATERIAL || coreItem.getItemMeta().getPersistentDataContainer().has(levelTrashKey, PersistentDataType.INTEGER));
+        return (coreItem.getType().equals(Materials.TRASH_T1_CORE_MATERIAL) || coreItem.getItemMeta().getPersistentDataContainer().has(levelTrashKey, PersistentDataType.INTEGER));
     }
 
     public boolean cellMatchLevel(Integer level, List<ItemStack> itemStacks, DankTech plugin) {
