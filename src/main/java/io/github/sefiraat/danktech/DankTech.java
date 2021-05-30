@@ -11,6 +11,7 @@ import io.github.sefiraat.danktech.listeners.UnloadingListener;
 import io.github.sefiraat.danktech.misc.Protection;
 import io.github.sefiraat.danktech.misc.SlimefunDankAddon;
 import io.github.sefiraat.danktech.misc.SupportedPlugins;
+import io.github.sefiraat.danktech.timers.TimerHooks;
 import io.github.sefiraat.danktech.timers.TimerSave;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -22,7 +23,6 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
 
 public class DankTech extends JavaPlugin {
 
@@ -32,7 +32,6 @@ public class DankTech extends JavaPlugin {
     private File itemBlacklistConfigFile;
     private FileConfiguration itemBlacklistConfig;
     private PaperCommandManager commandManager;
-    private final Timer repeater = new Timer();
     private Protection protection;
     private Config configClass;
     private SupportedPlugins supportedPlugins;
@@ -86,9 +85,7 @@ public class DankTech extends JavaPlugin {
         getLogger().info("########################################");
         getLogger().info("");
         getLogger().info("                Dank Tech               ");
-        getLogger().info("            Version 1.0.0.R1            ");
-        getLogger().info("");
-        getLogger().info("          Created by Sefiraat           ");
+        getLogger().info("           Created by Sefiraat          ");
         getLogger().info("");
         getLogger().info("########################################");
 
@@ -97,9 +94,10 @@ public class DankTech extends JavaPlugin {
         sortConfigs();
         registerCommands();
 
-        supportedPlugins = new SupportedPlugins(this);
-        protection = new Protection(this);
-        configClass = new Config(this);
+        getServer().getLogger().info("Setting up supported plugins : ");
+        supportedPlugins = new SupportedPlugins(this.getInstance());
+        protection = new Protection(this.getInstance());
+        configClass = new Config(this.getInstance());
 
         new ItemPickupListener(this.getInstance());
         new ItemRightClickListener(this.getInstance());
@@ -108,15 +106,19 @@ public class DankTech extends JavaPlugin {
 
         addRecipes();
 
+        TimerSave timerSave = new TimerSave(this.getInstance());
+        timerSave.runTaskTimer(this.instance, 0, 100L);
+
+        TimerHooks timerHooks = new TimerHooks(this.getInstance());
+        timerHooks.runTaskTimer(this.instance, 1L, 100L);
+
         if (supportedPlugins.isSlimefun()) {
             slimefunAddon = new SlimefunDankAddon(this.getInstance());
         }
 
-        repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
-
         if (!isUnitTest) {
             int pluginId = 11208;
-            Metrics metrics = new Metrics(this, pluginId);
+            Metrics metrics = new Metrics(this.getInstance(), pluginId);
         }
 
     }

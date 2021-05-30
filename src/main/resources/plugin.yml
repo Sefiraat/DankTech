@@ -1,14 +1,9 @@
 name: DankTech
-version: 1.2.6
+version: 1.2.6.1
 main: io.github.sefiraat.danktech.DankTech
 api-version: 1.16
-softdepend:
-  - GriefPrevention
-  - WorldGuard
-  - mcMMO
-  - Slimefun
-  - Towny
-  - Factions
+softdepend:  [GriefPrevention, WorldGuard, mcMMO, Slimefun, Towny, Factions, WildStacker]
+loadafter : [WildStacker]
 permissions:
   danktech.admin:
     description: Allows access to /danktech and to bypass world restrictions

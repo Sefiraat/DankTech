@@ -271,7 +271,7 @@ public final class ItemDetails {
         return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit7(plugin);
     }
     private static String dank8Volume(DankTech plugin) {
-        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit8(plugin);
+        return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + ": " + limit8(plugin);
     }
     private static String dank9Volume(DankTech plugin) {
         return "" + ChatColor.WHITE + dankVolumePerSlot(plugin) + limit9(plugin);

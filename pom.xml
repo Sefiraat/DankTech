@@ -6,7 +6,7 @@
 
     <groupId>io.github.sefiraat</groupId>
     <artifactId>DankTech</artifactId>
-    <version>1.2.6</version>
+    <version>1.2.6.1</version>
 
     <build>
         <plugins>
@@ -30,7 +30,11 @@
                         </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.sefiraat.danktech</shadedPattern>
+                            <shadedPattern>io.github.sefiraat.danktech.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>dev.dbassett.skullcreator</pattern>
+                            <shadedPattern>io.github.sefiraat.danktech.skullcreator</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

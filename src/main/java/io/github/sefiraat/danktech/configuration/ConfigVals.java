@@ -5,15 +5,15 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigVals {
 
-    private Integer valuePerSlotT1;
-    private Integer valuePerSlotT2;
-    private Integer valuePerSlotT3;
-    private Integer valuePerSlotT4;
-    private Integer valuePerSlotT5;
-    private Integer valuePerSlotT6;
-    private Integer valuePerSlotT7;
-    private Integer valuePerSlotT8;
-    private Integer valuePerSlotT9;
+    private final Integer valuePerSlotT1;
+    private final Integer valuePerSlotT2;
+    private final Integer valuePerSlotT3;
+    private final Integer valuePerSlotT4;
+    private final Integer valuePerSlotT5;
+    private final Integer valuePerSlotT6;
+    private final Integer valuePerSlotT7;
+    private final Integer valuePerSlotT8;
+    private final Integer valuePerSlotT9;
 
     public Integer getValuePerSlotT1() {
         return valuePerSlotT1;

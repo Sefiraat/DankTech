@@ -36,7 +36,7 @@ public class SupportedPlugins {
         return factions;
     }
 
-    private final boolean wildStacker;
+    private boolean wildStacker;
     public boolean isWildStacker() {
         return wildStacker;
     }
@@ -51,6 +51,11 @@ public class SupportedPlugins {
         worldGuard = plugin.getServer().getPluginManager().isPluginEnabled("WorldGuard");
         towny = plugin.getServer().getPluginManager().isPluginEnabled("Towny");
         factions = plugin.getServer().getPluginManager().isPluginEnabled("Factions");
+
+    }
+
+    public void setupPostLoadPlugins() {
+
         wildStacker = plugin.getServer().getPluginManager().isPluginEnabled("WildStacker");
 
     }
