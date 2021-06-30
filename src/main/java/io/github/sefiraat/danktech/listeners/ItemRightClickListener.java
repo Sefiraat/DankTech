@@ -1,6 +1,8 @@
 package io.github.sefiraat.danktech.listeners;
 
 import com.gmail.nossr50.mcMMO;
+import dev.triumphteam.gui.guis.Gui;
+import dev.triumphteam.gui.guis.StorageGui;
 import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemDetails;
 import io.github.sefiraat.danktech.finals.Messages;
@@ -8,7 +10,6 @@ import io.github.sefiraat.danktech.implementation.dankpacks.DankPack;
 import io.github.sefiraat.danktech.implementation.dankpacks.TrashPack;
 import io.github.sefiraat.danktech.misc.Config;
 import io.github.sefiraat.danktech.misc.ContainerStorage;
-import me.mattstudios.mfgui.gui.guis.Gui;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
@@ -28,21 +29,26 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nonnull;
 import java.util.Collection;
 
-import static io.github.sefiraat.danktech.finals.Constants.*;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_DANK_ID;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_TRASH_ID;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_LEVEL;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_SLOT;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_STACK;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_VOLUME;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getDankNameBold;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashNameBold;
 import static io.github.sefiraat.danktech.implementation.gui.DankGUI.getDankGUI;
 import static io.github.sefiraat.danktech.implementation.gui.DankTrashGUI.getTrashGUI;
-import static io.github.sefiraat.danktech.misc.Config.*;
+import static io.github.sefiraat.danktech.misc.Config.getNextPackID;
+import static io.github.sefiraat.danktech.misc.Config.getNextTrashID;
+import static io.github.sefiraat.danktech.misc.Config.getWorldBlacklistOpen;
+import static io.github.sefiraat.danktech.misc.Config.getWorldBlacklistPlace;
 import static io.github.sefiraat.danktech.misc.ContainerStorage.isShallow;
 
 public class ItemRightClickListener implements Listener {
 
-    final DankTech parent;
-
     public ItemRightClickListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        parent = plugin;
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -50,16 +56,16 @@ public class ItemRightClickListener implements Listener {
         if (e.getItem() != null && e.getItem().getItemMeta() != null && e.getAction() != Action.LEFT_CLICK_AIR && e.getAction() != Action.LEFT_CLICK_BLOCK) {
             Player p = e.getPlayer();
             ItemStack i = e.getItem();
-            if (ContainerStorage.isDankMaterial(i, parent.getInstance()) && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (ContainerStorage.isDankMaterial(i) && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 e.setCancelled(true);
                 return;
             }
-            if (ContainerStorage.isDank(i, parent.getInstance())) {
+            if (ContainerStorage.isDank(i)) {
                 handleDank(e, i, p);
                 e.setCancelled(true);
                 return;
             }
-            if (ContainerStorage.isTrash(i, parent.getInstance())) {
+            if (ContainerStorage.isTrash(i)) {
                 handleTrash(e, i, p);
                 e.setCancelled(true);
             }
@@ -71,10 +77,10 @@ public class ItemRightClickListener implements Listener {
             replaceDank(i, p, false);
             return;
         }
-        if (ContainerStorage.getDankId(i, parent).equals(0L)) {
+        if (ContainerStorage.getDankId(i).equals(0L)) {
             replaceDank(i, p, true);
             return;
-        } else if (isShallow(i, parent)) {
+        } else if (isShallow(i)) {
             replaceAndUpgradeDank(i, p);
             return;
         }
@@ -100,10 +106,10 @@ public class ItemRightClickListener implements Listener {
     }
 
     private void handleTrash(PlayerInteractEvent e, ItemStack i, Player p) {
-        if (ContainerStorage.getTrashId(i, parent).equals(0L)) {
+        if (ContainerStorage.getTrashId(i).equals(0L)) {
             replaceTrash(i, p);
             return;
-        } else if (isShallow(i, parent)) {
+        } else if (isShallow(i)) {
             replaceAndUpgradeTrash(i, p);
             return;
         }
@@ -129,117 +135,117 @@ public class ItemRightClickListener implements Listener {
 
     private void replaceDank(ItemStack i, Player player, boolean isNew) {
 
-        int level = ContainerStorage.getDankLevel(i, parent);
-        long id = 0;
+        int level = ContainerStorage.getDankLevel(i);
+        long id;
 
         if (isNew) {
-            id = getNextPackID(parent);
+            id = getNextPackID();
         } else {
-            id = ContainerStorage.getDankId(i, parent);
+            id = ContainerStorage.getDankId(i);
         }
 
         i.setAmount(0);
 
-        ItemStack dank = DankPack.getDankPack(level, id, parent, player.getPlayer());
+        ItemStack dank = DankPack.getDankPack(level, id, player.getPlayer());
         ItemMeta m = dank.getItemMeta();
-        m.setDisplayName(getDankNameBold(parent, level));
-        m.setLore(ItemDetails.getDankLore(parent, level, id, null));
+        m.setDisplayName(getDankNameBold(level));
+        m.setLore(ItemDetails.getDankLore(level, id, null));
         dank.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), dank);
-        player.sendMessage(Messages.messageCommandPackUpdated(parent, id));
+        player.sendMessage(Messages.messageCommandPackUpdated(id));
     }
 
     private void replaceAndUpgradeDank(ItemStack i, Player player) {
 
-        int level = ContainerStorage.getDankLevel(i, parent);
-        long id = ContainerStorage.getDankId(i, parent);
+        int level = ContainerStorage.getDankLevel(i);
+        long id = ContainerStorage.getDankId(i);
         i.setAmount(0);
 
-        ConfigurationSection c = parent.getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + id);
+        ConfigurationSection c = DankTech.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + id);
         c.set(CONFIG_GETTER_VAL_LEVEL, level);
         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_STACK, null);
         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_VOLUME , 0);
-        ItemStack dank = DankPack.getDankPack(level, id, parent, player);
+        ItemStack dank = DankPack.getDankPack(level, id, player);
         ItemMeta m = dank.getItemMeta();
-        m.setDisplayName(getDankNameBold(parent, level));
-        m.setLore(ItemDetails.getDankLore(parent, level, id, null));
+        m.setDisplayName(getDankNameBold(level));
+        m.setLore(ItemDetails.getDankLore(level, id, null));
         dank.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), dank);
-        player.sendMessage(Messages.messageCraftUpgradePack(parent));
+        player.sendMessage(Messages.messageCraftUpgradePack());
     }
 
     private void replaceTrash(ItemStack i, Player player) {
 
-        ContainerStorage.getTrashLevel(i, parent);
+        ContainerStorage.getTrashLevel(i);
 
-        int level = ContainerStorage.getTrashLevel(i, parent);
-        long id = 0;
-        id = getNextTrashID(parent);
+        int level = ContainerStorage.getTrashLevel(i);
+        long id;
+        id = getNextTrashID();
 
         i.setAmount(0);
 
-        ItemStack trash = TrashPack.getTrashPack(level, id, parent, player.getPlayer());
+        ItemStack trash = TrashPack.getTrashPack(level, id, player.getPlayer());
         ItemMeta m = trash.getItemMeta();
-        m.setDisplayName(getTrashNameBold(parent, level));
-        m.setLore(ItemDetails.getTrashLore(parent, level, id));
+        m.setDisplayName(getTrashNameBold(level));
+        m.setLore(ItemDetails.getTrashLore(level, id));
         trash.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), trash);
-        player.sendMessage(Messages.messageCommandPackUpdated(parent, id));
+        player.sendMessage(Messages.messageCommandPackUpdated(id));
     }
 
     private void replaceAndUpgradeTrash(ItemStack i, Player player) {
 
-        int level = ContainerStorage.getTrashLevel(i, parent);
-        long id = ContainerStorage.getTrashId(i, parent);
+        int level = ContainerStorage.getTrashLevel(i);
+        long id = ContainerStorage.getTrashId(i);
 
         i.setAmount(0);
 
-        ConfigurationSection c = parent.getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + id);
+        ConfigurationSection c = DankTech.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + id);
         c.set(CONFIG_GETTER_VAL_LEVEL, ((level*2)-1));
         c.set(CONFIG_GETTER_VAL_SLOT + ((level*2)-1) + "." + CONFIG_GETTER_VAL_STACK, null);
         c.set(CONFIG_GETTER_VAL_SLOT + ((level*2)-1) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
         c.set(CONFIG_GETTER_VAL_LEVEL, (level*2));
         c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_STACK, null);
         c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
-        ItemStack trash = TrashPack.getTrashPack(level, id, parent, player);
+        ItemStack trash = TrashPack.getTrashPack(level, id, player);
         ItemMeta m = trash.getItemMeta();
-        m.setDisplayName(getTrashNameBold(parent, level));
-        m.setLore(ItemDetails.getTrashLore(parent, level, id));
+        m.setDisplayName(getTrashNameBold(level));
+        m.setLore(ItemDetails.getTrashLore(level, id));
         trash.setItemMeta(m);
         player.getInventory().setItem(player.getInventory().getHeldItemSlot(), trash);
-        player.sendMessage(Messages.messageCraftUpgradeTrash(parent));
+        player.sendMessage(Messages.messageCraftUpgradeTrash());
     }
 
     private void openDankPack(ItemStack i, Player p) {
-        int dankLevel = ContainerStorage.getDankLevel(i, parent.getInstance());
-        long dankId = ContainerStorage.getDankId(i, parent.getInstance());
-        p.sendMessage(Messages.messageEventOpenPack(parent, dankId));
-        Config.setDankLastOpenedBy(dankId, parent, p);
-        Gui g = getDankGUI(dankId, dankLevel, parent.getInstance());
+        int dankLevel = ContainerStorage.getDankLevel(i);
+        long dankId = ContainerStorage.getDankId(i);
+        p.sendMessage(Messages.messageEventOpenPack(dankId));
+        Config.setDankLastOpenedBy(dankId, p);
+        Gui g = getDankGUI(dankId, dankLevel);
         g.open(p);
     }
 
     private void openTrashPack(ItemStack i, Player p) {
-        int trashLevel = ContainerStorage.getTrashLevel(i, parent.getInstance());
-        long trashId = ContainerStorage.getTrashId(i, parent.getInstance());
-        p.sendMessage(Messages.messageEventOpenTrash(parent, trashId));
-        Config.setDankLastOpenedBy(trashId, parent, p);
-        Gui g = getTrashGUI(trashId, trashLevel, parent.getInstance());
+        int trashLevel = ContainerStorage.getTrashLevel(i);
+        long trashId = ContainerStorage.getTrashId(i);
+        p.sendMessage(Messages.messageEventOpenTrash(trashId));
+        Config.setTrashLastOpenedBy(trashId, p);
+        Gui g = getTrashGUI(trashId, trashLevel);
         g.open(p);
     }
 
     private boolean canOpenBlacklist(Player p) {
-        return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistOpen(parent).contains(p.getWorld().getName());
+        return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistOpen().contains(p.getWorld().getName());
     }
 
     private boolean canPlaceBlacklist(Player p) {
-        return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistPlace(parent).contains(p.getWorld().getName());
+        return p.isOp() || p.hasPermission("danktech.admin") || !getWorldBlacklistPlace().contains(p.getWorld().getName());
     }
 
     private void cycleForward(ItemStack dank, Player p) {
-        Integer slot = ContainerStorage.getDankNextSlot(dank, parent);
-        Long dankID = ContainerStorage.getDankId(dank, parent);
-        ItemStack slotItemStack = Config.getSlotItemStack(dankID, slot, parent);
+        Integer slot = ContainerStorage.getDankNextSlot(dank);
+        Long dankID = ContainerStorage.getDankId(dank);
+        ItemStack slotItemStack = Config.getSlotItemStack(dankID, slot);
         String itemName = "EMPTY";
         if (slotItemStack != null) {
             if (slotItemStack.getItemMeta().hasDisplayName()) {
@@ -248,13 +254,13 @@ public class ItemRightClickListener implements Listener {
                 itemName = slotItemStack.getType().name().replace("_"," ");
             }
         }
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(parent, itemName, slot)));
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(itemName, slot)));
     }
 
     private void cycleBackward(ItemStack dank, Player p) {
-        Integer slot = ContainerStorage.getDankPreviousSlot(dank, parent);
-        Long dankID = ContainerStorage.getDankId(dank, parent);
-        ItemStack slotItemStack = Config.getSlotItemStack(dankID, slot, parent);
+        Integer slot = ContainerStorage.getDankPreviousSlot(dank);
+        Long dankID = ContainerStorage.getDankId(dank);
+        ItemStack slotItemStack = Config.getSlotItemStack(dankID, slot);
         String itemName = "EMPTY";
         if (slotItemStack != null) {
             if (slotItemStack.getItemMeta().hasDisplayName()) {
@@ -263,40 +269,40 @@ public class ItemRightClickListener implements Listener {
                 itemName = slotItemStack.getType().name().replace("_"," ");
             }
         }
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(parent, itemName, slot)));
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.messageEventSlotChanged(itemName, slot)));
     }
 
     private void placeBlock(PlayerInteractEvent e, ItemStack dank, Player p) {
-        Integer slot = ContainerStorage.getDankCurrentSlot(dank, parent);
-        Long dankID = ContainerStorage.getDankId(dank, parent);
-        ItemStack slotItemStack = Config.getSlotItemStack(dankID, slot, parent);
+        Integer slot = ContainerStorage.getDankCurrentSlot(dank);
+        Long dankID = ContainerStorage.getDankId(dank);
+        ItemStack slotItemStack = Config.getSlotItemStack(dankID, slot);
         if (slotItemStack != null && !slotItemStack.hasItemMeta() && slotItemStack.getType().isBlock()) {
             Block block = e.getClickedBlock().getRelative(e.getBlockFace());
             if (isSafeToBuild(block, p)) {
 
-                ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
+                ConfigurationSection section = DankTech.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
                 ConfigurationSection slotSection = section.getConfigurationSection(CONFIG_GETTER_VAL_SLOT + slot);
 
-                Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
+                int amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
                 if (amount > 1) {
                     amount--;
                     slotSection.set(CONFIG_GETTER_VAL_VOLUME, amount);
-                    ItemStack i = Config.getSlotItemStack(dankID, slot, parent);
+                    ItemStack i = Config.getSlotItemStack(dankID, slot);
                     block.setType(i.getType());
-                    if (parent.getSupportedPlugins().isMcMMO()) {
+                    if (DankTech.getInstance().getSupportedPlugins().isMcMMO()) {
                         mcMMO.getPlaceStore().setTrue(block);
                     }
                 } else {
-                    p.sendMessage(Messages.messageEventSlotNoMoreItems(parent));
+                    p.sendMessage(Messages.messageEventSlotNoMoreItems());
                 }
             }
         } else {
-            p.sendMessage(Messages.messageEventSlotCantPlace(parent));
+            p.sendMessage(Messages.messageEventSlotCantPlace());
         }
     }
 
     private boolean isSafeToBuild(Block block, Player p) {
-        if (block.getBlockData().getMaterial().equals(Material.AIR) && parent.getProtection().canBuild(block, p)) {
+        if (block.getBlockData().getMaterial().equals(Material.AIR) && DankTech.getInstance().getProtection().canBuild(block, p)) {
             Collection<Entity> entities = block.getWorld().getNearbyEntities(block.getLocation(), 0.5, 0.5, 0.5);
             if (!entities.isEmpty()) {
                 for (Entity e : entities) {

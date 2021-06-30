@@ -11,9 +11,11 @@ import io.github.sefiraat.danktech.listeners.UnloadingListener;
 import io.github.sefiraat.danktech.misc.Protection;
 import io.github.sefiraat.danktech.misc.SlimefunDankAddon;
 import io.github.sefiraat.danktech.misc.SupportedPlugins;
+import io.github.sefiraat.danktech.misc.Utils;
 import io.github.sefiraat.danktech.timers.TimerHooks;
 import io.github.sefiraat.danktech.timers.TimerSave;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,7 +28,11 @@ import java.io.IOException;
 
 public class DankTech extends JavaPlugin {
 
-    private DankTech instance;
+    private static DankTech instance;
+    public static DankTech getInstance() {
+        return instance;
+    }
+
     private File dankStorageConfigFile;
     private FileConfiguration dankStorageConfig;
     private File itemBlacklistConfigFile;
@@ -54,9 +60,6 @@ public class DankTech extends JavaPlugin {
     public PaperCommandManager getCommandManager() {
         return commandManager;
     }
-    public DankTech getInstance() {
-        return instance;
-    }
     public Protection getProtection() {
         return protection;
     }
@@ -68,6 +71,9 @@ public class DankTech extends JavaPlugin {
     }
     public SlimefunDankAddon getSlimefunAddon() {
         return slimefunAddon;
+    }
+    public void setSlimefunAddon(SlimefunDankAddon slimefunAddon) {
+        this.slimefunAddon = slimefunAddon;
     }
 
     public DankTech() {
@@ -83,44 +89,43 @@ public class DankTech extends JavaPlugin {
     public void onEnable() {
 
         getLogger().info("########################################");
-        getLogger().info("");
         getLogger().info("                Dank Tech               ");
         getLogger().info("           Created by Sefiraat          ");
-        getLogger().info("");
         getLogger().info("########################################");
 
         instance = this;
 
         sortConfigs();
+
+        configClass = new Config();
+        supportedPlugins = new SupportedPlugins(this);
+        protection = new Protection();
+
         registerCommands();
 
-        getServer().getLogger().info("Setting up supported plugins : ");
-        supportedPlugins = new SupportedPlugins(this.getInstance());
-        protection = new Protection(this.getInstance());
-        configClass = new Config(this.getInstance());
-
-        new ItemPickupListener(this.getInstance());
-        new ItemRightClickListener(this.getInstance());
-        new CraftListener(this.getInstance());
-        new UnloadingListener(this.getInstance());
+        new ItemPickupListener(this);
+        new ItemRightClickListener(this);
+        new CraftListener(this);
+        new UnloadingListener(this);
 
         addRecipes();
 
-        TimerSave timerSave = new TimerSave(this.getInstance());
-        timerSave.runTaskTimer(this.instance, 0, 100L);
+        TimerSave timerSave = new TimerSave(this);
+        timerSave.runTaskTimerAsynchronously (this, 0, 1200L);
 
-        TimerHooks timerHooks = new TimerHooks(this.getInstance());
-        timerHooks.runTaskTimer(this.instance, 1L, 100L);
-
-        if (supportedPlugins.isSlimefun()) {
-            slimefunAddon = new SlimefunDankAddon(this.getInstance());
-        }
+        TimerHooks timerHooks = new TimerHooks(this);
+        timerHooks.runTaskTimer(this, 1L, 100L);
 
         if (!isUnitTest) {
             int pluginId = 11208;
-            Metrics metrics = new Metrics(this.getInstance(), pluginId);
+            Metrics metrics = new Metrics(this, pluginId);
+            metrics.addCustomChart(new SimplePie("slimefun", () -> String.valueOf(getSupportedPlugins().isSlimefun())));
+            metrics.addCustomChart(new SimplePie("worldguard", () -> String.valueOf(getSupportedPlugins().isWorldGuard())));
+            metrics.addCustomChart(new SimplePie("factions", () -> String.valueOf(getSupportedPlugins().isFactions())));
+            metrics.addCustomChart(new SimplePie("griefprotection", () -> String.valueOf(getSupportedPlugins().isGriefPrevention())));
+            metrics.addCustomChart(new SimplePie("towny", () -> String.valueOf(getSupportedPlugins().isTowny())));
+            metrics.addCustomChart(new SimplePie("mcmmo", () -> String.valueOf(getSupportedPlugins().isMcMMO())));
         }
-
     }
 
     @Override
@@ -129,8 +134,9 @@ public class DankTech extends JavaPlugin {
     }
 
     private void registerCommands() {
-        commandManager = new PaperCommandManager(this.getInstance());
-        commandManager.registerCommand(new Commands(this.getInstance()));
+        commandManager = new PaperCommandManager(this);
+        commandManager.registerCommand(new Commands(this));
+        Utils.dbgMsg("Commands registered");
     }
 
     private void sortConfigs() {
@@ -140,6 +146,7 @@ public class DankTech extends JavaPlugin {
         createItemBlacklistConfig();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void createDankStorageConfig() {
         dankStorageConfigFile = new File(getDataFolder(), "DankStorages.yml");
         if (!dankStorageConfigFile.exists()) {
@@ -162,6 +169,7 @@ public class DankTech extends JavaPlugin {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void createItemBlacklistConfig() {
         itemBlacklistConfigFile = new File(getDataFolder(), "BlacklistedItems.yml");
         if (!itemBlacklistConfigFile.exists()) {
@@ -185,19 +193,19 @@ public class DankTech extends JavaPlugin {
     }
 
     private void addRecipes() {
-        this.getServer().addRecipe(Recipes.recipeCell1(this));
-        this.getServer().addRecipe(Recipes.recipeCell2(this));
-        this.getServer().addRecipe(Recipes.recipeCell3(this));
-        this.getServer().addRecipe(Recipes.recipeCell4(this));
-        this.getServer().addRecipe(Recipes.recipeCell5(this));
-        this.getServer().addRecipe(Recipes.recipeCell6(this));
-        this.getServer().addRecipe(Recipes.recipeCell7(this));
-        this.getServer().addRecipe(Recipes.recipeCell8(this));
-        this.getServer().addRecipe(Recipes.recipeCell9(this));
-        this.getServer().addRecipe(Recipes.recipeDank1(this));
-        this.getServer().addRecipe(Recipes.recipeDank(this));
-        this.getServer().addRecipe(Recipes.recipeTrash1(this));
-        this.getServer().addRecipe(Recipes.recipeTrash(this));
+        this.getServer().addRecipe(Recipes.recipeCell1());
+        this.getServer().addRecipe(Recipes.recipeCell2());
+        this.getServer().addRecipe(Recipes.recipeCell3());
+        this.getServer().addRecipe(Recipes.recipeCell4());
+        this.getServer().addRecipe(Recipes.recipeCell5());
+        this.getServer().addRecipe(Recipes.recipeCell6());
+        this.getServer().addRecipe(Recipes.recipeCell7());
+        this.getServer().addRecipe(Recipes.recipeCell8());
+        this.getServer().addRecipe(Recipes.recipeCell9());
+        this.getServer().addRecipe(Recipes.recipeDank1());
+        this.getServer().addRecipe(Recipes.recipeDank());
+        this.getServer().addRecipe(Recipes.recipeTrash1());
+        this.getServer().addRecipe(Recipes.recipeTrash());
     }
 
 }

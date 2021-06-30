@@ -14,7 +14,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static io.github.sefiraat.danktech.finals.Constants.*;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_TRASH_ID;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_LEVEL;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_SLOT;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_STACK;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_VOLUME;
 import static io.github.sefiraat.danktech.finals.ItemDetails.getTrashNameBold;
 import static io.github.sefiraat.danktech.finals.Materials.getTrashTexture;
 
@@ -24,26 +28,26 @@ public class TrashPack {
         throw new IllegalStateException("Utility class");
     }
 
-    public static ItemStack getTrashPack(@Nonnull Integer level, @Nonnull Long trashID, @Nonnull DankTech parent, @Nullable Player p) {
+    public static ItemStack getTrashPack(@Nonnull Integer level, @Nonnull Long trashID, @Nullable Player p) {
 
         ItemStack trash = SkullCreator.itemFromBase64(getTrashTexture(level));
 
-        if (!parent.getInstance().getDankStorageConfig().contains(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashID)) {
-            setupSection(parent.getInstance().getDankStorageConfig(), trashID, level);
-            parent.saveDankStorageConfig();
+        if (!DankTech.getInstance().getDankStorageConfig().contains(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashID)) {
+            setupSection(DankTech.getInstance().getDankStorageConfig(), trashID, level);
+            DankTech.getInstance().saveDankStorageConfig();
         }
 
         ItemMeta m = trash.getItemMeta();
-        m.setDisplayName(getTrashNameBold(parent, level));
-        m.setLore(ItemDetails.getTrashLore(parent, level, trashID));
+        m.setDisplayName(getTrashNameBold(level));
+        m.setLore(ItemDetails.getTrashLore(level, trashID));
         trash.setItemMeta(m);
 
-        ContainerStorage.makeTrash(trash, parent);
-        ContainerStorage.setTrashId(trash, parent, trashID);
-        ContainerStorage.setTrashLevel(trash, parent, level);
+        ContainerStorage.makeTrash(trash);
+        ContainerStorage.setTrashId(trash, trashID);
+        ContainerStorage.setTrashLevel(trash, level);
 
         if (p!= null) {
-            Config.setTrashLastOpenedBy(trashID, parent, p);
+            Config.setTrashLastOpenedBy(trashID, p);
         }
 
         return trash;

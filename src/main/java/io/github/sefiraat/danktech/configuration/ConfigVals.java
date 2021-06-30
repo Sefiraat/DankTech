@@ -43,9 +43,9 @@ public class ConfigVals {
         return valuePerSlotT9;
     }
 
-    public ConfigVals(DankTech parent) {
+    public ConfigVals() {
 
-        FileConfiguration c = parent.getConfig();
+        FileConfiguration c = DankTech.getInstance().getConfig();
 
         valuePerSlotT1 = c.getInt("VALUES.AMOUNT_PER_SLOT_T1");
         valuePerSlotT2 = c.getInt("VALUES.AMOUNT_PER_SLOT_T2");
@@ -56,7 +56,6 @@ public class ConfigVals {
         valuePerSlotT7 = c.getInt("VALUES.AMOUNT_PER_SLOT_T7");
         valuePerSlotT8 = c.getInt("VALUES.AMOUNT_PER_SLOT_T8");
         valuePerSlotT9 = c.getInt("VALUES.AMOUNT_PER_SLOT_T9");
-
 
     }
 

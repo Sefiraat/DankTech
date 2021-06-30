@@ -235,9 +235,9 @@ public class ConfigStrings {
         return craftUpgradeTrash;
     }
 
-    public ConfigStrings(DankTech parent) {
+    public ConfigStrings() {
 
-        FileConfiguration c = parent.getConfig();
+        FileConfiguration c = DankTech.getInstance().getConfig();
 
         guiFiller = c.getString("TEXTS.GUI.FILLER");
         guiInfoName = c.getString("TEXTS.GUI.INFO_NAME");

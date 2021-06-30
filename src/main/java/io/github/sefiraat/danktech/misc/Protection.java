@@ -25,30 +25,15 @@ import java.util.ArrayList;
 
 public class Protection {
 
-    private final DankTech plugin;
     private final SupportedPlugins supportedPlugins;
 
     private GriefPrevention griefPrevention;
     private WorldGuardPlugin worldGuard;
     private FPlayers factions;
 
-    public Protection(DankTech parent) {
-
-        this.plugin = parent;
-        supportedPlugins = plugin.getSupportedPlugins();
-
-        if (supportedPlugins.isGriefPrevention()) {
-            griefPrevention = (GriefPrevention) parent.getServer().getPluginManager().getPlugin("GriefPrevention");
-        }
-
-        if (supportedPlugins.isWorldGuard()) {
-            worldGuard = (WorldGuardPlugin) parent.getServer().getPluginManager().getPlugin("WorldGuard");
-        }
-
-        if (supportedPlugins.isFactions()) {
-            factions = FPlayers.getInstance();
-        }
-
+    public Protection() {
+        supportedPlugins = DankTech.getInstance().getSupportedPlugins();
+        Utils.dbgMsg("Protection plugins sorted");
     }
 
     public boolean canBuild(Block block, Player p) {
@@ -64,7 +49,7 @@ public class Protection {
 
     public boolean canBuildGriefPrevention(Block block, Player p) {
         if (supportedPlugins.isGriefPrevention()) {
-            DataStore d = griefPrevention.dataStore;
+            DataStore d = GriefPrevention.instance.dataStore;
             Claim c = d.getClaimAt(block.getLocation(), true, null);
             if (c != null) {
                 return c.allowBuild(p, block.getType()) == null;

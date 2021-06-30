@@ -14,47 +14,48 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static io.github.sefiraat.danktech.finals.ItemDetails.SLIMEFUN_DISPLAY_CATEGORY_NAME;
-import static io.github.sefiraat.danktech.finals.Recipes.*;
+import static io.github.sefiraat.danktech.finals.Recipes.getSlimefunCellRecipe;
+import static io.github.sefiraat.danktech.finals.Recipes.getSlimefunPackRecipe;
+import static io.github.sefiraat.danktech.finals.Recipes.getSlimefunTrashRecipe;
 
 public class SlimefunDankAddon implements SlimefunAddon {
 
-    private DankTech parent;
-
-    private Category dankCategory;
-
-    public SlimefunDankAddon(DankTech parent) {
-        this.parent = parent;
+    public SlimefunDankAddon() {
 
         // Category
-        NamespacedKey categoryIdMain = new NamespacedKey(parent, "danktech_main");
+        NamespacedKey categoryIdMain = new NamespacedKey(DankTech.getInstance(), "danktech_main");
 
         ItemStack categoryItemMain = SkullCreator.itemFromBase64(Materials.DANK_SLIMEFUN_CATEGORY);
         ItemMeta im = categoryItemMain.getItemMeta();
         im.setDisplayName(SLIMEFUN_DISPLAY_CATEGORY_NAME);
         im.setLore(Collections.singletonList("&a> Click to open"));
         categoryItemMain.setItemMeta(im);
-        dankCategory = new Category(categoryIdMain, categoryItemMain);
+        Category dankCategory = new Category(categoryIdMain, categoryItemMain);
 
         // Items
+        Utils.dbgMsg("Cells");
         List<SlimefunItemStack> cells =  new ArrayList<>();
         for (int i = 1; i < 10; i++) {
-            SlimefunItemStack dankCellStack = new SlimefunItemStack( "DANK_CELL_" + i, ItemStacks.getCell(i, parent));
+            Utils.dbgMsg(" -- " + i);
+            SlimefunItemStack dankCellStack = new SlimefunItemStack( "DANK_CELL_" + i, ItemStacks.getCell(i));
             SlimefunItem dankCell = new DankSlimefunItem(dankCategory, dankCellStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunCellRecipe(i));
             dankCell.register(this);
             cells.add(dankCellStack);
         }
 
         List<SlimefunItemStack> danks = new ArrayList<>();
+        Utils.dbgMsg("Dank Packs");
         for (Integer i = 1; i < 10; i++) {
-            SlimefunItemStack dankPackStack = new SlimefunItemStack( "DANK_PACK_" + i, ItemStacks.getShallowDank(i, parent));
+            Utils.dbgMsg(" -- " + i);
+            SlimefunItemStack dankPackStack = new SlimefunItemStack( "DANK_PACK_" + i, ItemStacks.getShallowDank(i));
             SlimefunItem dankPack;
             if (i.equals(1)) {
                 dankPack = new DankSlimefunItem(dankCategory, dankPackStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunPackRecipe(cells.get(0),null));
@@ -66,8 +67,10 @@ public class SlimefunDankAddon implements SlimefunAddon {
         }
 
         List<SlimefunItemStack> trashes = new ArrayList<>();
+        Utils.dbgMsg("Trash Packs");
         for (Integer i = 1; i < 10; i++) {
-            SlimefunItemStack dankTrashStack = new SlimefunItemStack( "DANK_TRASH_" + i, ItemStacks.getShallowTrash(i, parent));
+            Utils.dbgMsg(" -- " + i);
+            SlimefunItemStack dankTrashStack = new SlimefunItemStack( "DANK_TRASH_" + i, ItemStacks.getShallowTrash(i));
             SlimefunItem trashPack;
             if (i.equals(1)) {
                 trashPack = new DankSlimefunItem(dankCategory, dankTrashStack, new RecipeType(MinecraftRecipe.SHAPED_CRAFTING), getSlimefunTrashRecipe(cells.get(0),null));
@@ -80,10 +83,10 @@ public class SlimefunDankAddon implements SlimefunAddon {
 
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public JavaPlugin getJavaPlugin() {
-        return parent;
+        return DankTech.getInstance();
     }
 
     @Nullable

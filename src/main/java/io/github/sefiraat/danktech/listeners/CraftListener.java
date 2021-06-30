@@ -21,18 +21,25 @@ import org.bukkit.persistence.PersistentDataType;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import static io.github.sefiraat.danktech.finals.Constants.*;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_DANK_ID;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_TRASH_ID;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_LEVEL;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_SLOT;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_STACK;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_VOLUME;
+import static io.github.sefiraat.danktech.finals.Constants.KEY_ID_DANK;
+import static io.github.sefiraat.danktech.finals.Constants.KEY_ID_TRASH;
+import static io.github.sefiraat.danktech.finals.Constants.KEY_LEVEL_DANK;
+import static io.github.sefiraat.danktech.finals.Constants.KEY_LEVEL_TRASH;
 import static io.github.sefiraat.danktech.misc.Config.getNextPackID;
 import static io.github.sefiraat.danktech.misc.Config.getNextTrashID;
 
 public class CraftListener implements Listener {
 
-    final DankTech parent;
-
     public CraftListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        parent = plugin;
     }
 
     @EventHandler
@@ -53,8 +60,8 @@ public class CraftListener implements Listener {
         ItemStack coreItem = contents[4];
         List<ItemStack> cells = fillCellList(contents);
 
-        NamespacedKey levelDankKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_DANK);
-        NamespacedKey idDankKey = new NamespacedKey(parent.getInstance(), KEY_ID_DANK);
+        NamespacedKey levelDankKey = new NamespacedKey(DankTech.getInstance(), KEY_LEVEL_DANK);
+        NamespacedKey idDankKey = new NamespacedKey(DankTech.getInstance(), KEY_ID_DANK);
 
 
 
@@ -65,14 +72,15 @@ public class CraftListener implements Listener {
             boolean beaconBypass = false;
 
             if (coreItem.getType() != Materials.DANK_T1_CORE_MATERIAL) {
-                dankLevel = coreItem.getItemMeta().getPersistentDataContainer().get(levelDankKey, PersistentDataType.INTEGER) + 1;
+                dankLevel = Objects.requireNonNull(coreItem.getItemMeta()).getPersistentDataContainer().get(levelDankKey, PersistentDataType.INTEGER) + 1;
                 dankID = coreItem.getItemMeta().getPersistentDataContainer().get(idDankKey, PersistentDataType.LONG);
                 beaconBypass = true;
             }
 
-            if (cellMatchLevel(dankLevel, cells, parent)) {
-                ItemStack r = ItemStacks.getShallowDank(dankLevel, parent);
+            if (cellMatchLevel(dankLevel, cells, DankTech.getInstance())) {
+                ItemStack r = ItemStacks.getShallowDank(dankLevel);
                 ItemMeta im = r.getItemMeta();
+                assert im != null;
                 im.getPersistentDataContainer().set(levelDankKey, PersistentDataType.INTEGER, dankLevel);
                 im.getPersistentDataContainer().set(idDankKey, PersistentDataType.LONG, dankID);
                 r.setItemMeta(im);
@@ -90,25 +98,26 @@ public class CraftListener implements Listener {
         ItemStack coreItem = contents[4];
         List<ItemStack> cells = fillCellList(contents);
 
-        NamespacedKey levelTrashKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_TRASH);
-        NamespacedKey idTrashKey = new NamespacedKey(parent.getInstance(), KEY_ID_TRASH);
+        NamespacedKey levelTrashKey = new NamespacedKey(DankTech.getInstance(), KEY_LEVEL_TRASH);
+        NamespacedKey idTrashKey = new NamespacedKey(DankTech.getInstance(), KEY_ID_TRASH);
 
         if (isTrashCraft(coreItem, levelTrashKey)) {
             // Core denotes a DANK TRASH craft
 
             int trashLevel = 1;
-            long trashID = 0;
+            long trashID;
 
             if (coreItem.getType().equals(Materials.TRASH_T1_CORE_MATERIAL)) {
-                trashID = getNextTrashID(parent);
+                trashID = getNextTrashID();
             } else {
-                trashLevel = coreItem.getItemMeta().getPersistentDataContainer().get(levelTrashKey, PersistentDataType.INTEGER) + 1;
+                trashLevel = Objects.requireNonNull(coreItem.getItemMeta()).getPersistentDataContainer().get(levelTrashKey, PersistentDataType.INTEGER) + 1;
                 trashID = coreItem.getItemMeta().getPersistentDataContainer().get(idTrashKey, PersistentDataType.LONG);
             }
 
-            if (cellMatchLevel(trashLevel, cells, parent)) {
-                ItemStack r = ItemStacks.getShallowTrash(trashLevel, parent);
+            if (cellMatchLevel(trashLevel, cells, DankTech.getInstance())) {
+                ItemStack r = ItemStacks.getShallowTrash(trashLevel);
                 ItemMeta im = r.getItemMeta();
+                assert im != null;
                 im.getPersistentDataContainer().set(levelTrashKey, PersistentDataType.INTEGER, trashLevel);
                 im.getPersistentDataContainer().set(idTrashKey, PersistentDataType.LONG, trashID);
                 r.setItemMeta(im);
@@ -129,13 +138,15 @@ public class CraftListener implements Listener {
 
     private void testCraft(CraftItemEvent e, Player p) {
         ItemStack res = e.getInventory().getResult();
-        NamespacedKey dankKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_DANK);
-        boolean hasDankKey = res.getItemMeta().getPersistentDataContainer().has(dankKey, PersistentDataType.INTEGER);
-        NamespacedKey trashKey = new NamespacedKey(parent.getInstance(), KEY_LEVEL_TRASH);
+        NamespacedKey dankKey = new NamespacedKey(DankTech.getInstance(), KEY_LEVEL_DANK);
+        assert res != null;
+        boolean hasDankKey = Objects.requireNonNull(res.getItemMeta()).getPersistentDataContainer().has(dankKey, PersistentDataType.INTEGER);
+        NamespacedKey trashKey = new NamespacedKey(DankTech.getInstance(), KEY_LEVEL_TRASH);
         boolean hasTrashKey = res.getItemMeta().getPersistentDataContainer().has(trashKey, PersistentDataType.INTEGER);
 
         if (hasDankKey) {
             Integer level = res.getItemMeta().getPersistentDataContainer().get(dankKey, PersistentDataType.INTEGER);
+            assert level != null;
             if (level.equals(1)) {
                 craftDank(e, p);
             } else {
@@ -145,6 +156,7 @@ public class CraftListener implements Listener {
 
         if (hasTrashKey) {
             Integer level = res.getItemMeta().getPersistentDataContainer().get(trashKey, PersistentDataType.INTEGER);
+            assert level != null;
             if (level.equals(1)) {
                 craftTrash(e, p);
             } else {
@@ -154,44 +166,46 @@ public class CraftListener implements Listener {
     }
 
     private void craftDank(CraftItemEvent e, Player p) {
-        long packID = getNextPackID(parent);
-        ItemStack dank = DankPack.getDankPack(1, packID, parent, p);
+        long packID = getNextPackID();
+        ItemStack dank = DankPack.getDankPack(1, packID, p);
         e.setCurrentItem(dank);
-        p.sendMessage(Messages.messageCraftNewPack(parent));
+        p.sendMessage(Messages.messageCraftNewPack());
     }
 
     private void craftDank(CraftItemEvent e, Player p, ItemStack res, Integer level) {
-        NamespacedKey idKey = new NamespacedKey(parent.getInstance(), KEY_ID_DANK);
-        long packID = res.getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
-        ConfigurationSection c = parent.getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID);
+        NamespacedKey idKey = new NamespacedKey(DankTech.getInstance(), KEY_ID_DANK);
+        long packID = Objects.requireNonNull(res.getItemMeta()).getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
+        ConfigurationSection c = DankTech.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + packID);
+        assert c != null;
         c.set(CONFIG_GETTER_VAL_LEVEL, level);
         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_STACK, null);
         c.set(CONFIG_GETTER_VAL_SLOT + level + "." + CONFIG_GETTER_VAL_VOLUME , 0);
-        ItemStack dank = DankPack.getDankPack(level, packID, parent, p);
+        ItemStack dank = DankPack.getDankPack(level, packID, p);
         e.setCurrentItem(dank);
-        p.sendMessage(Messages.messageCraftUpgradePack(parent));
+        p.sendMessage(Messages.messageCraftUpgradePack());
     }
 
     private void craftTrash(CraftItemEvent e, Player p) {
-        long trashID = getNextTrashID(parent);
-        ItemStack trash = TrashPack.getTrashPack(1, trashID, parent, p);
+        long trashID = getNextTrashID();
+        ItemStack trash = TrashPack.getTrashPack(1, trashID, p);
         e.setCurrentItem(trash);
-        p.sendMessage(Messages.messageCraftNewTrash(parent));
+        p.sendMessage(Messages.messageCraftNewTrash());
     }
 
     private void craftTrash(CraftItemEvent e, Player p, ItemStack res, Integer level) {
-        NamespacedKey idKey = new NamespacedKey(parent.getInstance(), KEY_ID_TRASH);
-        long trashID = res.getItemMeta().getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
-        ConfigurationSection c = parent.getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashID);
+        NamespacedKey idKey = new NamespacedKey(DankTech.getInstance(), KEY_ID_TRASH);
+        long trashID = Objects.requireNonNull(res.getItemMeta()).getPersistentDataContainer().get(idKey, PersistentDataType.LONG);
+        ConfigurationSection c = DankTech.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashID);
+        assert c != null;
         c.set(CONFIG_GETTER_VAL_LEVEL, ((level*2)-1));
         c.set(CONFIG_GETTER_VAL_SLOT + ((level*2)-1) + "." + CONFIG_GETTER_VAL_STACK, null);
         c.set(CONFIG_GETTER_VAL_SLOT + ((level*2)-1) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
         c.set(CONFIG_GETTER_VAL_LEVEL, (level*2));
         c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_STACK, null);
         c.set(CONFIG_GETTER_VAL_SLOT + (level*2) + "." + CONFIG_GETTER_VAL_VOLUME , 0);
-        ItemStack trash = TrashPack.getTrashPack(level, trashID, parent, p);
+        ItemStack trash = TrashPack.getTrashPack(level, trashID, p);
         e.setCurrentItem(trash);
-        p.sendMessage(Messages.messageCraftUpgradeTrash(parent));
+        p.sendMessage(Messages.messageCraftUpgradeTrash());
     }
 
     private List<ItemStack> fillCellList(ItemStack[] contents) {
@@ -208,18 +222,19 @@ public class CraftListener implements Listener {
     }
 
     private boolean isDankCraft(ItemStack coreItem, NamespacedKey levelDankKey) {
-        return (coreItem.getType().equals(Materials.DANK_T1_CORE_MATERIAL) || coreItem.getItemMeta().getPersistentDataContainer().has(levelDankKey, PersistentDataType.INTEGER));
+        return (coreItem.getType().equals(Materials.DANK_T1_CORE_MATERIAL) || Objects.requireNonNull(coreItem.getItemMeta()).getPersistentDataContainer().has(levelDankKey, PersistentDataType.INTEGER));
     }
 
     private boolean isTrashCraft(ItemStack coreItem, NamespacedKey levelTrashKey) {
-        return (coreItem.getType().equals(Materials.TRASH_T1_CORE_MATERIAL) || coreItem.getItemMeta().getPersistentDataContainer().has(levelTrashKey, PersistentDataType.INTEGER));
+        return (coreItem.getType().equals(Materials.TRASH_T1_CORE_MATERIAL) || Objects.requireNonNull(coreItem.getItemMeta()).getPersistentDataContainer().has(levelTrashKey, PersistentDataType.INTEGER));
     }
 
     public boolean cellMatchLevel(Integer level, List<ItemStack> itemStacks, DankTech plugin) {
         NamespacedKey keyLevel = new NamespacedKey(plugin,"cell-level");
         for (ItemStack i : itemStacks) {
-            if (i.hasItemMeta() && i.getItemMeta().getPersistentDataContainer().has(keyLevel,PersistentDataType.INTEGER)) {
+            if (i.hasItemMeta() && Objects.requireNonNull(Objects.requireNonNull(i.getItemMeta())).getPersistentDataContainer().has(keyLevel,PersistentDataType.INTEGER)) {
                 Integer stackLevel = i.getItemMeta().getPersistentDataContainer().get(keyLevel,PersistentDataType.INTEGER);
+                assert stackLevel != null;
                 if (!stackLevel.equals(level)) {
                     return false;
                 }

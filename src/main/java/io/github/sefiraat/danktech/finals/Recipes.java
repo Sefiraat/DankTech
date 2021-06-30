@@ -32,81 +32,81 @@ public final class Recipes {
         }
     }
 
-    public static Recipe recipeCell1(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(1, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_1");
+    public static Recipe recipeCell1() {
+        ItemStack i = ItemStacks.getCell(1).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_1");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(1));
         r.setIngredient('E', Materials.CELL_CORE_MATERIAL);
         return r;
     }
-    public static Recipe recipeCell2(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(2, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_2");
+    public static Recipe recipeCell2() {
+        ItemStack i = ItemStacks.getCell(2).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_2");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(2));
         r.setIngredient('E', Materials.CELL_CORE_MATERIAL);
         return r;
     }
-    public static Recipe recipeCell3(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(3, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_3");
+    public static Recipe recipeCell3() {
+        ItemStack i = ItemStacks.getCell(3).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_3");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(3));
         r.setIngredient('E', Materials.CELL_CORE_MATERIAL);
         return r;
     }
-    public static Recipe recipeCell4(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(4, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_4");
+    public static Recipe recipeCell4() {
+        ItemStack i = ItemStacks.getCell(4).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_4");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(4));
         r.setIngredient('E', Materials.CELL_CORE_MATERIAL);
         return r;
     }
-    public static Recipe recipeCell5(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(5, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_5");
+    public static Recipe recipeCell5() {
+        ItemStack i = ItemStacks.getCell(5).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_5");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(5));
         r.setIngredient('E', Materials.CELL_CORE_MATERIAL);
         return r;
     }
-    public static Recipe recipeCell6(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(6, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_6");
+    public static Recipe recipeCell6() {
+        ItemStack i = ItemStacks.getCell(6).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_6");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(6));
         r.setIngredient('E', Materials.CELL_CORE_MATERIAL);
         return r;
     }
-    public static Recipe recipeCell7(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(7, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_7");
+    public static Recipe recipeCell7() {
+        ItemStack i = ItemStacks.getCell(7).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_7");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(7));
         r.setIngredient('E', Materials.CELL_CORE_MATERIAL);
         return r;
     }
-    public static Recipe recipeCell8(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(8, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_8");
+    public static Recipe recipeCell8() {
+        ItemStack i = ItemStacks.getCell(8).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_8");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(8));
         r.setIngredient('E', Materials.CELL_CORE_MATERIAL);
         return r;
     }
-    public static Recipe recipeCell9(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(9, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_9");
+    public static Recipe recipeCell9() {
+        ItemStack i = ItemStacks.getCell(9).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_9");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(9));
@@ -114,9 +114,9 @@ public final class Recipes {
         return r;
     }
 
-    public static Recipe recipeDank(DankTech plugin) {
+    public static Recipe recipeDank() {
         ItemStack i = new ItemStack(Material.PLAYER_HEAD, 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_All");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_All");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', Material.PLAYER_HEAD);
@@ -124,9 +124,9 @@ public final class Recipes {
         return r;
     }
 
-    public static Recipe recipeDank1(DankTech plugin) {
+    public static Recipe recipeDank1() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(1), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_1");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_1");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', Material.PLAYER_HEAD);
@@ -134,9 +134,9 @@ public final class Recipes {
         return r;
     }
 
-    public static Recipe recipeTrash(DankTech plugin) {
+    public static Recipe recipeTrash() {
         ItemStack i = new ItemStack(Material.PLAYER_HEAD, 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Trash_All");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Trash_All");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', Material.PLAYER_HEAD);
@@ -144,9 +144,9 @@ public final class Recipes {
         return r;
     }
 
-    public static Recipe recipeTrash1(DankTech plugin) {
+    public static Recipe recipeTrash1() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(1), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Trash_1");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Trash_1");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', Material.PLAYER_HEAD);
@@ -154,72 +154,72 @@ public final class Recipes {
         return r;
     }
 
-    public static Recipe recipeDank2(DankTech plugin) {
+    public static Recipe recipeDank2() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(2), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_2");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_2");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getDankCellMaterial(2));
         r.setIngredient('E', Material.PLAYER_HEAD);
         return r;
     }
-    public static Recipe recipeDank3(DankTech plugin) {
+    public static Recipe recipeDank3() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(3), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_3");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_3");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getDankCellMaterial(3));
         r.setIngredient('E', Material.PLAYER_HEAD);
         return r;
     }
-    public static Recipe recipeDank4(DankTech plugin) {
+    public static Recipe recipeDank4() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(4), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_4");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_4");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getDankCellMaterial(4));
         r.setIngredient('E', Material.PLAYER_HEAD);
         return r;
     }
-    public static Recipe recipeDank5(DankTech plugin) {
+    public static Recipe recipeDank5() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(5), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_5");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_5");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getDankCellMaterial(5));
         r.setIngredient('E', Material.PLAYER_HEAD);
         return r;
     }
-    public static Recipe recipeDank6(DankTech plugin) {
+    public static Recipe recipeDank6() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(6), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_6");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_6");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getDankCellMaterial(6));
         r.setIngredient('E', Material.PLAYER_HEAD);
         return r;
     }
-    public static Recipe recipeDank7(DankTech plugin) {
+    public static Recipe recipeDank7() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(7), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_7");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_7");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getDankCellMaterial(7));
         r.setIngredient('E', Material.PLAYER_HEAD);
         return r;
     }
-    public static Recipe recipeDank8(DankTech plugin) {
+    public static Recipe recipeDank8() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(8), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_8");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_8");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getDankCellMaterial(8));
         r.setIngredient('E', Material.PLAYER_HEAD);
         return r;
     }
-    public static Recipe recipeDank9(DankTech plugin) {
+    public static Recipe recipeDank9() {
         ItemStack i = new ItemStack(Materials.getDankMaterial(9), 1);
-        NamespacedKey key = new NamespacedKey(plugin, "Dank_9");
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Dank_9");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NEN","NNN");
         r.setIngredient('N', getDankCellMaterial(9));
@@ -271,9 +271,9 @@ public final class Recipes {
         return i;
     }
 
-    public static Recipe recipeUpgradeRange(DankTech plugin) {
-        ItemStack i = ItemStacks.getCell(1, plugin).clone();
-        NamespacedKey key = new NamespacedKey(plugin, "Cell_1");
+    public static Recipe recipeUpgradeRange() {
+        ItemStack i = ItemStacks.getCell(1).clone();
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "Cell_1");
         ShapedRecipe r = new ShapedRecipe(key, i);
         r.shape("NNN","NSN","NNN");
         r.setIngredient('N', getCellCraftingMaterial(1));

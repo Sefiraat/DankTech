@@ -1,6 +1,7 @@
 package io.github.sefiraat.danktech.implementation.gui;
 
-import me.mattstudios.mfgui.gui.guis.Gui;
+import dev.triumphteam.gui.guis.Gui;
+import dev.triumphteam.gui.guis.StorageGui;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 

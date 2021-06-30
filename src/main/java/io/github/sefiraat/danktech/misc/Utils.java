@@ -36,52 +36,52 @@ public class Utils {
         return 36 - i;
     }
 
-    public static void givePlayerDank(Player player, int level, DankTech parent) {
+    public static void givePlayerDank(Player player, int level) {
         if (level <= 9) {
-            long packID = getNextPackID(parent);
-            ItemStack dank = DankPack.getDankPack(level, packID, parent, player.getPlayer());
+            long packID = getNextPackID();
+            ItemStack dank = DankPack.getDankPack(level, packID, player.getPlayer());
             ItemMeta m = dank.getItemMeta();
-            m.setDisplayName(getDankNameBold(parent, level));
-            m.setLore(ItemDetails.getDankLore(parent, level, packID, null));
+            m.setDisplayName(getDankNameBold(level));
+            m.setLore(ItemDetails.getDankLore(level, packID, null));
             dank.setItemMeta(m);
             player.getPlayer().getInventory().addItem(dank);
-            player.getPlayer().sendMessage(Messages.messageCommandPackGiven(parent, packID));
+            player.getPlayer().sendMessage(Messages.messageCommandPackGiven(packID));
         } else {
-            player.getPlayer().sendMessage(Messages.messageCommandPackDoesNotExist(parent));
+            player.getPlayer().sendMessage(Messages.messageCommandPackDoesNotExist());
         }
     }
 
-    public static void recoverDankByID(Player p, DankTech parent, long id) {
-        int level = parent.getInstance().getDankStorageConfig().getInt(CONFIG_GETTER_SECTION_DANK_ID + "." + id + ".LEVEL");
-        ItemStack dank = DankPack.getDankPack(level, id, parent, p.getPlayer());
+    public static void recoverDankByID(Player p, long id) {
+        int level = DankTech.getInstance().getDankStorageConfig().getInt(CONFIG_GETTER_SECTION_DANK_ID + "." + id + ".LEVEL");
+        ItemStack dank = DankPack.getDankPack(level, id, p.getPlayer());
 
         p.getInventory().addItem(dank);
-        p.sendMessage(Messages.messageCommandPackGiven(parent, id));
+        p.sendMessage(Messages.messageCommandPackGiven(id));
     }
 
-    public static void givePlayerTrash(Player player, int level, DankTech parent) {
+    public static void givePlayerTrash(Player player, int level) {
         if (level <= 9) {
-            long packID = getNextTrashID(parent);
-            ItemStack trash = TrashPack.getTrashPack(level, packID, parent, player.getPlayer());
+            long packID = getNextTrashID();
+            ItemStack trash = TrashPack.getTrashPack(level, packID, player.getPlayer());
             ItemMeta m = trash.getItemMeta();
-            m.setDisplayName(getTrashNameBold(parent, level));
-            m.setLore(ItemDetails.getTrashLore(parent, level, packID));
+            m.setDisplayName(getTrashNameBold(level));
+            m.setLore(ItemDetails.getTrashLore(level, packID));
             trash.setItemMeta(m);
             player.getPlayer().getInventory().addItem(trash);
-            player.getPlayer().sendMessage(Messages.messageCommandTrashGiven(parent, packID));
+            player.getPlayer().sendMessage(Messages.messageCommandTrashGiven(packID));
         } else {
-            player.getPlayer().sendMessage(Messages.messageCommandPackDoesNotExist(parent));
+            player.getPlayer().sendMessage(Messages.messageCommandPackDoesNotExist());
         }
     }
 
-    public static void givePlayerCell(Player player, int level, int amount, DankTech parent) {
-        ItemStack i = ItemStacks.getCell(level, parent).clone();
+    public static void givePlayerCell(Player player, int level, int amount) {
+        ItemStack i = ItemStacks.getCell(level).clone();
         i.setAmount(amount);
         player.getPlayer().getInventory().addItem(i);
     }
 
-    public static long getNextItemID(DankTech plugin) {
-        ConfigurationSection sec = plugin.getInstance().getItemBlacklistConfig().getConfigurationSection("BLACKLISTED_ITEMS");
+    public static long getNextItemID() {
+        ConfigurationSection sec = DankTech.getInstance().getItemBlacklistConfig().getConfigurationSection("BLACKLISTED_ITEMS");
         int nextValue = 1;
         if (sec != null) {
             for (String key : sec.getKeys(false)) {
@@ -93,6 +93,12 @@ public class Utils {
             nextValue++;
         }
         return nextValue;
+    }
+
+    public static void dbgMsg(String string) {
+        if (DankTech.getInstance().getConfigClass().getBools().isDebug()) {
+            DankTech.getInstance().getLogger().info(string);
+        }
     }
 
 }

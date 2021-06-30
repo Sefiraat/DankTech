@@ -88,114 +88,114 @@ public class ContainerStorage {
         }
     }
 
-    public static boolean isShallow(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-shallow");
+    public static boolean isShallow(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"is-shallow");
         return containerHasData(i, key, PersistentDataType.INTEGER);
     }
 
-    public static void makeShallow(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-shallow");
+    public static void makeShallow(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"is-shallow");
         setData(i, key, 1);
     }
 
-    public static boolean isDank(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-dank");
+    public static boolean isDank(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"is-dank");
         return containerHasData(i, key, PersistentDataType.INTEGER);
     }
 
-    public static void makeDank(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-dank");
+    public static void makeDank(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"is-dank");
         setData(i, key, 1);
     }
 
-    public static boolean isTrash(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-trash");
+    public static boolean isTrash(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"is-trash");
         return containerHasData(i, key, PersistentDataType.INTEGER);
     }
 
-    public static void makeTrash(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"is-trash");
+    public static void makeTrash(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"is-trash");
         setData(i, key, 1);
     }
 
-    public static boolean isDankMaterial(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin, "dank");
+    public static boolean isDankMaterial(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(), "dank");
         return containerHasData(i, key, PersistentDataType.INTEGER);
     }
 
-    public static Integer getDankLevel(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"dank-level");
+    public static Integer getDankLevel(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"dank-level");
         if (containerHasData(i, key, PersistentDataType.INTEGER)) {
             return getDataInteger(i, key);
         }
         return 0;
     }
 
-    public static void setDankLevel(ItemStack i, DankTech plugin, int value) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"dank-level");
+    public static void setDankLevel(ItemStack i, int value) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"dank-level");
         setData(i, key, value);
     }
 
-    public static Integer getTrashLevel(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-level");
+    public static Integer getTrashLevel(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"trash-level");
         if (containerHasData(i, key, PersistentDataType.INTEGER)) {
             return getDataInteger(i, key);
         }
         return 0;
     }
 
-    public static void setTrashLevel(ItemStack i, DankTech plugin, int value) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-level");
+    public static void setTrashLevel(ItemStack i, int value) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"trash-level");
         setData(i, key, value);
     }
 
-    public static Integer getCellLevel(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"cell-level");
+    public static Integer getCellLevel(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"cell-level");
         if (containerHasData(i, key, PersistentDataType.INTEGER)) {
             return getDataInteger(i, key);
         }
         return 0;
     }
 
-    public static void setCellLevel(ItemStack i, DankTech plugin, int value) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"cell-level");
+    public static void setCellLevel(ItemStack i, int value) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"cell-level");
         setData(i, key, value);
     }
 
 
-    public static Long getDankId(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"dank-id");
+    public static Long getDankId(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"dank-id");
         if (containerHasData(i, key, PersistentDataType.LONG)) {
             return getDataLong(i, key);
         }
         return 0L;
     }
 
-    public static void setDankId(ItemStack i, DankTech plugin, long value) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"dank-id");
+    public static void setDankId(ItemStack i, long value) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"dank-id");
         setData(i, key, value);
     }
 
-    public static Long getTrashId(ItemStack i, DankTech plugin) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-id");
+    public static Long getTrashId(ItemStack i) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"trash-id");
         if (containerHasData(i, key, PersistentDataType.LONG)) {
             return getDataLong(i, key);
         }
         return 0L;
     }
 
-    public static void setTrashId(ItemStack i, DankTech plugin, long value) {
-        NamespacedKey key = new NamespacedKey(plugin.getInstance(),"trash-id");
+    public static void setTrashId(ItemStack i, long value) {
+        NamespacedKey key = new NamespacedKey(DankTech.getInstance(),"trash-id");
         setData(i, key, value);
     }
 
-    public static Integer getDankNextSlot(ItemStack i, DankTech plugin) {
-        NamespacedKey ssKey = new NamespacedKey(plugin.getInstance(),KEY_SELECTED_SLOT);
-        Integer dankLevel = getDankLevel(i, plugin);
+    public static Integer getDankNextSlot(ItemStack i) {
+        NamespacedKey ssKey = new NamespacedKey(DankTech.getInstance(),KEY_SELECTED_SLOT);
+        Integer dankLevel = getDankLevel(i);
         if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
             setData(i, ssKey, 0);
         }
-        Integer nextSlot = getDataInteger(i, ssKey) + 1;
+        int nextSlot = getDataInteger(i, ssKey) + 1;
         if (nextSlot > dankLevel) {
             nextSlot = 1;
         }
@@ -203,9 +203,9 @@ public class ContainerStorage {
         return nextSlot;
     }
 
-    public static Integer getDankPreviousSlot(ItemStack i, DankTech plugin) {
-        NamespacedKey ssKey = new NamespacedKey(plugin.getInstance(),KEY_SELECTED_SLOT);
-        Integer dankLevel = getDankLevel(i, plugin);
+    public static Integer getDankPreviousSlot(ItemStack i) {
+        NamespacedKey ssKey = new NamespacedKey(DankTech.getInstance(),KEY_SELECTED_SLOT);
+        Integer dankLevel = getDankLevel(i);
         if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
             setData(i, ssKey, 0);
         }
@@ -217,8 +217,8 @@ public class ContainerStorage {
         return nextSlot;
     }
 
-    public static Integer getDankCurrentSlot(ItemStack i, DankTech plugin) {
-        NamespacedKey ssKey = new NamespacedKey(plugin.getInstance(),KEY_SELECTED_SLOT);
+    public static Integer getDankCurrentSlot(ItemStack i) {
+        NamespacedKey ssKey = new NamespacedKey(DankTech.getInstance(),KEY_SELECTED_SLOT);
         if (!containerHasData(i, ssKey, PersistentDataType.INTEGER)) {
             setData(i, ssKey, 1);
         }

@@ -1,11 +1,10 @@
 package io.github.sefiraat.danktech.configuration;
 
-import io.github.sefiraat.danktech.DankTech;
-
 public class Config {
 
     private final ConfigStrings strings;
     private final ConfigVals vals;
+    private final ConfigBools bools;
 
     public ConfigStrings getStrings() {
         return strings;
@@ -13,9 +12,14 @@ public class Config {
     public ConfigVals getVals() {
         return vals;
     }
-
-    public Config(DankTech parent) {
-        strings = new ConfigStrings(parent);
-        vals = new ConfigVals(parent);
+    public ConfigBools getBools() {
+        return bools;
     }
+
+    public Config() {
+        strings = new ConfigStrings();
+        vals = new ConfigVals();
+        bools = new ConfigBools();
+    }
+
 }

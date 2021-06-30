@@ -40,11 +40,11 @@ public class GUITest {
 //            givePlayerDank(playerNormal.getPlayer(), i, plugin);
 //            for (ItemStack item : playerNormal.getInventory()) {
 //                if (isDank(item,plugin)) {
-//                    int dankLevel = ContainerStorage.getDankLevel(item, plugin.getInstance());
-//                    long dankId = ContainerStorage.getDankId(item, plugin.getInstance());
+//                    int dankLevel = ContainerStorage.getDankLevel(item, DankTech.getInstance());
+//                    long dankId = ContainerStorage.getDankId(item, DankTech.getInstance());
 //                    playerNormal.sendMessage(Messages.messageEventOpenPack(dankId));
 //                    Config.setDankLastOpenedBy(dankId, plugin, playerNormal);
-//                    Gui g = getDankGUI(dankId, dankLevel, plugin.getInstance());
+//                    Gui g = getDankGUI(dankId, dankLevel, DankTech.getInstance());
 //                    g.open(playerNormal);
 //                    server.getLogger().info("GUI Opened");
 //                }
@@ -61,11 +61,11 @@ public class GUITest {
 //            givePlayerTrash(playerNormal.getPlayer(), i, plugin);
 //            for (ItemStack item : playerNormal.getInventory()) {
 //                if (isTrash(item,plugin)) {
-//                    int trashLevel = ContainerStorage.getTrashLevel(item, plugin.getInstance());
-//                    long trashId = ContainerStorage.getTrashId(item, plugin.getInstance());
+//                    int trashLevel = ContainerStorage.getTrashLevel(item, DankTech.getInstance());
+//                    long trashId = ContainerStorage.getTrashId(item, DankTech.getInstance());
 //                    playerNormal.sendMessage(Messages.messageEventOpenPack(trashId));
 //                    Config.setDankLastOpenedBy(trashId, plugin, playerNormal);
-//                    Gui g = getTrashGUI(trashId, trashLevel, plugin.getInstance());
+//                    Gui g = getTrashGUI(trashId, trashLevel, DankTech.getInstance());
 //                    g.open(playerNormal);
 //                }
 //            }

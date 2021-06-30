@@ -22,74 +22,74 @@ public final class Messages {
     public static final String ID = " - ID: ";
 
     // Commands
-    public static String messageCommandSubcommand(DankTech plugin) {
-        return PREFIX + NOTICE + plugin.getConfigClass().getStrings().getCommandSubcommand();
+    public static String messageCommandSubcommand() {
+        return PREFIX + NOTICE + DankTech.getInstance().getConfigClass().getStrings().getCommandSubcommand();
     }
-    public static String messageCommandSelectItem(DankTech plugin) {
-        return PREFIX + NOTICE + plugin.getConfigClass().getStrings().getCommandSelectItem();
+    public static String messageCommandSelectItem() {
+        return PREFIX + NOTICE + DankTech.getInstance().getConfigClass().getStrings().getCommandSelectItem();
     }
-    public static String messageCommandPackDoesNotExist(DankTech plugin) {
-        return PREFIX + ERROR + plugin.getConfigClass().getStrings().getCommandPackDoesNotExist();
+    public static String messageCommandPackDoesNotExist() {
+        return PREFIX + ERROR + DankTech.getInstance().getConfigClass().getStrings().getCommandPackDoesNotExist();
     }
-    public static String messageCommandBlacklistItemSaved(DankTech plugin) {
-        return PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandBlacklistItemAdded();
+    public static String messageCommandBlacklistItemSaved() {
+        return PREFIX + SUCCESS + DankTech.getInstance().getConfigClass().getStrings().getCommandBlacklistItemAdded();
     }
-    public static String messageCommandBlacklistMustHold(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCommandBlacklistMustHold();
+    public static String messageCommandBlacklistMustHold() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getCommandBlacklistMustHold();
     }
-    public static String messageCommandPackGiven(DankTech plugin, long packID) {
-        return (PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandDankPackGiven() + ID + packID);
+    public static String messageCommandPackGiven(long packID) {
+        return (PREFIX + SUCCESS + DankTech.getInstance().getConfigClass().getStrings().getCommandDankPackGiven() + ID + packID);
     }
-    public static String messageCommandTrashGiven(DankTech plugin, long trashID) {
-        return (PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getCommandTrashPackGiven() + ID + trashID);
+    public static String messageCommandTrashGiven(long trashID) {
+        return (PREFIX + SUCCESS + DankTech.getInstance().getConfigClass().getStrings().getCommandTrashPackGiven() + ID + trashID);
     }
-    public static String messageCommandPackUpdated(DankTech plugin, long packID) {
-        return (PREFIX + WARNING + plugin.getConfigClass().getStrings().getCommandPackUpdated() + ID + packID);
+    public static String messageCommandPackUpdated(long packID) {
+        return (PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getCommandPackUpdated() + ID + packID);
     }
 
     // Events
-    public static String messageEventOpenPack(DankTech plugin, long packID) {
-        return (PREFIX + PASSIVE + plugin.getConfigClass().getStrings().getEventOpenDank() + ID + packID);
+    public static String messageEventOpenPack(long packID) {
+        return (PREFIX + PASSIVE + DankTech.getInstance().getConfigClass().getStrings().getEventOpenDank() + ID + packID);
     }
-    public static String messageEventOpenTrash(DankTech plugin, long trashID) {
-        return (PREFIX + PASSIVE + plugin.getConfigClass().getStrings().getEventOpenTrash() + ID + trashID);
+    public static String messageEventOpenTrash(long trashID) {
+        return (PREFIX + PASSIVE + DankTech.getInstance().getConfigClass().getStrings().getEventOpenTrash() + ID + trashID);
     }
-    public static String messageEventInputExisting(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventInputExisting();
+    public static String messageEventInputExisting() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getEventInputExisting();
     }
-    public static String messageEventInputThisDank(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventInputThisDank();
+    public static String messageEventInputThisDank() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getEventInputThisDank();
     }
-    public static String messageEventInputBlacklisted(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventInputBlacklisted();
+    public static String messageEventInputBlacklisted() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getEventInputBlacklisted();
     }
-    public static String messageEventWithdrawNoSpace(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventWithdrawNoSpace();
+    public static String messageEventWithdrawNoSpace() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getEventWithdrawNoSpace();
     }
-    public static String messageEventSlotNotAssigned(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventSlotNotAssigned();
+    public static String messageEventSlotNotAssigned() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getEventSlotNotAssigned();
     }
-    public static String messageEventSlotCantPlace(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventSlotCantPlace();
+    public static String messageEventSlotCantPlace() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getEventSlotCantPlace();
     }
-    public static String messageEventSlotNoMoreItems(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getEventSlotNoMoreItems();
+    public static String messageEventSlotNoMoreItems() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getEventSlotNoMoreItems();
     }
-    public static String messageEventSlotChanged(DankTech plugin, String s, Integer slot) {
-         return PREFIX + SUCCESS + plugin.getConfigClass().getStrings().getEventSlotChanged() + " [" + slot + "] : " + ChatColor.GOLD + s;
+    public static String messageEventSlotChanged(String s, Integer slot) {
+         return PREFIX + SUCCESS + DankTech.getInstance().getConfigClass().getStrings().getEventSlotChanged() + " [" + slot + "] : " + ChatColor.GOLD + s;
     }
 
     // Crafting
-    public static String messageCraftNewPack(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCraftNewPack();
+    public static String messageCraftNewPack() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getCraftNewPack();
     }
-    public static String messageCraftUpgradePack(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCraftUpgradePack();
+    public static String messageCraftUpgradePack() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getCraftUpgradePack();
     }
-    public static String messageCraftNewTrash(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCraftNewTrash();
+    public static String messageCraftNewTrash() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getCraftNewTrash();
     }
-    public static String messageCraftUpgradeTrash(DankTech plugin) {
-        return PREFIX + WARNING + plugin.getConfigClass().getStrings().getCraftUpgradeTrash();
+    public static String messageCraftUpgradeTrash() {
+        return PREFIX + WARNING + DankTech.getInstance().getConfigClass().getStrings().getCraftUpgradeTrash();
     }
 }

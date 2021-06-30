@@ -11,25 +11,24 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-import static io.github.sefiraat.danktech.finals.Constants.*;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_DANK_ID;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_STACK;
+import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_VOLUME;
 import static io.github.sefiraat.danktech.misc.ContainerStorage.getDankId;
 import static io.github.sefiraat.danktech.misc.ContainerStorage.isDank;
 
 public class UnloadingListener implements Listener {
 
-    final DankTech parent;
-
     public UnloadingListener(@Nonnull DankTech plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        parent = plugin;
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onHop(InventoryMoveItemEvent e) {
-        if (e.getSource().getType().equals(InventoryType.HOPPER) && isDank(e.getItem(), parent)) {
+        if (e.getSource().getType().equals(InventoryType.HOPPER) && isDank(e.getItem())) {
             ItemStack dank = e.getItem();
-            Long dankID = getDankId(dank, parent.getInstance());
-            ConfigurationSection section = parent.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
+            Long dankID = getDankId(dank);
+            ConfigurationSection section = DankTech.getInstance().getDankStorageConfig().getConfigurationSection(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID);
             ConfigurationSection slotSection = null;
             e.setCancelled(true);
             for (String s : section.getKeys(false)) {
@@ -48,7 +47,7 @@ public class UnloadingListener implements Listener {
     }
 
     private void hopItemsFromDank(ConfigurationSection slotSection, InventoryMoveItemEvent e) {
-        Integer amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
+        int amount = slotSection.getInt(CONFIG_GETTER_VAL_VOLUME);
         ItemStack i = slotSection.getItemStack(CONFIG_GETTER_VAL_STACK).clone();
         if (amount > 1) {
             if (amount <= i.getMaxStackSize()) {
