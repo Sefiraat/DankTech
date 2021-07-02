@@ -63,6 +63,9 @@ public class DankTech extends JavaPlugin {
     public Protection getProtection() {
         return protection;
     }
+    public void setProtection(Protection protection) {
+        this.protection = protection;
+    }
     public Config getConfigClass() {
         return configClass;
     }
@@ -98,8 +101,6 @@ public class DankTech extends JavaPlugin {
         sortConfigs();
 
         configClass = new Config();
-        supportedPlugins = new SupportedPlugins(this);
-        protection = new Protection();
 
         registerCommands();
 
@@ -113,8 +114,7 @@ public class DankTech extends JavaPlugin {
         TimerSave timerSave = new TimerSave(this);
         timerSave.runTaskTimerAsynchronously (this, 0, 1200L);
 
-        TimerHooks timerHooks = new TimerHooks(this);
-        timerHooks.runTaskTimer(this, 1L, 100L);
+        this.getServer().getScheduler().runTask(this, this::afterStart);
 
         if (!isUnitTest) {
             int pluginId = 11208;
@@ -206,6 +206,10 @@ public class DankTech extends JavaPlugin {
         this.getServer().addRecipe(Recipes.recipeDank());
         this.getServer().addRecipe(Recipes.recipeTrash1());
         this.getServer().addRecipe(Recipes.recipeTrash());
+    }
+
+    public void afterStart() {
+        this.supportedPlugins = new SupportedPlugins(this);
     }
 
 }

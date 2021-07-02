@@ -78,7 +78,7 @@ public final class GUIItems {
     public static GuiItem guiPackAssignedSlot(@Nonnull Long dankID, @Nonnull Integer slot) {
         ItemStack i = DankTech.getInstance().getDankStorageConfig().getItemStack(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID + "." + CONFIG_GETTER_VAL_SLOT + slot + "." + CONFIG_GETTER_VAL_STACK);
         assert i != null;
-        GuiItem g = ItemBuilder.from(i).asGuiItem();
+        GuiItem g = ItemBuilder.from(i.clone()).asGuiItem();
         g.setAction(event -> event.setCancelled(true));
         return g;
     }

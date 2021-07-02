@@ -38,13 +38,7 @@ public class DankTechTest {
     }
 
     @Test
-    @DisplayName("Protections loaded")
-    void testProtection() {
-        Assertions.assertNotNull(plugin.getProtection());
-    }
-
-    @Test
-    @DisplayName("Protections loaded")
+    @DisplayName("Commands loaded")
     void testCommandManager() {
         Assertions.assertNotNull(plugin.getCommandManager());
     }

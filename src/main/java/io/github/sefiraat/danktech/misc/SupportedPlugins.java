@@ -42,13 +42,11 @@ public class SupportedPlugins {
     }
 
     public SupportedPlugins(DankTech plugin) {
-
         this.plugin = plugin;
-
-        Utils.dbgMsg("Setting up supported plugins");
+        Utils.dbgMsg("Setting up post-load supported plugins");
         mcMMO = plugin.getServer().getPluginManager().getPlugin("mcMMO") != null;
         Utils.dbgMsg("-- mcMMO : " + mcMMO);
-        griefPrevention = plugin.getServer().getPluginManager().getPlugin("GriefPrevention") != null;
+        griefPrevention =  plugin.getServer().getPluginManager().isPluginEnabled("GriefPrevention");
         Utils.dbgMsg("-- griefPrevention : " + griefPrevention);
         worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard") != null;
         Utils.dbgMsg("-- worldGuard : " + worldGuard);
@@ -68,10 +66,8 @@ public class SupportedPlugins {
             Utils.dbgMsg("Skipping Slimefun Integration");
         }
 
+        plugin.setProtection(new Protection(this));
     }
 
-    public void setupPostLoadPlugins() {
-        Utils.dbgMsg("Setting up post-load supported plugins");
-    }
 
 }

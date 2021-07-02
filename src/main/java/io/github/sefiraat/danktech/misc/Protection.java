@@ -31,8 +31,8 @@ public class Protection {
     private WorldGuardPlugin worldGuard;
     private FPlayers factions;
 
-    public Protection() {
-        supportedPlugins = DankTech.getInstance().getSupportedPlugins();
+    public Protection(SupportedPlugins supportedPlugins) {
+        this.supportedPlugins = supportedPlugins;
         Utils.dbgMsg("Protection plugins sorted");
     }
 

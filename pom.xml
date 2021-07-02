@@ -6,7 +6,7 @@
 
     <groupId>io.github.sefiraat</groupId>
     <artifactId>DankTech</artifactId>
-    <version>1.2.7</version>
+    <version>1.2.8</version>
 
     <build>
         <plugins>
@@ -158,6 +158,7 @@
             <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -195,6 +196,7 @@
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
             <version>16.17.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
@@ -269,6 +271,7 @@
             <groupId>com.bgsoftware</groupId>
             <artifactId>WildStackerAPI</artifactId>
             <version>latest</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

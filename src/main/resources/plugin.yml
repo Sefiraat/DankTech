@@ -1,5 +1,5 @@
 name: DankTech
-version: 1.2.7
+version: 1.2.8
 main: io.github.sefiraat.danktech.DankTech
 api-version: 1.16
 softdepend:  [Slimefun, mcMMO]
