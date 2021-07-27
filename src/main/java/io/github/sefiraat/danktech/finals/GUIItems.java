@@ -61,6 +61,7 @@ public final class GUIItems {
         g.setAction(event -> event.setCancelled(true));
         return g;
     }
+
     public static GuiItem guiUnassignedSlot() {
         ItemStack guiSkull = SkullCreator.itemFromBase64(Materials.DANK_GUI_EMPTY);
         GuiItem g = ItemBuilder.skull(guiSkull).asGuiItem();
@@ -75,6 +76,7 @@ public final class GUIItems {
         g.setAction(event -> event.setCancelled(true));
         return g;
     }
+
     public static GuiItem guiPackAssignedSlot(@Nonnull Long dankID, @Nonnull Integer slot) {
         ItemStack i = DankTech.getInstance().getDankStorageConfig().getItemStack(CONFIG_GETTER_SECTION_DANK_ID + "." + dankID + "." + CONFIG_GETTER_VAL_SLOT + slot + "." + CONFIG_GETTER_VAL_STACK);
         assert i != null;
@@ -86,7 +88,7 @@ public final class GUIItems {
     public static GuiItem guiTrashAssignedSlot(@Nonnull Long trashId, @Nonnull Integer slot) {
         ItemStack i = DankTech.getInstance().getDankStorageConfig().getItemStack(CONFIG_GETTER_SECTION_TRASH_ID + "." + trashId + "." + CONFIG_GETTER_VAL_SLOT + slot + "." + CONFIG_GETTER_VAL_STACK);
         assert i != null;
-        GuiItem g = ItemBuilder.from(i).asGuiItem();
+        GuiItem g = ItemBuilder.from(i.clone()).asGuiItem();
         g.setAction(event -> event.setCancelled(true));
         return g;
     }

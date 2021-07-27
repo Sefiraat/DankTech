@@ -1,8 +1,9 @@
 name: DankTech
-version: 1.2.8
+version: 1.2.9
 main: io.github.sefiraat.danktech.DankTech
 api-version: 1.16
 softdepend:  [Slimefun, mcMMO]
+loadbefore: [SlimeCustomizer]
 permissions:
   danktech.admin:
     description: Allows access to /danktech and to bypass world restrictions
