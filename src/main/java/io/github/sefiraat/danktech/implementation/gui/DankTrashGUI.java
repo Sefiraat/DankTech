@@ -6,11 +6,14 @@ import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.GUIItems;
 import io.github.sefiraat.danktech.finals.Messages;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 
 import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_SECTION_TRASH_ID;
 import static io.github.sefiraat.danktech.finals.Constants.CONFIG_GETTER_VAL_SLOT;
@@ -90,6 +93,7 @@ public class DankTrashGUI {
                     i.setAmount(i.getAmount() - 1);
                     e.getWhoClicked().setItemOnCursor(i);
                     i2.setAmount(1);
+                    clearGuiPDC(i2);
                     slotSection.set(CONFIG_GETTER_VAL_STACK, i2);
                     slotSection.set(CONFIG_GETTER_VAL_VOLUME, 1);
                     gui.updateItem(slotR - 1, slotC, GUIItems.guiTrashAssignedSlot(trashID, dankSlot));
@@ -100,6 +104,15 @@ public class DankTrashGUI {
                 e.getWhoClicked().sendMessage(Messages.messageEventInputExisting());
             }
         }
+    }
+
+
+    private static void clearGuiPDC(ItemStack i) {
+        ItemMeta im = i.getItemMeta();
+        assert im != null;
+        PersistentDataContainer c = im.getPersistentDataContainer();
+        c.remove(new NamespacedKey("danktech", "mf-gui"));
+        i.setItemMeta(im);
     }
 
     public static void setItemDisplays(Gui gui, int trashLevel, long trashID) {

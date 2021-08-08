@@ -122,6 +122,8 @@ public class CraftListener implements Listener {
                 im.getPersistentDataContainer().set(idTrashKey, PersistentDataType.LONG, trashID);
                 r.setItemMeta(im);
                 e.getInventory().setResult(r);
+            } else {
+                e.getInventory().setResult(new ItemStack(Material.AIR));
             }
         }
     }
