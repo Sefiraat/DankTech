@@ -1,7 +1,7 @@
 package io.github.sefiraat.danktech.finals;
 
 import io.github.sefiraat.danktech.DankTech;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;

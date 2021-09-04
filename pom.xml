@@ -6,7 +6,7 @@
 
     <groupId>io.github.sefiraat</groupId>
     <artifactId>DankTech</artifactId>
-    <version>1.2.10</version>
+    <version>1.2.11</version>
 
     <build>
         <plugins>
@@ -234,7 +234,7 @@
         <dependency>
             <groupId>com.github.Slimefun</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>a36f487</version>
+            <version>RC-27</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>

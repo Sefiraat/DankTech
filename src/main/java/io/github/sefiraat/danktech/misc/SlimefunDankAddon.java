@@ -5,11 +5,11 @@ import io.github.sefiraat.danktech.DankTech;
 import io.github.sefiraat.danktech.finals.ItemStacks;
 import io.github.sefiraat.danktech.finals.Materials;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.recipes.MinecraftRecipe;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.recipes.MinecraftRecipe;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -38,7 +38,7 @@ public class SlimefunDankAddon implements SlimefunAddon {
         im.setDisplayName(SLIMEFUN_DISPLAY_CATEGORY_NAME);
         im.setLore(Collections.singletonList("&a> Click to open"));
         categoryItemMain.setItemMeta(im);
-        Category dankCategory = new Category(categoryIdMain, categoryItemMain);
+        ItemGroup dankCategory = new ItemGroup(categoryIdMain, categoryItemMain);
 
         // Items
         Utils.dbgMsg("Cells");
