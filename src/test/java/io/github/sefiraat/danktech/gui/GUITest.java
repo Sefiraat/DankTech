@@ -1,36 +1,36 @@
-package io.github.sefiraat.danktech.gui;
-
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import io.github.sefiraat.danktech.DankTech;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.TestMethodOrder;
-
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class GUITest {
-
-    private static ServerMock server;
-    private static DankTech plugin;
-    private static PlayerMock playerNormal;
-
-    @BeforeAll
-    public static void setUp()
-    {
-        server = MockBukkit.mock();
-        plugin = MockBukkit.load(DankTech.class);
-        server.addSimpleWorld("world");
-        playerNormal = server.addPlayer();
-    }
-
-    @AfterAll
-    public static void tearDown()
-    {
-        MockBukkit.unmock();
-    }
-
+//package io.github.sefiraat.danktech.gui;
+//
+//import be.seeseemelk.mockbukkit.MockBukkit;
+//import be.seeseemelk.mockbukkit.ServerMock;
+//import be.seeseemelk.mockbukkit.entity.PlayerMock;
+//import io.github.sefiraat.danktech.DankTech;
+//import org.junit.jupiter.api.AfterAll;
+//import org.junit.jupiter.api.BeforeAll;
+//import org.junit.jupiter.api.MethodOrderer;
+//import org.junit.jupiter.api.TestMethodOrder;
+//
+//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+//public class GUITest {
+//
+//    private static ServerMock server;
+//    private static DankTech plugin;
+//    private static PlayerMock playerNormal;
+//
+//    @BeforeAll
+//    public static void setUp()
+//    {
+//        server = MockBukkit.mock();
+//        plugin = MockBukkit.load(DankTech.class);
+//        server.addSimpleWorld("world");
+//        playerNormal = server.addPlayer();
+//    }
+//
+//    @AfterAll
+//    public static void tearDown()
+//    {
+//        MockBukkit.unmock();
+//    }
+//
 //    @Test
 //    @DisplayName("Dank GUI")
 //    @Order(1)
@@ -79,5 +79,5 @@ public class GUITest {
 //        PaginatedGui adminGUI = AdminGUI.getDankAdminGUI(plugin);
 //        adminGUI.open(playerNormal);
 //    }
-
-}
+//
+//}
