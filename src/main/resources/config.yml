@@ -1,3 +1,4 @@
+auto-update: true
 GENERAL:
   DEBUG: true
   BLACKLISTED_WORLDS_OPEN_PACK:
