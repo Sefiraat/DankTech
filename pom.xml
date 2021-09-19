@@ -6,7 +6,7 @@
 
     <groupId>io.github.sefiraat</groupId>
     <artifactId>DankTech</artifactId>
-    <version>1.2.11</version>
+    <version>modified</version>
 
     <build>
         <plugins>

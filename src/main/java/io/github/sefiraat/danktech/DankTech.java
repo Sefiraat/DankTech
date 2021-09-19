@@ -14,6 +14,7 @@ import io.github.sefiraat.danktech.misc.SupportedPlugins;
 import io.github.sefiraat.danktech.misc.Utils;
 import io.github.sefiraat.danktech.timers.TimerHooks;
 import io.github.sefiraat.danktech.timers.TimerSave;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -23,6 +24,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 
@@ -92,11 +94,14 @@ public class DankTech extends JavaPlugin {
     public void onEnable() {
 
         getLogger().info("########################################");
-        getLogger().info("                Dank Tech               ");
-        getLogger().info("           Created by Sefiraat          ");
+        getLogger().info("     Dank Tech - Created by Sefiraat    ");
         getLogger().info("########################################");
 
         instance = this;
+
+        if (this.getConfig().getBoolean("auto-update") && this.getDescription().getVersion().startsWith("DEV")) {
+            new GitHubBuildsUpdater(this, this.getFile(), "Sefiraat/DankTech/master").start();
+        }
 
         sortConfigs();
 
