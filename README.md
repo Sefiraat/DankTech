@@ -1,5 +1,8 @@
 <img src="https://github.com/Sefiraat/DankTech/blob/master/images/wiki/logo_large.png">
 
+***Please note!***
+
+***This version of DankTech will no longer be fully supported, while I will maintain for critical bugs for a while, active development has shifted to DankTech2 (A rewrite of DankTech as a Slimefun4 addon) avilable [here](https://github.com/Sefiraat/DankTech2)***
 
 DankTech is an attempt to recreate the [Dank Storage](https://www.curseforge.com/minecraft/mc-mods/dank-storage) mod, [/dank/null](https://www.curseforge.com/minecraft/mc-mods/dank-null) and OpenBlocks /dev/null in the form of a plugin.
 
